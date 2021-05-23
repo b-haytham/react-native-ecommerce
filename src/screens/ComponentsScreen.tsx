@@ -2,12 +2,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import OrderCard from "../components/cards/OrderCard";
 import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import Button from "../components/forms/form_elements/Button";
 import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
 import Header from "../components/navigation/Header";
+import { OrderStatus } from "../redux/data_types";
 import { Box, Text } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
@@ -84,6 +86,35 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             in_checkout
                         />
                     </Box>
+                    <Box marginHorizontal='s'>
+                        <OrderCard 
+                            elevation={1}
+                            date="05-12-2020"
+                            tracking_number="IW15884531358"
+                            number_items={3}
+                            total_amount={112}
+                            status={OrderStatus.SUCCESS}
+                            onDetailPress={() => {}}
+                        />
+                        <OrderCard 
+                            elevation={1}
+                            date="05-12-2020"
+                            tracking_number="IW15884531358"
+                            number_items={3}
+                            total_amount={112}
+                            status={OrderStatus.PENDING}
+                            onDetailPress={() => {}}
+                        />
+                        <OrderCard 
+                            elevation={1}
+                            date="05-12-2020"
+                            tracking_number="IW15884531358"
+                            number_items={3}
+                            total_amount={112}
+                            status={OrderStatus.FAILURE}
+                            onDetailPress={() => {}}
+                        />
+                    </Box>  
                 </Box>
             </ScrollView>
         </Layout>

@@ -1,18 +1,18 @@
-enum SIZES {
+export enum SIZES {
     S = "S",
     M = "M",
     L = "L",
     XL = "XL"
 }
 
-enum OrderStatus {
+export enum OrderStatus {
     SUCCESS = "SUCCESS",
     PENDING = "PENDING",
     FAILURE = "FAILURE",
     CANCELLED = "CANCELLED"
 }
 
-enum Gender {
+export enum Gender {
     MALE = "MALE",
     FEMALE = "FEMALE"
 }
