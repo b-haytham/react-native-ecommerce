@@ -2,6 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import Button from "../components/forms/form_elements/Button";
 import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
@@ -57,6 +58,30 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                                     />
                                 </TouchableOpacity>
                             }
+                        />
+                    </Box>
+                </Box>
+                <Box marginVertical="m">
+                    <Text variant="headline" mb="m" marginHorizontal="m">
+                        Cards
+                    </Text>
+                    <Box marginHorizontal="s">
+                        <ShippingAddressCard
+                            elevation={1}
+                            address="3 Newbridge Court, Chino Hills, CA 91709 United States"
+                            name="Jack Jack"
+                            is_checked_as_default={true}
+                            onCheckBoxChange={(v) => {}}
+                            onEditPress={() => {}}
+                        />
+                        <ShippingAddressCard
+                            elevation={1}
+                            address="3 Newbridge Court, Chino Hills, CA 91709 United States"
+                            name="Jack Jack"
+                            is_checked_as_default={false}
+                            onCheckBoxChange={(v) => {}}
+                            onEditPress={() => {}}
+                            in_checkout
                         />
                     </Box>
                 </Box>
