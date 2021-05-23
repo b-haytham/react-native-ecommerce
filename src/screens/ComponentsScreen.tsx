@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import Button from "../components/forms/form_elements/Button";
 import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
+import BottomTab from "../components/navigation/BottomTab";
 import { Box, Text } from "../utils/restyle";
 
 interface ComponentsScreenProps {}
@@ -24,6 +25,10 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                         variant='DEFAULT'
                         onPress={() => {}}
                     />
+                </Box>
+                <Box marginVertical='m'>
+                    <Text variant="headline" mb='m' marginHorizontal='m'>Navigation</Text>
+                    <BottomTab route_name='Home' />
                 </Box>
             </ScrollView>
         </Layout>
