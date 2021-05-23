@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
+import Button from "../components/forms/form_elements/Button";
 import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
 import { Box, Text } from "../utils/restyle";
@@ -13,6 +14,16 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                 <Box m="m">
                     <Text variant="headline">Form Elements</Text>
                     <Input placeholder="Input" />
+                    <Button
+                        title='PRIMARY'
+                        variant='PRIMARY'
+                        onPress={() => {}}
+                    />
+                        <Button
+                        title='DEFAULT'
+                        variant='DEFAULT'
+                        onPress={() => {}}
+                    />
                 </Box>
             </ScrollView>
         </Layout>
