@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
@@ -6,6 +6,7 @@ import Badge from "../components/Badge";
 import OrderCard from "../components/cards/OrderCard";
 import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import Button from "../components/forms/form_elements/Button";
+import IconButton from "../components/forms/form_elements/IconButton";
 import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
@@ -87,8 +88,8 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             in_checkout
                         />
                     </Box>
-                    <Box marginHorizontal='s'>
-                        <OrderCard 
+                    <Box marginHorizontal="s">
+                        <OrderCard
                             elevation={1}
                             date="05-12-2020"
                             tracking_number="IW15884531358"
@@ -97,7 +98,7 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             status={OrderStatus.SUCCESS}
                             onDetailPress={() => {}}
                         />
-                        <OrderCard 
+                        <OrderCard
                             elevation={1}
                             date="05-12-2020"
                             tracking_number="IW15884531358"
@@ -106,7 +107,7 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             status={OrderStatus.PENDING}
                             onDetailPress={() => {}}
                         />
-                        <OrderCard 
+                        <OrderCard
                             elevation={1}
                             date="05-12-2020"
                             tracking_number="IW15884531358"
@@ -115,20 +116,57 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             status={OrderStatus.FAILURE}
                             onDetailPress={() => {}}
                         />
-                    </Box>  
+                    </Box>
                 </Box>
                 <Box marginVertical="m">
                     <Text variant="headline" mb="m" marginHorizontal="m">
                         Badges
-                    </Text>       
+                    </Text>
+                    <Box marginHorizontal="s" flexDirection="row">
+                        <Badge
+                            marginHorizontal="s"
+                            title="New"
+                            bg="darkColor"
+                        />
+                        <Badge marginHorizontal="s" title="-50%" bg="primary" />
+                        <Badge
+                            marginHorizontal="s"
+                            title="Succress"
+                            bg="success"
+                        />
+                    </Box>
                 </Box>
-                <Box 
-                    marginHorizontal="s"
-                    flexDirection='row'
-                >
-                    <Badge marginHorizontal='s' title='New' bg='darkColor'  />
-                    <Badge marginHorizontal='s' title='-50%' bg='primary'  />
-                    <Badge marginHorizontal='s' title='Succress' bg='success'  />
+                <Box marginVertical="m">
+                    <Text variant="headline" mb="m" marginHorizontal="m">
+                        Icon buttons
+                    </Text>
+                    <Box marginHorizontal="s" flexDirection="row">
+                        <IconButton
+                            elevation={20}
+                            marginHorizontal="s"
+                            onPress={() => {}}
+                            bg="darkColor"
+                            icon={
+                                <Entypo
+                                    name="plus"
+                                    size={24}
+                                    color={"#ffffff"}
+                                />
+                            }
+                        />
+                        <IconButton
+                            elevation={10}
+                            onPress={() => {}}
+                            bg="primary"
+                            icon={
+                                <Entypo
+                                    name="shopping-bag"
+                                    size={24}
+                                    color={"#ffffff"}
+                                />
+                            }
+                        />
+                    </Box>
                 </Box>
             </ScrollView>
         </Layout>
