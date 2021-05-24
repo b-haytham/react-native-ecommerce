@@ -2,6 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import Badge from "../components/Badge";
 import OrderCard from "../components/cards/OrderCard";
 import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import Button from "../components/forms/form_elements/Button";
@@ -115,6 +116,19 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             onDetailPress={() => {}}
                         />
                     </Box>  
+                </Box>
+                <Box marginVertical="m">
+                    <Text variant="headline" mb="m" marginHorizontal="m">
+                        Badges
+                    </Text>       
+                </Box>
+                <Box 
+                    marginHorizontal="s"
+                    flexDirection='row'
+                >
+                    <Badge marginHorizontal='s' title='New' bg='darkColor'  />
+                    <Badge marginHorizontal='s' title='-50%' bg='primary'  />
+                    <Badge marginHorizontal='s' title='Succress' bg='success'  />
                 </Box>
             </ScrollView>
         </Layout>
