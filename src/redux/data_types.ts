@@ -28,17 +28,19 @@ export type Product = {
     sizes: SIZES[]
     details: {
         title: string
-        detail_list: string[]
+        detail_list: string[] | []
     },
     brand: {
         name: string
         display_name: string
     }
     number_reviews: number
-    number_views: string
+    number_views: number
     number_sold: number
     is_in_stock: boolean
     is_discount: boolean
+    avg_rating: number
+    is_new: boolean
     discount: {
         percentage: number
     }
@@ -51,7 +53,7 @@ export type Category = {
     id :number
     name: string
     display_name: string
-    sub_categories: SubCategory[]
+    sub_categories: SubCategory[] | []
     number_product: number
 }
 
@@ -59,7 +61,7 @@ export type SubCategory = {
     id: number
     name: string
     display_name: string
-    parent_category: Category
+    parent_category: Category | number
     number_product: number
 }
 

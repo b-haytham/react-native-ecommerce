@@ -24,10 +24,12 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-bouncy-checkbox": "^2.1.1",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-shared-element": "^0.7.0",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-web": "~0.13.12",
     "react-navigation-shared-element": "^5.0.0-alpha1",
     "react-redux": "^7.2.4",
@@ -37,6 +39,7 @@
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/react-native-snap-carousel": "^3.8.3",
     "typescript": "~4.0.0"
   },
   "private": true

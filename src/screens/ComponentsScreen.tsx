@@ -1,9 +1,16 @@
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+    View,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+    Dimensions,
+} from "react-native";
 import Badge from "../components/Badge";
 import OrderCard from "../components/cards/OrderCard";
+import ProductCard from "../components/cards/ProductCard";
 import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import Button from "../components/forms/form_elements/Button";
 import IconButton from "../components/forms/form_elements/IconButton";
@@ -11,11 +18,16 @@ import Input from "../components/forms/form_elements/Input";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
 import Header from "../components/navigation/Header";
-import { OrderStatus } from "../redux/data_types";
+import { OrderStatus, Product } from "../redux/data_types";
 import { Box, Text } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
+import Carousel from "react-native-snap-carousel";
+import { PRODUCTS } from "../redux/data";
+
 interface ComponentsScreenProps {}
+
+const { width, height } = Dimensions.get("screen");
 
 const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
     const theme = useTheme<Theme>();
@@ -115,6 +127,24 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             total_amount={112}
                             status={OrderStatus.FAILURE}
                             onDetailPress={() => {}}
+                        />
+                    </Box>
+                    <Box>
+                        <Carousel
+                            data={PRODUCTS}
+                            keyExtractor={(item: Product) => item.id.toString()}
+                            sliderWidth={width}
+                            itemWidth={200}
+                            activeAnimationType="spring"
+                            numColumns={4}
+                            renderItem={({ item }: { item: Product }) => (
+                                <ProductCard
+                                    width={200}
+                                    product={item}
+                                    onImagePress={() => {}}
+                                    onAddToBagPress={() => {}}
+                                />
+                            )}
                         />
                     </Box>
                 </Box>
