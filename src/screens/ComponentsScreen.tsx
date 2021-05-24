@@ -1,4 +1,4 @@
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import {
@@ -24,6 +24,7 @@ import { Theme } from "../utils/theme";
 
 import Carousel from "react-native-snap-carousel";
 import { PRODUCTS } from "../redux/data";
+import CategoryCard from "../components/cards/CategoryCard";
 
 interface ComponentsScreenProps {}
 
@@ -127,6 +128,30 @@ const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
                             total_amount={112}
                             status={OrderStatus.FAILURE}
                             onDetailPress={() => {}}
+                        />
+                    </Box>
+                    <Box
+                        elevation={2}
+                        marginVertical="s"
+                        borderRadius="s"
+                        marginHorizontal="s"
+                        overflow="hidden"
+                    >
+                        <CategoryCard
+                            icon={
+                                <TouchableOpacity>
+                                    
+                                    <Ionicons
+                                        name="ios-arrow-forward"
+                                        size={30}
+                                        color={theme.colors.white}
+                                    />
+                                </TouchableOpacity>
+                            }
+                            title="Men"
+                            width={width}
+                            height={200}
+                            image="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
                         />
                     </Box>
                     <Box>
