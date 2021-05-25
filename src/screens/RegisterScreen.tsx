@@ -1,20 +1,37 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React from "react";
+import { StyleSheet } from "react-native";
+import Social from "../components/forms/form_elements/Social";
+import RegisterForm from "../components/forms/RegisterForm";
 
-interface RegisterScreenProps{}
+import Layout from "../components/Layout";
 
-const RegisterScreen: React.FC<RegisterScreenProps> = ({}) =>{
-    return (
-        <View style={styles.container}>
-            <Text>RegisterScreen</Text>
-        </View>
-    )
+import {
+    RegisterScreenNavigationProps,
+    RegisterScreenRouteProps,
+} from "../navigation/ScreensNavigationRouteProps";
+import { Text } from "../utils/restyle";
+
+interface RegisterScreenProps {
+    navigation: RegisterScreenNavigationProps;
+    route: RegisterScreenRouteProps;
 }
+
+const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+    return (
+        <Layout p="l">
+            <Text variant="headline" mt="xl" mb="xl">
+                Register
+            </Text>
+            <RegisterForm onSubmit={() => navigation.navigate("Login")} />
+            <Social title="Or Register with social account" />
+        </Layout>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
-})
+    },
+});
 
-export default RegisterScreen
+export default RegisterScreen;
