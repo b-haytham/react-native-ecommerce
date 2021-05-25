@@ -6,6 +6,7 @@ import { Box } from "../../utils/restyle";
 import { Theme } from "../../utils/theme";
 
 import { Entypo, Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 
 interface BottomTabProps extends BoxProps<Theme> {
     route_name: string;
@@ -19,6 +20,7 @@ interface BottomTabProps extends BoxProps<Theme> {
 const { width, height } = Dimensions.get("screen");
 
 const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
+    const navigation = useNavigation()
     const theme = useTheme<Theme>();
     return (
         <Box
@@ -32,8 +34,8 @@ const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
             borderTopRightRadius="m"
             {...rest}
         >
-            <Pressable>
-                <Box p="s" bg="background" borderRadius="m">
+            <Pressable onPress={() => navigation.navigate('Home')}>
+                <Box p="s" bg={route_name.startsWith("Home") ? 'background' : 'white'} borderRadius="m">
                     <Entypo
                         name="home"
                         size={24}
@@ -45,8 +47,8 @@ const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
                     />
                 </Box>
             </Pressable>
-            <Pressable>
-                <Box>
+            <Pressable onPress={() => navigation.navigate('Shop_Main')}>
+                <Box p="s" bg={route_name.startsWith("Shop") ? 'background' : 'white'} borderRadius="m">
                     <Entypo
                         name="shopping-cart"
                         size={24}
@@ -58,8 +60,8 @@ const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
                     />
                 </Box>
             </Pressable>
-            <Pressable>
-                <Box>
+            <Pressable onPress={() => navigation.navigate('Bag_Main')}>
+                <Box p="s" bg={route_name.startsWith("Bag") ? 'background' : 'white'} borderRadius="m">
                     <Entypo
                         name="shopping-bag"
                         size={24}
@@ -71,8 +73,8 @@ const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
                     />
                 </Box>
             </Pressable>
-            <Pressable>
-                <Box>
+            <Pressable onPress={() => navigation.navigate('Favourite_Main')}>
+                <Box p="s" bg={route_name.startsWith("Favourite") ? 'background' : 'white'} borderRadius="m">
                     <Entypo
                         name="heart"
                         size={24}
@@ -84,8 +86,8 @@ const BottomTab: React.FC<BottomTabProps> = ({ route_name, ...rest }) => {
                     />
                 </Box>
             </Pressable>
-            <Pressable>
-                <Box>
+            <Pressable onPress={() => navigation.navigate('Profile_Main')}>
+                <Box p="s" bg={route_name.startsWith("Profile") ? 'background' : 'white'} borderRadius="m">
                     <Ionicons
                         name="person"
                         size={24}

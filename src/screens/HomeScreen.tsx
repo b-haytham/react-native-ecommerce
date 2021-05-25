@@ -1,6 +1,7 @@
 import React from "react";
 import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
+import { SharedElement } from "react-navigation-shared-element";
 import ProductCard from "../components/cards/ProductCard";
 import Button from "../components/forms/form_elements/Button";
 import HomeHero from "../components/HomeHero";
@@ -22,7 +23,7 @@ interface HomeScreenProps {
 
 const { width, height } = Dimensions.get("screen");
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     return (
         <Layout>
             <BottomTab
@@ -30,8 +31,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 position="absolute"
                 bottom={0}
                 zIndex={10}
-                route_name="Home"
+                route_name={route.name}
             />
+
             <ScrollView style={{ flex: 1, marginBottom: height * 0.1 }}>
                 <HomeHero
                     overflow="hidden"

@@ -13,5 +13,9 @@ export type AuthStackParamList = {
 
 export type MainStackParamList = {
     Home: undefined
+    Shop_Main: undefined
+    Bag_Main: undefined
+    Favourite_Main: undefined
+    Profile_Main: undefined
 }
 
