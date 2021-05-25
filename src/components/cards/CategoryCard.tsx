@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 import { BoxProps } from "@shopify/restyle";
 import { Box, Text } from "../../utils/restyle";
@@ -8,7 +8,7 @@ import { Theme } from "../../utils/theme";
 interface CategoryCardProps extends BoxProps<Theme> {
     width: number;
     height: number;
-    image: string;
+    image: ImageSourcePropType;
     title: string;
     icon: ReactNode;
 }
@@ -23,25 +23,26 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
     return (
         <Box
+            
             width={width}
             height={height}
-            {...rest}
             borderRadius="s"
             overflow="hidden"
+            {...rest}
         >
             <Image
-                style={StyleSheet.absoluteFillObject}
+                style={{height, width}}
                 width={width}
                 height={height}
                 resizeMode="cover"
-                source={{ uri: image }}
+                source={image}
             />
             <Box position="absolute" bottom={10} left={10}>
                 <Text variant="headline" color="white">
                     {title}
                 </Text>
             </Box>
-            <Box position="absolute" bottom={10} right={30}>
+            <Box position="absolute" bottom={10} right={10}>
                 {icon}
             </Box>
         </Box>

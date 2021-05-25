@@ -11,7 +11,12 @@ import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/v
 export default function App() {
 
     const [assets, error] = useAssets([
-        require('./assets/hero-home.jpg')
+        require('./assets/hero-home.jpg'),
+        require('./assets/kids.jpg'),
+        require('./assets/jewelry.jpg'),
+        require('./assets/women.jpg'),
+        require('./assets/men.jpg'),
+
     ])
 
     const [fontLoaded] = useFonts({
