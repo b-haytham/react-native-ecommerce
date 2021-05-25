@@ -1,13 +1,19 @@
 import React from "react";
-import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
+import { useFonts } from "expo-font";
+import { useAssets } from 'expo-asset'
+import AppLoading from "expo-app-loading";
 
 import Navigation from "./src/navigation";
 import store from "./src/redux/store";
-import AppLoading from "expo-app-loading";
 import { Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 export default function App() {
+
+    const [assets, error] = useAssets([
+        require('./assets/hero-home.jpg')
+    ])
+
     const [fontLoaded] = useFonts({
         ...Entypo.font,
         ...MaterialCommunityIcons.font,
@@ -23,7 +29,7 @@ export default function App() {
         "Ubuntu-Regular": require("./assets/fonts/Ubuntu-Regular.ttf"),
     });
 
-    if (!fontLoaded) {
+    if (!fontLoaded || !assets) {
         return <AppLoading />;
     } else {
         return (
