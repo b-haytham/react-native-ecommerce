@@ -30,6 +30,7 @@
     "react-native-screens": "~3.0.0",
     "react-native-shared-element": "^0.7.0",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",
     "react-navigation-shared-element": "^5.0.0-alpha1",
     "react-redux": "^7.2.4",

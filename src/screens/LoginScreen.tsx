@@ -1,18 +1,23 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
+import Social from '../components/forms/form_elements/Social'
+import LoginForm from '../components/forms/LoginForm'
 import Layout from '../components/Layout'
 import BottomTab from '../components/navigation/BottomTab'
+import { LoginScreenNavigationProps, LoginScreenRouteProps } from '../navigation/ScreensNavigationRouteProps'
+import { Text } from '../utils/restyle'
 
-interface LoginScreenProps{}
+interface LoginScreenProps{
+    navigation: LoginScreenNavigationProps
+    route: LoginScreenRouteProps
+}
 
-const LoginScreen: React.FC<LoginScreenProps> = ({}) =>{
+const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) =>{
     return (
-        <Layout>
-            <BottomTab 
-                route_name="Home" 
-                position='absolute'
-                bottom={0}
-            />
+        <Layout p='l'>
+            <Text variant="headline" mt='xl' mb='xl'>Login</Text>
+            <LoginForm onSubmit={(data) => navigation.navigate('Register')} />
+            <Social title='Or Login with social account' />
         </Layout>
     )
 }
