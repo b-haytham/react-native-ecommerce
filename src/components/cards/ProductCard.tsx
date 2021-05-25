@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    StyleSheet,
-    Dimensions,
-    Image,
-    TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 
 import { BoxProps } from "@shopify/restyle";
 import { Theme } from "../../utils/theme";
@@ -14,11 +9,12 @@ import Badge from "../Badge";
 import IconButton from "../forms/form_elements/IconButton";
 import { Entypo } from "@expo/vector-icons";
 
-import { AirbnbRating } from 'react-native-ratings'
+import { AirbnbRating } from "react-native-ratings";
 
 interface ProductCardProps extends BoxProps<Theme> {
     product: Product;
     width: number;
+    is_new?: boolean;
     onImagePress(item: Product): void;
     onAddToBagPress(item: Product): void;
 }
@@ -28,6 +24,7 @@ const { width: SWitch, height } = Dimensions.get("screen");
 const ProductCard: React.FC<ProductCardProps> = ({
     width,
     product,
+    is_new,
     onImagePress,
     onAddToBagPress,
     ...rest
@@ -52,6 +49,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         <Badge
                             title={`-${product.discount.percentage}%`}
                             bg="primary"
+                            position="absolute"
+                            top={5}
+                            left={5}
+                            zIndex={2}
+                        />
+                    )}
+                    {product.is_new && (
+                        <Badge
+                            title={`New`}
+                            bg="darkColor"
                             position="absolute"
                             top={5}
                             left={5}
@@ -86,7 +93,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 paddingHorizontal="m"
                 flexDirection="row"
                 alignItems="center"
-                
             >
                 <AirbnbRating
                     defaultRating={product.avg_rating}
