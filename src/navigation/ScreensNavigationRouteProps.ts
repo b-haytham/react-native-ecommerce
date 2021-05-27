@@ -40,6 +40,10 @@ export type ProfileScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<AppStackParamList>
 >
 
+export type ProductDetailScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Shop_Product_Detail'>,
+    StackNavigationProp<AppStackParamList>
+>
 
 // Auth Stack route Props
 
@@ -53,3 +57,4 @@ export type ShopScreenRouteProps = RouteProp<MainStackParamList, 'Shop_Main'>
 export type BagScreenRouteProps = RouteProp<MainStackParamList, 'Bag_Main'>
 export type FavouriteScreenRouteProps = RouteProp<MainStackParamList, 'Favourite_Main'>
 export type ProfileScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Main'>
+export type ProductDetailScreenRouteProps = RouteProp<MainStackParamList, 'Shop_Product_Detail'>

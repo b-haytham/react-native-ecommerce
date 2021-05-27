@@ -73,7 +73,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 <ProductCard
                                     width={200}
                                     product={item}
-                                    onImagePress={() => {}}
+                                    onImagePress={() => navigation.navigate('Shop_Product_Detail', {item})}
                                     onAddToBagPress={() => {}}
                                 />
                             )}
@@ -107,7 +107,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     is_new
                                     width={200}
                                     product={item}
-                                    onImagePress={() => {}}
+                                    onImagePress={() => navigation.navigate('Shop_Product_Detail', {item})}
                                     onAddToBagPress={() => {}}
                                 />
                             )}

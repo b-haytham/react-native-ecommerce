@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/core"
+import { Product } from "../redux/data_types"
 
 export type AppStackParamList = {
     Auth: NavigatorScreenParams<AuthStackParamList>
@@ -17,5 +18,8 @@ export type MainStackParamList = {
     Bag_Main: undefined
     Favourite_Main: undefined
     Profile_Main: undefined
+    Shop_Product_Detail: {
+        item: Product
+    } 
 }
 

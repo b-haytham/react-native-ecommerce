@@ -10,6 +10,7 @@ import IconButton from "../forms/form_elements/IconButton";
 import { Entypo } from "@expo/vector-icons";
 
 import { AirbnbRating } from "react-native-ratings";
+import { SharedElement } from "react-navigation-shared-element";
 
 interface ProductCardProps extends BoxProps<Theme> {
     product: Product;
@@ -45,6 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     bg="white"
                     width={width}
                 >
+
                     {product.is_discount && (
                         <Badge
                             title={`-${product.discount.percentage}%`}
@@ -65,13 +67,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             zIndex={2}
                         />
                     )}
+                    <SharedElement id={`image-${product.id}`}>
                     <Image
-                        style={StyleSheet.absoluteFillObject}
+                        style={{width, height: 150}}
                         width={width}
                         height={150}
                         resizeMode="cover"
                         source={{ uri: product.thumbnail! }}
                     />
+                    </SharedElement>
                 </Box>
 
                 <Box position="absolute" zIndex={50} bottom={-10} right={0}>
@@ -82,10 +86,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 name="shopping-bag"
                                 size={24}
                                 color={"#ffffff"}
+                                />
+                            }
+                            onPress={() => onAddToBagPress(product)}
                             />
-                        }
-                        onPress={() => onAddToBagPress(product)}
-                    />
                 </Box>
             </TouchableOpacity>
             <Box
