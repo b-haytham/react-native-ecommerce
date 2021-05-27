@@ -19,7 +19,7 @@ const Avatar: React.FC<AvatarProps> = ({source ,size, ...rest}) =>{
             <Image
                 width={size}
                 height={size}
-                style={{width: size,height: size, borderRadius: size / 2}}
+                style={{width: size,height: size, borderRadius: size / 2, borderWidth:2, borderColor: 'red' }}
                 resizeMode='cover'
                 source={source}
             />
