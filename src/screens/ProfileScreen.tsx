@@ -5,10 +5,12 @@ import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import Layout from "../components/Layout";
 import ListItem from "../components/ListItem";
 import BottomTab from "../components/navigation/BottomTab";
+import UserInfo from "../components/UserInfo";
 import {
     ProfileScreenNavigationProps,
     ProfileScreenRouteProps,
 } from "../navigation/ScreensNavigationRouteProps";
+import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
 interface ProfileScreenProps {
@@ -29,6 +31,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                     paddingHorizontal: theme.spacing.m,
                 }}
             >
+                <Box>
+                    <UserInfo 
+                        imageSize={80}
+                        image={{uri: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}}
+                        name='Jack'
+                        email='jack@jack.com'
+                    />
+                </Box>
                 <ListItem
                     title="My Orders"
                     description="Already have 4 Orders"
