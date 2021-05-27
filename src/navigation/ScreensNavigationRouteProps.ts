@@ -35,15 +35,42 @@ export type FavouriteScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<MainStackParamList, 'Favourite_Main'>,
     StackNavigationProp<AppStackParamList>
 >
-export type ProfileScreenNavigationProps = CompositeNavigationProp<
-    StackNavigationProp<MainStackParamList, 'Profile_Main'>,
-    StackNavigationProp<AppStackParamList>
->
 
 export type ProductDetailScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<MainStackParamList, 'Shop_Product_Detail'>,
     StackNavigationProp<AppStackParamList>
 >
+
+// ----
+
+export type ProfileScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_Main'>,
+    StackNavigationProp<AppStackParamList>
+>
+
+
+export type ShippingAddressesScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_ShippingAddresses'>,
+    StackNavigationProp<AppStackParamList>
+>
+
+export type OrdersScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_Orders'>,
+    StackNavigationProp<AppStackParamList>
+>
+
+export type UserReviewsScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_Reviews'>,
+    StackNavigationProp<AppStackParamList>
+>
+
+export type SettingsScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_Settings'>,
+    StackNavigationProp<AppStackParamList>
+>
+
+
+
 
 // Auth Stack route Props
 
@@ -56,5 +83,12 @@ export type HomeScreenRouteProps = RouteProp<MainStackParamList, 'Home'>
 export type ShopScreenRouteProps = RouteProp<MainStackParamList, 'Shop_Main'>
 export type BagScreenRouteProps = RouteProp<MainStackParamList, 'Bag_Main'>
 export type FavouriteScreenRouteProps = RouteProp<MainStackParamList, 'Favourite_Main'>
-export type ProfileScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Main'>
 export type ProductDetailScreenRouteProps = RouteProp<MainStackParamList, 'Shop_Product_Detail'>
+
+// ----
+
+export type ProfileScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Main'>
+export type ShippingAdressesScreenRouteProps = RouteProp<MainStackParamList, 'Profile_ShippingAddresses'>
+export type OrdersScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Orders'>
+export type UserReviewsScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Reviews'>
+export type SettingsScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Settings'>

@@ -102,7 +102,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             />
                         }
                         right_icon={
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Profile_Orders')}> 
                                 <MaterialIcons
                                     name="keyboard-arrow-right"
                                     size={30}
@@ -122,7 +122,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             />
                         }
                         right_icon={
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Profile_ShippingAddresses')}>
                                 <MaterialIcons
                                     name="keyboard-arrow-right"
                                     size={30}
@@ -142,7 +142,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             />
                         }
                         right_icon={
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Profile_Reviews')}> 
                                 <MaterialIcons
                                     name="keyboard-arrow-right"
                                     size={30}
@@ -162,7 +162,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             />
                         }
                         right_icon={
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Profile_Settings')}>
                                 <MaterialIcons
                                     name="keyboard-arrow-right"
                                     size={30}

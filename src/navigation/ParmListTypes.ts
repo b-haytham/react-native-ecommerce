@@ -18,6 +18,10 @@ export type MainStackParamList = {
     Bag_Main: undefined
     Favourite_Main: undefined
     Profile_Main: undefined
+    Profile_Orders: undefined
+    Profile_ShippingAddresses: undefined
+    Profile_Reviews: undefined
+    Profile_Settings: undefined
     Shop_Product_Detail: {
         item: Product
     } 

@@ -5,9 +5,13 @@ import { createSharedElementStackNavigator } from "react-navigation-shared-eleme
 import BagScreen from "../screens/BagScreen";
 import FavouriteScreen from "../screens/FavouriteScreen";
 import HomeScreen from "../screens/HomeScreen";
+import OrdersScreen from "../screens/OrdersScreen";
 import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
+import SettingScreen from "../screens/SettingScreen";
+import ShippingAddressesScreen from "../screens/ShippingAddressesScreen";
 import ShopScreen from "../screens/ShopScreen";
+import UserReviewsScreen from "../screens/UserReviewsScreen";
 import { MainStackParamList } from "./ParmListTypes";
 
 const Stack = createSharedElementStackNavigator<MainStackParamList>();
@@ -54,25 +58,33 @@ const MainStack = () => {
             <Stack.Screen name="Bag_Main" component={BagScreen} />
             <Stack.Screen name="Favourite_Main" component={FavouriteScreen} />
             <Stack.Screen name="Profile_Main" component={ProfileScreen} />
-            <Stack.Screen name="Shop_Product_Detail" component={ProductDetail}  sharedElementsConfig={(route, otherRoute, showing) => {
-          const { item } = route.params;
-          if (route.name === "ItemDetailsScreen" && showing) {
-            // Open animation fades in image, title and description
-            return [
-              {
-                id: `image-${item.id}`,
-              },
-            
-            ];
-          } else {
-            // Close animation only fades out image
-            return [
-              {
-                id: `image-${item.id}`,
-              },
-            ];
-          }
-        }}/>
+            <Stack.Screen name="Profile_ShippingAddresses" component={ShippingAddressesScreen} />
+            <Stack.Screen name="Profile_Orders" component={OrdersScreen} />
+            <Stack.Screen name="Profile_Reviews" component={UserReviewsScreen} />
+            <Stack.Screen name="Profile_Settings" component={SettingScreen} />
+
+            <Stack.Screen
+                name="Shop_Product_Detail"
+                component={ProductDetail}
+                sharedElementsConfig={(route, otherRoute, showing) => {
+                    const { item } = route.params;
+                    if (route.name === "ItemDetailsScreen" && showing) {
+                        // Open animation fades in image, title and description
+                        return [
+                            {
+                                id: `image-${item.id}`,
+                            },
+                        ];
+                    } else {
+                        // Close animation only fades out image
+                        return [
+                            {
+                                id: `image-${item.id}`,
+                            },
+                        ];
+                    }
+                }}
+            />
         </Stack.Navigator>
     );
 };
