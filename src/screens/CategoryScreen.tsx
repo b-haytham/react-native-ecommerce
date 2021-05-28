@@ -14,6 +14,15 @@ import { Theme } from "../utils/theme";
 import { SharedElement } from "react-navigation-shared-element";
 import ProductList from "../components/lists/ProductList";
 import { PRODUCTS } from "../redux/data";
+import Animated, {
+    Extrapolate,
+    interpolate,
+    useAnimatedStyle,
+    useDerivedValue,
+    useSharedValue,
+    withTiming,
+} from "react-native-reanimated";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -24,28 +33,67 @@ const { width, height } = Dimensions.get("screen");
 
 const IMAGE_HEIGHT = height * 0.6;
 
+const AnimatedBox = Animated.createAnimatedComponent(Box);
+
 const CategoryScreen: React.FC<CategoryScreenProps> = ({
     route,
     navigation,
 }) => {
     const theme = useTheme<Theme>();
+    const translationY = useSharedValue(0);
+    const imageH = useSharedValue(IMAGE_HEIGHT);
+
+    const imageShrinked = useSharedValue(false);
+
+    const imageHeight = useDerivedValue(() => {
+        return interpolate(
+            translationY.value,
+            [0, 100],
+            [IMAGE_HEIGHT, IMAGE_HEIGHT / 2],
+            Extrapolate.CLAMP
+        );
+    });
+
+    const productTranslateY = useDerivedValue(() => {
+        return interpolate(
+            translationY.value,
+            [0, 100],
+            [IMAGE_HEIGHT, IMAGE_HEIGHT / 2],
+            Extrapolate.CLAMP
+        );
+    });
+
+    const chevrStyles = useAnimatedStyle(() => ({
+        zIndex: 5000,
+        bottom: -15, 
+        left: width / 2 - 15
+    }));
+
+    const animatedStyles = useAnimatedStyle(() => ({
+        height: imageH.value,
+    }));
+
+    const animatedProductList = useAnimatedStyle(() => ({
+        flex: 1,
+    }));
     return (
         <Layout no_padding>
-            <Box
-                position='absolute'
+            <AnimatedBox
                 width={width}
-                height={IMAGE_HEIGHT}
                 borderBottomRightRadius="l"
                 borderBottomLeftRadius="l"
                 overflow="hidden"
+                style={animatedStyles}
             >
-                <SharedElement id={`category-${route.params.category.display_name}`}>
+                <SharedElement
+                    id={`category-${route.params.category.display_name}`}
+                >
                     <Image
                         width={width}
                         height={IMAGE_HEIGHT}
                         style={{ width, height: IMAGE_HEIGHT }}
                         source={route.params.category.image}
-                        resizeMode='cover'
+                        resizeMode="cover"
                     />
                 </SharedElement>
                 <Box position="absolute" bottom={20} left={20}>
@@ -62,16 +110,27 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         onPress={() => navigation.navigate("Shop_Main")}
                     />
                 </Box>
-            </Box>
-            
-                <Box
-                    style={{paddingTop: IMAGE_HEIGHT }}
+                <AnimatedBox
+                    position="absolute"
+                    bottom={theme.spacing.m}
+                    right={theme.spacing.m}
+                    style={[chevrStyles]}
                 >
-                    <ProductList 
-                        products={PRODUCTS}
+                    <ExitIcon
+                        onPress={() => {
+                            imageH.value = withTiming(
+                                imageShrinked.value === false
+                                    ? IMAGE_HEIGHT / 3
+                                    : IMAGE_HEIGHT
+                            );
+                            imageShrinked.value = !imageShrinked.value;
+                        }}
                     />
-                </Box>
-            
+                </AnimatedBox>
+            </AnimatedBox>
+            <AnimatedBox style={[animatedProductList]}>
+                <ProductList translationY={translationY} products={PRODUCTS} />
+            </AnimatedBox>
         </Layout>
     );
 };
