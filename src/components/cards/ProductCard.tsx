@@ -35,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             width={width}
             borderRadius="m"
             bg="white"
-            marginHorizontal="s"
+            margin="s"
             {...rest}
         >
             <TouchableOpacity onPress={() => onImagePress(product)}>

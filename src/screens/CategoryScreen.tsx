@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Image, ScrollView } from "react-native";
 import Layout from "../components/Layout";
 import {
     CategoryScreenNavigationProps,
@@ -12,6 +12,8 @@ import ExitIcon from "../components/forms/form_elements/ExitIcon";
 import { useTheme } from "@shopify/restyle";
 import { Theme } from "../utils/theme";
 import { SharedElement } from "react-navigation-shared-element";
+import ProductList from "../components/lists/ProductList";
+import { PRODUCTS } from "../redux/data";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -30,7 +32,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     return (
         <Layout no_padding>
             <Box
-                position="absolute"
+                position='absolute'
                 width={width}
                 height={IMAGE_HEIGHT}
                 borderBottomRightRadius="l"
@@ -61,6 +63,15 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                     />
                 </Box>
             </Box>
+            
+                <Box
+                    style={{paddingTop: IMAGE_HEIGHT }}
+                >
+                    <ProductList 
+                        products={PRODUCTS}
+                    />
+                </Box>
+            
         </Layout>
     );
 };
