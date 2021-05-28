@@ -1,4 +1,5 @@
-import { Product, SIZES } from "./data_types";
+import { ImageSourcePropType } from "react-native";
+import { Category, Product, SIZES } from "./data_types";
 
 export const PRODUCTS: Product[] = [
     {
@@ -186,3 +187,38 @@ export const PRODUCTS: Product[] = [
         sizes: [SIZES.M, SIZES.L, SIZES.XL]
     }
 ] 
+
+export const CATEGORIES: (Category & {image: ImageSourcePropType})[] = [
+    {
+        id: 0,
+        name: 'MEN',
+        display_name: 'Men',
+        number_product: 70,
+        sub_categories: [],
+        image: require('../../assets/men.jpg')
+    },
+    {
+        id: 1,
+        name: 'WOMEN',
+        display_name: 'Women',
+        number_product: 790,
+        sub_categories: [],
+        image: require('../../assets/women.jpg')
+    },
+    {
+        id: 2,
+        name: 'KIDS',
+        display_name: 'Kids',
+        number_product: 40,
+        sub_categories: [],
+        image: require('../../assets/kids.jpg')
+    },
+    {
+        id: 3,
+        name: 'ACCESSORIES',
+        display_name: 'Accessories',
+        number_product: 30,
+        sub_categories: [],
+        image: require('../../assets/jewelry.jpg')
+    },
+]

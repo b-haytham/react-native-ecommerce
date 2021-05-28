@@ -3,11 +3,13 @@ import { TransitionSpec } from "@react-navigation/stack/lib/typescript/src/types
 import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import BagScreen from "../screens/BagScreen";
+import CategoryScreen from "../screens/CategoryScreen";
 import FavouriteScreen from "../screens/FavouriteScreen";
 import HomeScreen from "../screens/HomeScreen";
 import OrdersScreen from "../screens/OrdersScreen";
 import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
+import SearchScreen from "../screens/SearchScreen";
 import SettingScreen from "../screens/SettingScreen";
 import ShippingAddressesScreen from "../screens/ShippingAddressesScreen";
 import ShopScreen from "../screens/ShopScreen";
@@ -54,21 +56,42 @@ const MainStack = () => {
             headerMode="none"
         >
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Shop_Main" component={ShopScreen} />
+
             <Stack.Screen name="Bag_Main" component={BagScreen} />
             <Stack.Screen name="Favourite_Main" component={FavouriteScreen} />
+
             <Stack.Screen name="Profile_Main" component={ProfileScreen} />
             <Stack.Screen name="Profile_ShippingAddresses" component={ShippingAddressesScreen} />
             <Stack.Screen name="Profile_Orders" component={OrdersScreen} />
             <Stack.Screen name="Profile_Reviews" component={UserReviewsScreen} />
             <Stack.Screen name="Profile_Settings" component={SettingScreen} />
-
+            
+            <Stack.Screen name="Shop_Main" component={ShopScreen} />
+            <Stack.Screen name="Shop_Search" component={SearchScreen} />
+            <Stack.Screen name="Shop_Category" component={CategoryScreen} sharedElementsConfig={(route, otherRoute, showing) => {
+                    const { category } = route.params;
+                    if (route.name === "Shop_Category" && showing) {
+                        // Open animation fades in image, title and description
+                        return [
+                            {
+                                id: `category-${category.display_name}`,
+                            },
+                        ];
+                    } else {
+                        // Close animation only fades out image
+                        return [
+                            {
+                                id: `category-${category.display_name}`,
+                            },
+                        ];
+                    }
+                }}  />
             <Stack.Screen
                 name="Shop_Product_Detail"
                 component={ProductDetail}
                 sharedElementsConfig={(route, otherRoute, showing) => {
                     const { item } = route.params;
-                    if (route.name === "ItemDetailsScreen" && showing) {
+                    if (route.name === "Shop_Product_Detail" && showing) {
                         // Open animation fades in image, title and description
                         return [
                             {

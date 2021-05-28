@@ -10,6 +10,7 @@ import {
     ShopScreenRouteProps,
     ShopScreenScreenNavigationProps,
 } from "../navigation/ScreensNavigationRouteProps";
+import { CATEGORIES } from "../redux/data";
 import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
@@ -58,90 +59,36 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
                     marginTop: headerHeight - theme.spacing.l,
                 }}
             >
-                <Box
-                    justifyContent="center"
-                    alignItems="center"
-                    marginVertical="s"
-                >
-                    <CategoryCard
-                        width={width - theme.spacing.m * 2}
-                        image={require("../../assets/men.jpg")}
-                        title="Men"
-                        height={200}
-                        icon={
-                            <TouchableOpacity>
-                                <Ionicons
-                                    name="ios-arrow-forward"
-                                    size={30}
-                                    color={theme.colors.white}
-                                />
-                            </TouchableOpacity>
-                        }
-                    />
-                </Box>
-                <Box
-                    justifyContent="center"
-                    alignItems="center"
-                    marginVertical="s"
-                >
-                    <CategoryCard
-                        width={width - theme.spacing.m * 2}
-                        image={require("../../assets/women.jpg")}
-                        title="Women"
-                        height={200}
-                        icon={
-                            <TouchableOpacity>
-                                <Ionicons
-                                    name="ios-arrow-forward"
-                                    size={30}
-                                    color={theme.colors.white}
-                                />
-                            </TouchableOpacity>
-                        }
-                    />
-                </Box>
-                <Box
-                    justifyContent="center"
-                    alignItems="center"
-                    marginVertical="s"
-                >
-                    <CategoryCard
-                        width={width - theme.spacing.m * 2}
-                        image={require("../../assets/kids.jpg")}
-                        title="Kids"
-                        height={200}
-                        icon={
-                            <TouchableOpacity>
-                                <Ionicons
-                                    name="ios-arrow-forward"
-                                    size={30}
-                                    color={theme.colors.white}
-                                />
-                            </TouchableOpacity>
-                        }
-                    />
-                </Box>
-                <Box
-                    justifyContent="center"
-                    alignItems="center"
-                    marginVertical="s"
-                >
-                    <CategoryCard
-                        width={width - theme.spacing.m * 2}
-                        image={require("../../assets/jewelry.jpg")}
-                        title="Accessories"
-                        height={200}
-                        icon={
-                            <TouchableOpacity>
-                                <Ionicons
-                                    name="ios-arrow-forward"
-                                    size={30}
-                                    color={theme.colors.white}
-                                />
-                            </TouchableOpacity>
-                        }
-                    />
-                </Box>
+                {CATEGORIES.map((c) => (
+                    <Box
+                        key={c.id}
+                        justifyContent="center"
+                        alignItems="center"
+                        marginVertical="s"
+                    >
+                        <CategoryCard
+                            width={width - theme.spacing.m * 2}
+                            image={c.image}
+                            title={c.display_name}
+                            height={200}
+                            icon={
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        navigation.navigate("Shop_Category", {
+                                            category: c,
+                                        })
+                                    }
+                                >
+                                    <Ionicons
+                                        name="ios-arrow-forward"
+                                        size={30}
+                                        color={theme.colors.white}
+                                    />
+                                </TouchableOpacity>
+                            }
+                        />
+                    </Box>
+                ))}
             </ScrollView>
         </Layout>
     );
