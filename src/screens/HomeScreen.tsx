@@ -66,9 +66,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             keyExtractor={(item: Product) => item.id.toString()}
                             sliderWidth={width}
                             itemWidth={200}
-                            activeAnimationType="spring"
-                            numColumns={4}
-                            initialScrollIndex={1}
                             renderItem={({ item }: { item: Product }) => (
                                 <ProductCard
                                     width={200}
@@ -99,9 +96,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             keyExtractor={(item: Product) => item.id.toString()}
                             sliderWidth={width}
                             itemWidth={200}
-                            activeAnimationType="spring"
-                            numColumns={4}
-                            initialScrollIndex={1}
                             renderItem={({ item }: { item: Product }) => (
                                 <ProductCard
                                     is_new

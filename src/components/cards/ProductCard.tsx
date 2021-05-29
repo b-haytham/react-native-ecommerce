@@ -1,7 +1,13 @@
-import React from "react";
-import { StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+    StyleSheet,
+    Dimensions,
+    Image,
+    TouchableOpacity,
+    ActivityIndicator,
+} from "react-native";
 
-import { BoxProps } from "@shopify/restyle";
+import { BoxProps, useTheme } from "@shopify/restyle";
 import { Theme } from "../../utils/theme";
 import { Box, Text } from "../../utils/restyle";
 import { Product } from "../../redux/data_types";
@@ -30,97 +36,116 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onAddToBagPress,
     ...rest
 }) => {
-    return (
-        <Box
-            width={width}
-            borderRadius="m"
-            bg="white"
-            margin="s"
-            {...rest}
-        >
-            <TouchableOpacity onPress={() => onImagePress(product)}>
-                <Box
-                    borderRadius="m"
-                    overflow="hidden"
-                    height={150}
-                    bg="white"
-                    width={width}
-                >
+    const theme = useTheme<Theme>();
+    const [loading, setLoading] = useState(true);
 
-                    {product.is_discount && (
-                        <Badge
-                            title={`-${product.discount.percentage}%`}
-                            bg="primary"
-                            position="absolute"
-                            top={5}
-                            left={5}
-                            zIndex={2}
-                        />
-                    )}
-                    {product.is_new && (
-                        <Badge
-                            title={`New`}
-                            bg="darkColor"
-                            position="absolute"
-                            top={5}
-                            left={5}
-                            zIndex={2}
-                        />
-                    )}
-                    <SharedElement id={`image-${product.id}`}>
-                    <Image
-                        style={{width, height: 150}}
-                        width={width}
+    useEffect(() => {
+        preload(product.thumbnail!);
+    }, []);
+
+    const preload = async (image: string) => {
+        await Image.prefetch(image);
+        setLoading(false);
+    };
+
+    if (loading) {
+        return (
+            <Box
+                width={width}
+                height={400}
+                justifyContent="center"
+                alignItems="center"
+            >
+                <ActivityIndicator color={theme.colors.primary} />
+            </Box>
+        );
+    } else {
+        return (
+            <Box width={width} borderRadius="m" bg="white" margin="s" {...rest}>
+                <TouchableOpacity onPress={() => onImagePress(product)}>
+                    <Box
+                        borderRadius="m"
+                        overflow="hidden"
                         height={150}
-                        resizeMode="cover"
-                        source={{ uri: product.thumbnail! }}
-                    />
-                    </SharedElement>
-                </Box>
+                        bg="white"
+                        width={width}
+                    >
+                        {product.is_discount && (
+                            <Badge
+                                title={`-${product.discount.percentage}%`}
+                                bg="primary"
+                                position="absolute"
+                                top={5}
+                                left={5}
+                                zIndex={2}
+                            />
+                        )}
+                        {product.is_new && (
+                            <Badge
+                                title={`New`}
+                                bg="darkColor"
+                                position="absolute"
+                                top={5}
+                                left={5}
+                                zIndex={2}
+                            />
+                        )}
 
-                <Box position="absolute" zIndex={50} bottom={-10} right={0}>
-                    <IconButton
-                        bg="primary"
-                        icon={
-                            <Entypo
-                                name="shopping-bag"
-                                size={24}
-                                color={"#ffffff"}
+                        <SharedElement id={`image-${product.id}`}>
+                            <Image
+                                style={{ width, height: 150 }}
+                                width={width}
+                                height={150}
+                                resizeMode="cover"
+                                source={{ uri: product.thumbnail! }}
+                            />
+                        </SharedElement>
+                    </Box>
+
+                    <Box position="absolute" zIndex={50} bottom={-10} right={0}>
+                        <IconButton
+                            bg="primary"
+                            icon={
+                                <Entypo
+                                    name="shopping-bag"
+                                    size={24}
+                                    color={"#ffffff"}
                                 />
                             }
                             onPress={() => onAddToBagPress(product)}
-                            />
+                        />
+                    </Box>
+                </TouchableOpacity>
+                <Box
+                    marginTop="s"
+                    paddingHorizontal="m"
+                    flexDirection="row"
+                    alignItems="center"
+                >
+                    <AirbnbRating
+                        defaultRating={product.avg_rating}
+                        isDisabled
+                        size={10}
+                        showRating={false}
+                    />
+                    <Text variant="description" opacity={0.5}>
+                        {`(${product.number_reviews})`}
+                    </Text>
                 </Box>
-            </TouchableOpacity>
-            <Box
-                marginTop="s"
-                paddingHorizontal="m"
-                flexDirection="row"
-                alignItems="center"
-            >
-                <AirbnbRating
-                    defaultRating={product.avg_rating}
-                    isDisabled
-                    size={10}
-                    showRating={false}
-                />
-                <Text variant="description" opacity={0.5}>
-                    {`(${product.number_reviews})`}
+                <Text paddingHorizontal="m" variant="description" opacity={0.5}>
+                    {`${product.brand.display_name}`}
                 </Text>
+                <Text paddingHorizontal="m" variant="body2">
+                    {`${product.display_name}`}
+                </Text>
+                <Text
+                    paddingHorizontal="m"
+                    variant="body2"
+                    marginVertical="s"
+                >{`$${product.price}`}</Text>
             </Box>
-            <Text paddingHorizontal="m" variant="description" opacity={0.5}>
-                {`${product.brand.display_name}`}
-            </Text>
-            <Text paddingHorizontal="m" variant="body2">
-                {`${product.display_name}`}
-            </Text>
-            <Text
-                paddingHorizontal="m"
-                variant="body2"
-                marginVertical="s"
-            >{`$${product.price}`}</Text>
-        </Box>
-    );
+        );
+    }
 };
 
 const styles = StyleSheet.create({
