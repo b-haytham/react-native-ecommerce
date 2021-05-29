@@ -23,21 +23,17 @@ interface SettingScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
+const HEADER_HEIGHT = height * .15
 
 const SettingScreen: React.FC<SettingScreenProps> = ({ route, navigation }) => {
     const theme = useTheme<Theme>();
-    const [headerHeight, setHeaderHeight] = useState(0);
     const [salesNoification, setSalesNotification] = useState(false);
     const [deliveryStatus, setDeliveryStatus] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
     return (
         <Layout>
             <Header
-                onLayout={({
-                    nativeEvent: {
-                        layout: { width, height },
-                    },
-                }) => setHeaderHeight(height)}
+                height={HEADER_HEIGHT}
                 elevation={2}
                 title="Settings"
                 position="absolute"
@@ -64,7 +60,7 @@ const SettingScreen: React.FC<SettingScreenProps> = ({ route, navigation }) => {
                 style={{
                     flex: 1,
                     marginBottom: height * 0.1,
-                    marginTop: headerHeight - theme.spacing.l,
+                    marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
                 <Box margin="m">

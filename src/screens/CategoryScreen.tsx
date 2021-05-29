@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, Image, ScrollView } from "react-native";
 import Layout from "../components/Layout";
 import {
@@ -40,42 +40,20 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
+    const [display, setDisplay] = useState(false)
     const translationY = useSharedValue(0);
     const imageH = useSharedValue(IMAGE_HEIGHT);
 
     const imageShrinked = useSharedValue(false);
 
-    const imageHeight = useDerivedValue(() => {
-        return interpolate(
-            translationY.value,
-            [0, 100],
-            [IMAGE_HEIGHT, IMAGE_HEIGHT / 2],
-            Extrapolate.CLAMP
-        );
-    });
-
-    const productTranslateY = useDerivedValue(() => {
-        return interpolate(
-            translationY.value,
-            [0, 100],
-            [IMAGE_HEIGHT, IMAGE_HEIGHT / 2],
-            Extrapolate.CLAMP
-        );
-    });
-
-    const chevrStyles = useAnimatedStyle(() => ({
-        zIndex: 5000,
-        bottom: -15, 
-        left: width / 2 - 15
-    }));
-
     const animatedStyles = useAnimatedStyle(() => ({
         height: imageH.value,
     }));
 
-    const animatedProductList = useAnimatedStyle(() => ({
-        flex: 1,
-    }));
+    useEffect(() => {
+        setDisplay(true)
+    }, [])
+
     return (
         <Layout no_padding>
             <AnimatedBox
@@ -110,11 +88,11 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         onPress={() => navigation.navigate("Shop_Main")}
                     />
                 </Box>
-                <AnimatedBox
+                <Box
                     position="absolute"
-                    bottom={theme.spacing.m}
-                    right={theme.spacing.m}
-                    style={[chevrStyles]}
+                    bottom={-15}
+                    left={width / 2 - 15}
+                    
                 >
                     <ExitIcon
                         onPress={() => {
@@ -126,11 +104,11 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                             imageShrinked.value = !imageShrinked.value;
                         }}
                     />
-                </AnimatedBox>
+                </Box>
             </AnimatedBox>
-            <AnimatedBox style={[animatedProductList]}>
+            {display ? <Box flex={1}>
                 <ProductList translationY={translationY} products={PRODUCTS} />
-            </AnimatedBox>
+            </Box> : <Box/>}
         </Layout>
     );
 };

@@ -23,22 +23,18 @@ interface ShippingAddressesScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
+const HEADER_HEIGHT = height * .15
 
 const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
     route,
     navigation,
 }) => {
     const theme = useTheme<Theme>();
-    const [headerHeight, setHeaderHeight] = useState(0);
 
     return (
         <Layout>
             <Header
-                onLayout={({
-                    nativeEvent: {
-                        layout: { width, height },
-                    },
-                }) => setHeaderHeight(height)}
+                height={HEADER_HEIGHT}
                 elevation={2}
                 title="Shipping Addresses"
                 position="absolute"
@@ -76,7 +72,7 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 style={{
                     flex: 1,
                     marginBottom: height * 0.1,
-                    marginTop: headerHeight - theme.spacing.l,
+                    marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
                 <Box marginHorizontal="s">

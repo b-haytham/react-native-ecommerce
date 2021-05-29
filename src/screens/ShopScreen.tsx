@@ -20,18 +20,15 @@ interface ShopScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
+const HEADER_HEIGHT = height * .15
 
 const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
-    const [headerHeight, setHeaderHeight] = useState(0);
+
     return (
         <Layout>
             <Header
-                onLayout={({
-                    nativeEvent: {
-                        layout: { width, height },
-                    },
-                }) => setHeaderHeight(height)}
+                height={HEADER_HEIGHT}
                 elevation={2}
                 title="Categories"
                 position="absolute"
@@ -56,7 +53,7 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
                 style={{
                     flex: 1,
                     marginBottom: height * 0.1,
-                    marginTop: headerHeight - theme.spacing.l,
+                    marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
                 {CATEGORIES.map((c) => (

@@ -25,7 +25,7 @@ const { width, height } = Dimensions.get("screen");
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     return (
-        <Layout>
+        <Layout no_padding>
             <BottomTab
                 elevation={5}
                 position="absolute"
