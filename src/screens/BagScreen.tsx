@@ -3,6 +3,7 @@ import { } from 'react-native'
 import Layout from '../components/Layout'
 import BottomTab from '../components/navigation/BottomTab'
 import { BagScreenNavigationProps, BagScreenRouteProps } from '../navigation/ScreensNavigationRouteProps'
+import { useAppSelector } from '../redux/hooks'
 
 interface BagScreenProps{
     navigation: BagScreenNavigationProps
@@ -10,6 +11,8 @@ interface BagScreenProps{
 }
 
 const BagScreen: React.FC<BagScreenProps> = ({navigation, route}) =>{
+    const bagItems = useAppSelector(state => state.bag.bagItems)
+
     return (
         <Layout>
             <BottomTab
