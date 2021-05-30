@@ -24,7 +24,7 @@ const Chip: React.FC<CategoryChipProps> = ({ name, onPress, textProps,...rest })
                 maxWidth={100}
                 {...rest}
             >
-                <Text {...textProps} variant="body" color="white">
+                <Text variant="body" color="white"  {...textProps}>
                     {name}
                 </Text>
             </Box>
