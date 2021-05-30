@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PRODUCTS } from "../data";
-import { Product } from "../data_types";
+import { Product, SIZES } from "../data_types";
 
-interface BagItem {
+export interface BagItem {
     product: Product;
     quantity: number;
+    size: SIZES;
+    color: string;
 }
 
 // Define a type for the slice state
@@ -21,10 +23,14 @@ const initialState: UserState = {
         {
             product: PRODUCTS[0],
             quantity: 1,
+            size: SIZES.M,
+            color: "Black",
         },
         {
             product: PRODUCTS[5],
             quantity: 1,
+            size: SIZES.M,
+            color: "Red",
         },
     ],
     error: null,
@@ -34,32 +40,42 @@ export const bagSlice = createSlice({
     name: "bag",
     initialState,
     reducers: {
-        addToBag(state, action: PayloadAction<Product>) {
-            state.bagItems?.push({product: action.payload, quantity: 1})
+        addToBag(
+            state,
+            action: PayloadAction<Product & { size: SIZES; color: string }>
+        ) {
+            state.bagItems?.push({
+                product: action.payload,
+                quantity: 1,
+                size: action.payload.size,
+                color: action.payload.color,
+            });
         },
         removeFromBag(state, action: PayloadAction<number>) {
-            state.bagItems = state.bagItems!.filter(s=> s.product.id !== action.payload)
+            state.bagItems = state.bagItems!.filter(
+                (s) => s.product.id !== action.payload
+            );
         },
         incrementQuantity(state, action: PayloadAction<number>) {
-            let item = state.bagItems?.find(s => s.product.id === action.payload)
-            if(item) {
-                item.quantity = item.quantity + 1
-            } 
-        },
-        decrementQuantity(state, action:PayloadAction<number>){
-            let item = state.bagItems?.find(s => s.product.id === action.payload)
-            if(item && item.quantity > 1) {
-                item.quantity = item.quantity - 1
+            let item = state.bagItems?.find(
+                (s) => s.product.id === action.payload
+            );
+            if (item) {
+                item.quantity = item.quantity + 1;
             }
-        }
+        },
+        decrementQuantity(state, action: PayloadAction<number>) {
+            let item = state.bagItems?.find(
+                (s) => s.product.id === action.payload
+            );
+            if (item && item.quantity > 1) {
+                item.quantity = item.quantity - 1;
+            }
+        },
     },
 });
 
-export const {
-    addToBag,
-    decrementQuantity,
-    incrementQuantity,
-    removeFromBag
-} = bagSlice.actions;
+export const { addToBag, decrementQuantity, incrementQuantity, removeFromBag } =
+    bagSlice.actions;
 
 export default bagSlice.reducer;
