@@ -5,11 +5,12 @@ import { BoxProps } from "@shopify/restyle";
 import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 import Chip from "./Chip";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface SelectablesProps extends BoxProps<Theme> {
     items: string[] | [];
     value: string;
-    onChange(value: string): void
+    onChange(value: string): void;
 }
 
 const Selectables: React.FC<SelectablesProps> = ({
@@ -19,6 +20,7 @@ const Selectables: React.FC<SelectablesProps> = ({
     ...rest
 }) => {
     const [selected, setSelected] = useState(value);
+
     return (
         <Box {...rest}>
             <ScrollView
@@ -27,23 +29,27 @@ const Selectables: React.FC<SelectablesProps> = ({
                 showsHorizontalScrollIndicator={false}
             >
                 {items.length > 0 &&
-                    items.map((it, index) => (
-                        <Chip
-                            marginHorizontal='s'
-                            width={80}
-                            borderWidth={selected === it ? 1 : 0}
-                            overflow="hidden"
-                            bg={selected === it ? 'white' : "darkColor"}
-                            borderRadius="m"
-                            textProps={{color: selected === it ? 'black' : 'white'}}
-                            key={index}
-                            name={it}
-                            onPress={() => {
-                                setSelected(it)
-                                onChange(it)
-                            }}
-                        />
-                    ))}
+                    items.map((it, index) => {
+                        return (
+                            <Chip
+                                marginHorizontal="s"
+                                width={80}
+                                borderWidth={selected === it ? 1 : 0}
+                                overflow="hidden"
+                                bg={selected === it ? "white" : "darkColor"}
+                                borderRadius="m"
+                                textProps={{
+                                    color: selected === it ? "black" : "white",
+                                }}
+                                key={index}
+                                name={it}
+                                onPress={() => {
+                                    setSelected(it);
+                                    onChange(it);
+                                }}
+                            />
+                        );
+                    })}
             </ScrollView>
         </Box>
     );

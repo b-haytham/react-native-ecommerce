@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
@@ -15,17 +15,23 @@ import { useAppSelector } from "../redux/hooks";
 import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
+import Slider from "@react-native-community/slider";
+import SelectableColors from "../components/SelectableColors";
+
 interface FavouriteScreenProps {
     navigation: FavouriteScreenNavigationProps;
     route: FavouriteScreenRouteProps;
 }
 
-const { width, height } = Dimensions.get('screen')
+const { width, height } = Dimensions.get("screen");
 const HEADER_HEIGHT = height * 0.15;
 
-const FavouriteScreen: React.FC<FavouriteScreenProps> = ({navigation, route}) => {
-    const theme = useTheme<Theme>()
-    const favourites = useAppSelector(state => state.favourite.favourites)
+const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
+    navigation,
+    route,
+}) => {
+    const theme = useTheme<Theme>();
+    const favourites = useAppSelector((state) => state.favourite.favourites);
     return (
         <Layout>
             <Header
@@ -46,11 +52,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({navigation, route}) =>
                     </TouchableOpacity>
                 }
             />
-            <BottomTab
-                route_name={route.name}
-                position="absolute"
-                bottom={0}
-            />
+            <BottomTab route_name={route.name} position="absolute" bottom={0} />
             <ScrollView
                 style={{
                     flex: 1,
@@ -58,8 +60,31 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({navigation, route}) =>
                     marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
-                <Box width={width}>
-                    <Selectables value={'S'} items={["S", "M", "L", 'XL']} onChange={(v) => console.log(v)} />
+                <Box>
+                    <Box  marginVertical='m'>
+                        <Selectables
+                            value={"S"}
+                            items={["S", "M", "L", "XL"]}
+                            onChange={(v) => {}}
+                        />
+                    </Box>
+                    <Box marginVertical='m'>
+                        <SelectableColors
+                            value={"Black"}
+                            items={["Black", "Blue", "Brown", "Green"]}
+                            onChange={(v) => {}}
+                        />
+                    </Box>
+                    <Box marginVertical="m">
+                        <Slider
+                            style={{ width: 300, height: 40 }}
+                            minimumValue={0}
+                            maximumValue={1}
+                            minimumTrackTintColor="#000"
+                            maximumTrackTintColor="gray"
+                            thumbTintColor='#000'
+                        />
+                    </Box>
                 </Box>
             </ScrollView>
         </Layout>
