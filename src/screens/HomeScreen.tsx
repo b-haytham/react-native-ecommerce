@@ -1,5 +1,6 @@
-import React from "react";
-import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { useTheme } from "@shopify/restyle";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { SharedElement } from "react-navigation-shared-element";
 import ProductCard from "../components/cards/ProductCard";
@@ -15,6 +16,7 @@ import {
 import { PRODUCTS } from "../redux/data";
 import { Product } from "../redux/data_types";
 import { Box, Text } from "../utils/restyle";
+import { Theme } from "../utils/theme";
 
 interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
@@ -24,6 +26,9 @@ interface HomeScreenProps {
 const { width, height } = Dimensions.get("screen");
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
+    const [display, setDisplay] = useState(false)
+    useEffect(() => {setDisplay(true)}, [])
+    const theme = useTheme<Theme>()
     return (
         <Layout no_padding>
             <BottomTab
@@ -33,7 +38,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                 zIndex={10}
                 route_name={route.name}
             />
-
+            
             <ScrollView style={{ flex: 1, marginBottom: height * 0.1 }}>
                 <HomeHero
                     overflow="hidden"
@@ -46,7 +51,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     onPress={() => {}}
                 />
                 <Box marginVertical="m">
-                    <Box>
+                   {display ? <Box>
                         <Box
                             flexDirection="row"
                             alignItems="center"
@@ -75,10 +80,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 />
                             )}
                         />
-                    </Box>
+                    </Box> : <Box />}
                 </Box>
                 <Box marginVertical="m">
-                    <Box>
+                    
+                    {display ? <Box>
                         <Box
                             flexDirection="row"
                             alignItems="center"
@@ -106,7 +112,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 />
                             )}
                         />
-                    </Box>
+                    </Box>:  <Box flex={1} justifyContent="center" alignItems="center">
+                        <ActivityIndicator
+                            color={theme.colors.primary}
+                            size="large"
+                        />
+                    </Box>}
                 </Box>
             </ScrollView>
         </Layout>

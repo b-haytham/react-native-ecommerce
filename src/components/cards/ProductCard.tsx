@@ -37,29 +37,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
     ...rest
 }) => {
     const theme = useTheme<Theme>();
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        preload(product.thumbnail!);
-    }, []);
+    // useEffect(() => {
+    //     preload(product.thumbnail!);
+    // }, []);
 
-    const preload = async (image: string) => {
-        await Image.prefetch(image);
-        setLoading(false);
-    };
+    // const preload = async (image: string) => {
+    //     await Image.prefetch(image);
+    //     setLoading(false);
+    // };
 
-    if (loading) {
-        return (
-            <Box
-                width={width}
-                height={400}
-                justifyContent="center"
-                alignItems="center"
-            >
-                <ActivityIndicator color={theme.colors.primary} />
-            </Box>
-        );
-    } else {
+    // if (loading) {
+    //     return (
+    //         <Box
+    //             width={width}
+    //             height={400}
+    //             justifyContent="center"
+    //             alignItems="center"
+    //         >
+    //             <ActivityIndicator color={theme.colors.primary} />
+    //         </Box>
+    //     );
+    // } else {
         return (
             <Box width={width} borderRadius="m" bg="white" margin="s" {...rest}>
                 <TouchableOpacity onPress={() => onImagePress(product)}>
@@ -145,7 +145,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 >{`$${product.price}`}</Text>
             </Box>
         );
-    }
+    // }
 };
 
 const styles = StyleSheet.create({

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Image, ScrollView } from "react-native";
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    KeyboardAvoidingView,
+    ScrollView,
+} from "react-native";
 import Layout from "../components/Layout";
 import {
     CategoryScreenNavigationProps,
@@ -15,14 +21,21 @@ import { SharedElement } from "react-navigation-shared-element";
 import ProductList from "../components/lists/ProductList";
 import { PRODUCTS } from "../redux/data";
 import Animated, {
+    Easing,
     Extrapolate,
     interpolate,
+    useAnimatedScrollHandler,
     useAnimatedStyle,
     useDerivedValue,
     useSharedValue,
+    withSpring,
     withTiming,
 } from "react-native-reanimated";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import ProductCard from "../components/cards/ProductCard";
+import Input from "../components/forms/form_elements/Input";
+import { useKeyboard } from "../utils/useKeyboardHeight";
+import { Product } from "../redux/data_types";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -32,7 +45,10 @@ interface CategoryScreenProps {
 const { width, height } = Dimensions.get("screen");
 
 const IMAGE_HEIGHT = height * 0.6;
+const PRODUCT_WIDTH = width / 2;
+const HIDDEN_VIEW_HEIGHT = height * 0.4;
 
+const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const CategoryScreen: React.FC<CategoryScreenProps> = ({
@@ -40,22 +56,73 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
-    const [display, setDisplay] = useState(false)
+    const [display, setDisplay] = useState(false);
+    const [selectedProduct, setSelectedProduct] =
+        useState<Product | null>(null);
     const translationY = useSharedValue(0);
+    const hiddenViewTranslateY = useSharedValue(HIDDEN_VIEW_HEIGHT + 15);
     const imageH = useSharedValue(IMAGE_HEIGHT);
 
     const imageShrinked = useSharedValue(false);
+
+
+    const scrollHandler = useAnimatedScrollHandler((event) => {
+        translationY.value = event.contentOffset.y;
+    });
+
+    const hiddenViewStyles = useAnimatedStyle(() => ({
+        transform: [
+            {
+                translateY: withTiming(hiddenViewTranslateY.value, {
+                    easing: Easing.circle,
+                }),
+            },
+        ],
+    }));
 
     const animatedStyles = useAnimatedStyle(() => ({
         height: imageH.value,
     }));
 
     useEffect(() => {
-        setDisplay(true)
-    }, [])
+        setDisplay(true);
+    }, []);
 
     return (
         <Layout no_padding>
+            <AnimatedBox
+                position="absolute"
+                bg="background"
+                zIndex={555555}
+                bottom={0}
+                width={width}
+                height={HIDDEN_VIEW_HEIGHT}
+                borderTopRightRadius="xl"
+                borderTopLeftRadius="xl"
+                elevation={15}
+                style={hiddenViewStyles}
+            >
+                <Box
+                    position="absolute"
+                    top={-15}
+                    left={width / 2 - 15}
+                    zIndex={0}
+                >
+                    <ExitIcon
+                        onPress={() => {
+                            setSelectedProduct(null);
+                            hiddenViewTranslateY.value =
+                                HIDDEN_VIEW_HEIGHT + 15;
+                        }}
+                    />
+                </Box>
+
+                <ScrollView style={{ flex: 1 }}>
+                    <Box paddingTop="xl" paddingHorizontal="m">
+                        <Input placeholder="Name" />
+                    </Box>
+                </ScrollView>
+            </AnimatedBox>
             <AnimatedBox
                 width={width}
                 borderBottomRightRadius="l"
@@ -88,12 +155,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         onPress={() => navigation.navigate("Shop_Main")}
                     />
                 </Box>
-                <Box
-                    position="absolute"
-                    bottom={-15}
-                    left={width / 2 - 15}
-                    
-                >
+                <Box position="absolute" bottom={-15} left={width / 2 - 15}>
                     <ExitIcon
                         onPress={() => {
                             imageH.value = withTiming(
@@ -106,9 +168,41 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                     />
                 </Box>
             </AnimatedBox>
-            {display ? <Box flex={1}>
-                <ProductList translationY={translationY} products={PRODUCTS} />
-            </Box> : <Box/>}
+            <Box flex={1}>
+                {display ? (
+                    <Box>
+                        {PRODUCTS.length > 0 && (
+                            <AnimatedFlatlist
+                                data={PRODUCTS}
+                                keyExtractor={(p, i) => p.id.toString()}
+                                numColumns={2}
+                                onScroll={scrollHandler}
+                                scrollEventThrottle={16}
+                                renderItem={({ item }) => (
+                                    <ProductCard
+                                        width={
+                                            PRODUCT_WIDTH - theme.spacing.s * 2
+                                        }
+                                        product={item}
+                                        onAddToBagPress={() => {
+                                            setSelectedProduct(item);
+                                            hiddenViewTranslateY.value = 0;
+                                        }}
+                                        onImagePress={() => {}}
+                                    />
+                                )}
+                            />
+                        )}
+                    </Box>
+                ) : (
+                    <Box flex={1} justifyContent="center" alignItems="center">
+                        <ActivityIndicator
+                            color={theme.colors.primary}
+                            size="large"
+                        />
+                    </Box>
+                )}
+            </Box>
         </Layout>
     );
 };
