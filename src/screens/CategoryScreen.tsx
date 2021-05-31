@@ -188,7 +188,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                                             setSelectedProduct(item);
                                             hiddenViewTranslateY.value = 0;
                                         }}
-                                        onImagePress={() => {}}
+                                        onImagePress={() => navigation.navigate('Shop_Product_Detail', {item: item})}
                                     />
                                 )}
                             />
