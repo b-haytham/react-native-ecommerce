@@ -914,27 +914,33 @@ export const CURRENT_USER: User = {
     shipping_addresses: [
         {
             id: 0,
-            address: "route tunis km 8 (3041)",
-            city: "sfax",
-            country: "tunisia",
+            address: "3 Newbridge Court",
+            city: "Chino Hills",
+            country: "United States",
             full_name: "Jack Jack",
-            state: "sfax",
+            state: "CA",
+            zip_code: 91709,
+            is_default: true
         },
         {
-            id: 0,
-            address: "route tunis km 8 (3041)",
-            city: "sfax",
-            country: "tunisia",
+            id: 1,
+            address: "3 Newbridge Court",
+            city: "Chino Hills",
+            country: "United States",
             full_name: "Jack Jack",
-            state: "sfax",
+            state: "CA",
+            zip_code: 91709,
+            is_default: false
         },
         {
-            id: 0,
-            address: "route tunis km 8 (3041)",
-            city: "sfax",
-            country: "tunisia",
+            id: 2,
+            address: "3 Newbridge Court",
+            city: "Chino Hills",
+            country: "United States",
             full_name: "Jack Jack",
-            state: "sfax",
+            state: "CA",
+            zip_code: 91709,
+            is_default: false
         },
     ],
 };

@@ -16,6 +16,9 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Box } from "../utils/restyle";
 
 import ShippingAddressCard from '../components/cards/ShippingAddressCard'
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { ShippingAddress } from "../redux/data_types";
+import { removeShippingAddress } from "../redux/user/userSlice";
 
 interface ShippingAddressesScreenProps {
     navigation: ShippingAddressesScreenNavigationProps;
@@ -30,7 +33,8 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
-
+    const dispatch = useAppDispatch()
+    const shippingAddresses = useAppSelector(state => state.user.current_user?.shipping_addresses)
     return (
         <Layout>
             <Header
@@ -52,7 +56,7 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 }
                 right_icon={
                     <TouchableOpacity
-                        
+                        onPress={() => navigation.navigate('Profile_New_Address', {shipping_address: null})}
                     >
                         <Entypo
                             name="plus"
@@ -76,22 +80,17 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 }}
             >
                 <Box marginHorizontal="s">
+                    {shippingAddresses && shippingAddresses.length > 0 && shippingAddresses.map((sh: ShippingAddress)=> (
                         <ShippingAddressCard
+                            key={sh.id}
                             elevation={1}
-                            address="3 Newbridge Court, Chino Hills, CA 91709 United States"
-                            name="Jack Jack"
-                            is_checked_as_default={true}
+                            address={sh}
                             onCheckBoxChange={(v) => {}}
-                            onEditPress={() => {}}
+                            onEditPress={() => navigation.navigate('Profile_New_Address', {shipping_address: sh})}
+                            onDeletePress={() => dispatch(removeShippingAddress(sh.id))}
                         />
-                        <ShippingAddressCard
-                            elevation={1}
-                            address="3 Newbridge Court, Chino Hills, CA 91709 United States"
-                            name="Jack Jack"
-                            is_checked_as_default={false}
-                            onCheckBoxChange={(v) => {}}
-                            onEditPress={() => {}}
-                        />
+                    ))}
+                      
                     </Box>
             </ScrollView>
         </Layout>

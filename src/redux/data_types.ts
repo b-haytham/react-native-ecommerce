@@ -72,6 +72,8 @@ export type ShippingAddress = {
     state: string
     address: string
     country: string
+    zip_code: number
+    is_default: boolean
 }
 
 export type Review = {
