@@ -42,14 +42,17 @@ export const bagSlice = createSlice({
     reducers: {
         addToBag(
             state,
-            action: PayloadAction<Product & { size: SIZES; color: string }>
+            action: PayloadAction<BagItem>
         ) {
-            state.bagItems?.push({
-                product: action.payload,
-                quantity: 1,
-                size: action.payload.size,
-                color: action.payload.color,
-            });
+            const p = state.bagItems?.find(p => p.product.id === action.payload.product.id)
+            if(!p) {
+                state.bagItems?.push({
+                    product: action.payload.product,
+                    quantity: 1,
+                    size: action.payload.size,
+                    color: action.payload.color,
+                });
+            }
         },
         removeFromBag(state, action: PayloadAction<number>) {
             state.bagItems = state.bagItems!.filter(

@@ -1,32 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PRODUCTS } from "../data";
-import { Product } from "../data_types";
+import { Product, SIZES } from "../data_types";
 
 
-
+export interface FavouriteItem {
+    product: Product;
+    size: SIZES;
+    color: string;
+}
 // Define a type for the slice state
 interface UserState {
     loading: boolean;
-    favourites: Product[] | null;
+    favourites: FavouriteItem[] ;
     error: string | null;
 }
 
 // Define the initial state using that type
 const initialState: UserState = {
     loading: false,
-    favourites: PRODUCTS.slice(0, 3),
-    error: null,
+    favourites: [
+        {
+            product: PRODUCTS[0],
+            size: SIZES.XL,
+            color: 'Black'
+        },
+        {
+            product: PRODUCTS[9],
+            size: SIZES.XL,
+            color: 'Black'
+        },
+    ],
+    error:null,
+    
 };
 
 export const favouriteSlice = createSlice({
-    name: "bag",
+    name: "favourite",
     initialState,
     reducers: {
-        addToFavourite(state, action:PayloadAction<Product>){
-            state.favourites?.push(action.payload)
+        addToFavourite(state, action:PayloadAction<FavouriteItem>){
+            state.favourites.push(action.payload)
         },
         removeFromFavourite(state, action:PayloadAction<number>){
-            state.favourites = state.favourites!.filter(f => f.id !== action.payload)
+            state.favourites = state.favourites.filter(f => f.product.id !== action.payload)
         },
     },
 });

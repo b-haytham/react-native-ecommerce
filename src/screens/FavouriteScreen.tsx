@@ -32,6 +32,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
 }) => {
     const theme = useTheme<Theme>();
     const favourites = useAppSelector((state) => state.favourite.favourites);
+    console.log(favourites)
     return (
         <Layout>
             <Header
