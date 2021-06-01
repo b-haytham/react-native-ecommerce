@@ -44,8 +44,8 @@ export type Product = {
     discount: {
         percentage: number
     }
-    category: Category | number
-    sub_category: SubCategory | number
+    category: Category 
+    sub_category: SubCategory 
 }
 
 

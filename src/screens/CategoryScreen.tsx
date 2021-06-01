@@ -36,6 +36,7 @@ import ProductCard from "../components/cards/ProductCard";
 import Input from "../components/forms/form_elements/Input";
 import { useKeyboard } from "../utils/useKeyboardHeight";
 import { Product } from "../redux/data_types";
+import { useAppSelector } from "../redux/hooks";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -56,16 +57,17 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
+    const products = useAppSelector((state) => state.products.products).filter(
+        (p) => p.category.name === route.params.category.name
+    );
     const [display, setDisplay] = useState(false);
+    
     const [selectedProduct, setSelectedProduct] =
         useState<Product | null>(null);
     const translationY = useSharedValue(0);
+  
     const hiddenViewTranslateY = useSharedValue(HIDDEN_VIEW_HEIGHT + 15);
-    const imageH = useSharedValue(IMAGE_HEIGHT);
-
-    const imageShrinked = useSharedValue(false);
-
-
+  
     const scrollHandler = useAnimatedScrollHandler((event) => {
         translationY.value = event.contentOffset.y;
     });
@@ -80,10 +82,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
         ],
     }));
 
-    const animatedStyles = useAnimatedStyle(() => ({
-        height: imageH.value,
-    }));
-
+ 
     useEffect(() => {
         setDisplay(true);
     }, []);
@@ -128,16 +127,16 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                 borderBottomRightRadius="l"
                 borderBottomLeftRadius="l"
                 overflow="hidden"
-                style={animatedStyles}
+                
             >
                 <SharedElement
                     id={`category-${route.params.category.display_name}`}
                 >
                     <Image
-                        width={width}
-                        height={IMAGE_HEIGHT}
-                        style={{ width, height: IMAGE_HEIGHT }}
-                        source={route.params.category.image}
+                        // width={width}
+                        // height={IMAGE_HEIGHT / 3}
+                        style={[{ width, height: IMAGE_HEIGHT / 3 }]}
+                        source={route.params.category.image} 
                         resizeMode="cover"
                     />
                 </SharedElement>
@@ -155,25 +154,13 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         onPress={() => navigation.navigate("Shop_Main")}
                     />
                 </Box>
-                <Box position="absolute" bottom={-15} left={width / 2 - 15}>
-                    <ExitIcon
-                        onPress={() => {
-                            imageH.value = withTiming(
-                                imageShrinked.value === false
-                                    ? IMAGE_HEIGHT / 3
-                                    : IMAGE_HEIGHT
-                            );
-                            imageShrinked.value = !imageShrinked.value;
-                        }}
-                    />
-                </Box>
             </AnimatedBox>
             <Box flex={1}>
                 {display ? (
                     <Box>
-                        {PRODUCTS.length > 0 && (
+                        {products.length > 0 && (
                             <AnimatedFlatlist
-                                data={PRODUCTS}
+                                data={products}
                                 keyExtractor={(p, i) => p.id.toString()}
                                 numColumns={2}
                                 onScroll={scrollHandler}
@@ -188,7 +175,12 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                                             setSelectedProduct(item);
                                             hiddenViewTranslateY.value = 0;
                                         }}
-                                        onImagePress={() => navigation.navigate('Shop_Product_Detail', {item: item})}
+                                        onImagePress={() =>
+                                            navigation.navigate(
+                                                "Shop_Product_Detail",
+                                                { item: item }
+                                            )
+                                        }
                                     />
                                 )}
                             />

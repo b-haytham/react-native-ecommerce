@@ -5,7 +5,7 @@ import { Product } from "../data_types";
 // Define a type for the slice state
 interface UserState {
     loading: boolean;
-    products: Product[] | null;
+    products: Product[] | [];
     error: string | null;
 }
 

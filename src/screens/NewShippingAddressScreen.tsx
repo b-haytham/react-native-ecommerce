@@ -74,7 +74,7 @@ const NewShippingAddressScreen: React.FC<NewShippingAddressScreenProps> = ({
             <Header
                 height={HEADER_HEIGHT}
                 elevation={2}
-                title="New Address"
+                title={shipping_address ? 'Edit Address' : "New Address"}
                 position="absolute"
                 top={0}
                 left_icon={

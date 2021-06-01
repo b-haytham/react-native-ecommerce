@@ -15,10 +15,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Box } from "../utils/restyle";
 
-import ShippingAddressCard from '../components/cards/ShippingAddressCard'
+import ShippingAddressCard from "../components/cards/ShippingAddressCard";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ShippingAddress } from "../redux/data_types";
 import { removeShippingAddress } from "../redux/user/userSlice";
+import { AnimatePresence } from "framer-motion";
+import { MotiView } from "@motify/components";
 
 interface ShippingAddressesScreenProps {
     navigation: ShippingAddressesScreenNavigationProps;
@@ -26,15 +28,17 @@ interface ShippingAddressesScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const HEADER_HEIGHT = height * .15
+const HEADER_HEIGHT = height * 0.15;
 
 const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
     route,
     navigation,
 }) => {
     const theme = useTheme<Theme>();
-    const dispatch = useAppDispatch()
-    const shippingAddresses = useAppSelector(state => state.user.current_user?.shipping_addresses)
+    const dispatch = useAppDispatch();
+    const shippingAddresses = useAppSelector(
+        (state) => state.user.current_user?.shipping_addresses
+    );
     return (
         <Layout>
             <Header
@@ -56,7 +60,11 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 }
                 right_icon={
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Profile_New_Address', {shipping_address: null})}
+                        onPress={() =>
+                            navigation.navigate("Profile_New_Address", {
+                                shipping_address: null,
+                            })
+                        }
                     >
                         <Entypo
                             name="plus"
@@ -72,7 +80,7 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 position="absolute"
                 bottom={0}
             />
-              <ScrollView
+            <ScrollView
                 style={{
                     flex: 1,
                     marginBottom: height * 0.1,
@@ -80,18 +88,45 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 }}
             >
                 <Box marginHorizontal="s">
-                    {shippingAddresses && shippingAddresses.length > 0 && shippingAddresses.map((sh: ShippingAddress)=> (
-                        <ShippingAddressCard
-                            key={sh.id}
-                            elevation={1}
-                            address={sh}
-                            onCheckBoxChange={(v) => {}}
-                            onEditPress={() => navigation.navigate('Profile_New_Address', {shipping_address: sh})}
-                            onDeletePress={() => dispatch(removeShippingAddress(sh.id))}
-                        />
-                    ))}
-                      
-                    </Box>
+                    <AnimatePresence>
+                        {shippingAddresses &&
+                            shippingAddresses.length > 0 &&
+                            shippingAddresses.map((sh: ShippingAddress, i: number) => (
+                                <MotiView
+                                    key={sh.id}
+                                    from={{ opacity: 0, translateX: -width }}
+                                    animate={{ opacity: 1, translateX: 0 }}
+                                    exit={{ opacity: 0, translateX: -width }}
+                                    transition={{
+                                        type: "timing",
+                                        duration: 300,
+                                        delay: i * 10,
+                                    }}
+                                    exitTransition={{
+                                        type: "timing",
+                                        duration: 300,
+                                    }}
+                                >
+                                    <ShippingAddressCard
+                                        elevation={1}
+                                        address={sh}
+                                        onCheckBoxChange={(v) => {}}
+                                        onEditPress={() =>
+                                            navigation.navigate(
+                                                "Profile_New_Address",
+                                                { shipping_address: sh }
+                                            )
+                                        }
+                                        onDeletePress={() =>
+                                            dispatch(
+                                                removeShippingAddress(sh.id)
+                                            )
+                                        }
+                                    />
+                                </MotiView>
+                            ))}
+                    </AnimatePresence>
+                </Box>
             </ScrollView>
         </Layout>
     );

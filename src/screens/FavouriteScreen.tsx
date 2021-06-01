@@ -78,6 +78,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                                 transition={{
                                     type: "timing",
                                     duration: 300,
+                                    delay: i * 10
                                 }}
                                 exitTransition={{
                                     type: "timing",
