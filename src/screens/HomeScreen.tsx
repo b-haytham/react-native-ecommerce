@@ -50,7 +50,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     image={require("../../assets/hero-home.jpg")}
                     onPress={() => {}}
                 />
-                <Box marginVertical="m">
+                {/* <Box marginVertical="m">
                    {display ? <Box>
                         <Box
                             flexDirection="row"
@@ -118,7 +118,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             size="large"
                         />
                     </Box>}
-                </Box>
+                </Box> */}
             </ScrollView>
         </Layout>
     );

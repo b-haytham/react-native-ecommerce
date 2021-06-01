@@ -11,12 +11,17 @@ import {
     FavouriteScreenNavigationProps,
     FavouriteScreenRouteProps,
 } from "../navigation/ScreensNavigationRouteProps";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
 import Slider from "@react-native-community/slider";
 import SelectableColors from "../components/SelectableColors";
+import { AnimatePresence } from "framer-motion";
+import { MotiView } from "@motify/components";
+import FavouriteCard from "../components/cards/FavouriteCard";
+import { addToBag } from "../redux/bag/bagSlice";
+import { removeFromFavourite } from "../redux/favourite/favouriteSlice";
 
 interface FavouriteScreenProps {
     navigation: FavouriteScreenNavigationProps;
@@ -31,8 +36,8 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
     route,
 }) => {
     const theme = useTheme<Theme>();
+    const dispatch = useAppDispatch()
     const favourites = useAppSelector((state) => state.favourite.favourites);
-    console.log(favourites)
     return (
         <Layout>
             <Header
@@ -61,32 +66,33 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                     marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
-                <Box>
-                    <Box  marginVertical='m'>
-                        <Selectables
-                            value={"S"}
-                            items={["S", "M", "L", "XL"]}
-                            onChange={(v) => {}}
-                        />
-                    </Box>
-                    <Box marginVertical='m'>
-                        <SelectableColors
-                            value={"Black"}
-                            items={["Black", "Blue", "Brown", "Green"]}
-                            onChange={(v) => {}}
-                        />
-                    </Box>
-                    <Box marginVertical="m">
-                        <Slider
-                            style={{ width: 300, height: 40 }}
-                            minimumValue={0}
-                            maximumValue={1}
-                            minimumTrackTintColor="#000"
-                            maximumTrackTintColor="gray"
-                            thumbTintColor='#000'
-                        />
-                    </Box>
-                </Box>
+                <AnimatePresence>
+                    {favourites &&
+                        favourites.length > 0 &&
+                        favourites.map((f, i) => (
+                            <MotiView
+                                key={f.product.id}
+                                from={{ opacity: 0, translateX: -width }}
+                                animate={{ opacity: 1, translateX: 0 }}
+                                exit={{ opacity: 0, translateX: -width }}
+                                transition={{
+                                    type: "timing",
+                                    duration: 300,
+                                }}
+                                exitTransition={{
+                                    type: "timing",
+                                    duration: 300,
+                                }}
+                            >
+                                <FavouriteCard
+                                    favouriteItem={f}
+                                    onDeletePress={() => dispatch(removeFromFavourite(f.product.id))}
+                                    onImagePress={() => navigation.navigate('Shop_Product_Detail', {item: f.product})}
+                                    onAddToBagPress={() => dispatch(addToBag({...f, quantity: 1}))}
+                              />
+                            </MotiView>
+                        ))}
+                </AnimatePresence>
             </ScrollView>
         </Layout>
     );
