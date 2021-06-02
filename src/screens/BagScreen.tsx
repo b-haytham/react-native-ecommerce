@@ -16,7 +16,9 @@ import { removeFromBag } from "../redux/bag/bagSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Theme } from "../utils/theme";
 
-import { AnimatePresence, MotiView } from 'moti'
+import { AnimatePresence, MotiView } from "moti";
+import { Box, Text } from "../utils/restyle";
+import Button from "../components/forms/form_elements/Button";
 
 interface BagScreenProps {
     navigation: BagScreenNavigationProps;
@@ -29,8 +31,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
     const dispatch = useAppDispatch();
     const bagItems = useAppSelector((state) => state.bag.bagItems);
-
-
+    const total = useAppSelector(state => state.bag.total) 
     return (
         <Layout>
             <Header
@@ -60,43 +61,68 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                 }}
             >
                 <AnimatePresence>
-                {bagItems &&
-                    bagItems.length > 0 &&
-                    bagItems.map((b, i) => {
-                        return (
-                            
-                            <MotiView
-                                key={b.product.id}
-                                from={{opacity: 0, translateX: -width}}
-                                animate={{opacity: 1, translateX: 0}}
-                                exit={{opacity: 0, translateX: -width}}
-                                transition={{
-                                    type: 'timing',
-                                    duration: 300
-                                }}
-                                exitTransition={{
-                                    type: 'timing',
-                                    duration: 300
-                                }}
-                            >
-                                <BagCard
-                                    bagItem={b}
-                                    onImagePress={() =>
-                                        navigation.navigate(
-                                            "Shop_Product_Detail",
-                                            {
-                                                item: b.product,
-                                            }
-                                        )
-                                    }
-                                    onDeletePress={() => {
-                                        dispatch(removeFromBag(b.product.id))
+                    {bagItems &&
+                        bagItems.length > 0 &&
+                        bagItems.map((b, i) => {
+                            return (
+                                <MotiView
+                                    key={b.product.id}
+                                    from={{ opacity: 0, translateX: -width }}
+                                    animate={{ opacity: 1, translateX: 0 }}
+                                    exit={{ opacity: 0, translateX: -width }}
+                                    transition={{
+                                        type: "timing",
+                                        duration: 300,
                                     }}
-                                />
-                            </MotiView>
-                        );
-                    })}
-                    </AnimatePresence>
+                                    exitTransition={{
+                                        type: "timing",
+                                        duration: 300,
+                                    }}
+                                >
+                                    <BagCard
+                                        bagItem={b}
+                                        onImagePress={() =>
+                                            navigation.navigate(
+                                                "Shop_Product_Detail",
+                                                {
+                                                    item: b.product,
+                                                }
+                                            )
+                                        }
+                                        onDeletePress={() => {
+                                            dispatch(
+                                                removeFromBag(b.product.id)
+                                            );
+                                        }}
+                                    />
+                                </MotiView>
+                            );
+                        })}
+                </AnimatePresence>
+                {bagItems && bagItems.length > 0 && (
+                    <Box>
+                        <Box
+                            elevation={1}
+                            m="m"
+                            p="m"
+                            bg="white"
+                            borderRadius="m"
+                            flexDirection="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Text variant="body2">Total</Text>
+                            <Text variant="body2">{`${total} DT`}</Text>
+                        </Box>
+                        <Box marginHorizontal="m">
+                            <Button
+                                title="CHECKOUT"
+                                onPress={() => {}}
+                                variant="PRIMARY"
+                            />
+                        </Box>
+                    </Box>
+                )}
             </ScrollView>
         </Layout>
     );

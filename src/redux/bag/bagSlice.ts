@@ -14,6 +14,7 @@ interface UserState {
     loading: boolean;
     bagItems: BagItem[] | null;
     error: string | null;
+    total: number
 }
 
 // Define the initial state using that type
@@ -33,6 +34,7 @@ const initialState: UserState = {
             color: "Red",
         },
     ],
+    total: PRODUCTS[0].price + PRODUCTS[5].price,
     error: null,
 };
 
@@ -52,9 +54,14 @@ export const bagSlice = createSlice({
                     size: action.payload.size,
                     color: action.payload.color,
                 });
+                state.total = +(state.total + action.payload.product.price).toFixed(2)
             }
         },
         removeFromBag(state, action: PayloadAction<number>) {
+            const item = state.bagItems?.find(p => p.product.id === action.payload)
+            if(item) {
+                state.total = +(state.total - item.product.price * item.quantity).toFixed(2)
+            }
             state.bagItems = state.bagItems!.filter(
                 (s) => s.product.id !== action.payload
             );
@@ -65,6 +72,7 @@ export const bagSlice = createSlice({
             );
             if (item) {
                 item.quantity = item.quantity + 1;
+                state.total = +(state.total + item.product.price).toFixed(2)
             }
         },
         decrementQuantity(state, action: PayloadAction<number>) {
@@ -73,6 +81,8 @@ export const bagSlice = createSlice({
             );
             if (item && item.quantity > 1) {
                 item.quantity = item.quantity - 1;
+                state.total = +(state.total - item.product.price).toFixed(2)
+
             }
         },
     },
