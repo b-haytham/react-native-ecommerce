@@ -34,7 +34,7 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
                 position="absolute"
                 top={0}
                 right_icon={
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Shop_Search')}>
                         <MaterialIcons
                             name="search"
                             size={30}

@@ -60,7 +60,7 @@ const BagCard: React.FC<BagCardProps> = ({
                     />
                 </SharedElement>
             </TouchableOpacity>
-            <Box flex={1} width={width * 0.7}>
+            <Box flex={1} width={width * 0.7} justifyContent='space-between'>
                 <Box>
                     <Text p="m" variant="body2">
                         {bagItem.product.display_name}
@@ -84,8 +84,9 @@ const BagCard: React.FC<BagCardProps> = ({
                 </Box>
                 <Box
                     flexDirection="row"
-                    paddingHorizontal="m"
+                    paddingHorizontal="s"
                     justifyContent="space-between"
+                    alignItems='center'
                 >
                     <Box flexDirection="row" alignItems="center">
                         <TouchableOpacity

@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Keyboard, KeyboardEvent } from 'react-native';
 
-export const useKeyboard = (): [number] => {
+export const useKeyboard = (): [number, boolean] => {
   const keyboardRef = useRef(0);
+  const [keyboardShow, setKeyboardShow] = useState(false)
 
   function onKeyboardDidShow(e: KeyboardEvent): void {
+    setKeyboardShow(true)
     keyboardRef.current = e.endCoordinates.height;
   }
 
   function onKeyboardDidHide(): void {
+    setKeyboardShow(false)
     keyboardRef.current = 0;
   }
 
@@ -21,5 +24,5 @@ export const useKeyboard = (): [number] => {
     };
   }, []);
 
-  return [keyboardRef.current];
+  return [keyboardRef.current, keyboardShow];
 };

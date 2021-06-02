@@ -18,6 +18,7 @@ interface InputProps extends BoxProps<Theme> {
     textInputProps?: TextInputProps;
     password?: boolean;
     elevation?: number
+    inputRef?: React.LegacyRef<TextInput> | undefined 
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,7 +27,8 @@ const Input: React.FC<InputProps> = ({
     textInputStyle,
     textInputProps,
     password,
-    elevation
+    elevation,
+    inputRef
 }) => {
     const theme = useTheme<Theme>();
 
@@ -43,6 +45,7 @@ const Input: React.FC<InputProps> = ({
             elevation={elevation ? elevation : 0}
         >
             <TextInput
+                ref={inputRef}
                 style={[styles.textInput, textInputStyle]}
                 placeholder={placeholder}
                 secureTextEntry={password}

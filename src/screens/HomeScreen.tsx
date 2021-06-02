@@ -21,7 +21,7 @@ import {
     HomeScreenNavigationProps,
     HomeScreenRouteProps,
 } from "../navigation/ScreensNavigationRouteProps";
-import { PRODUCTS } from "../redux/data";
+import { EXPORLE_SETION, PRODUCTS } from "../redux/data";
 import { Product } from "../redux/data_types";
 import { useAppSelector } from "../redux/hooks";
 import { Box, Text } from "../utils/restyle";
@@ -57,7 +57,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <Text variant="headline" color="darkColor" opacity={0.9}>
                         Home
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Bag_Main')}>
                         <Entypo
                             name="shopping-bag"
                             size={25}
@@ -96,108 +96,41 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        decelerationRate={"fast"}
+                        decelerationRate={0}
+                        snapToInterval={width * .6 + theme.spacing.s * 2}
                     >
-                        <Box
-                            width={width * 0.6}
-                            height={150}
-                            marginHorizontal="s"
-                        >
-                            <TouchableOpacity activeOpacity={0.6}>
-                                <Image
-                                    style={{
-                                        width: width * 0.6,
-                                        height: 150,
-                                        borderRadius: 20,
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{
-                                        uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/white-female-shoes-on-feet-royalty-free-image-912581410-1563805834.jpg?crop=0.66667xw:1xh;center,top&resize=768:*",
-                                    }}
-                                />
-                                <Box position="absolute" bottom={10} left={10}>
-                                    <Text variant="body2" color="white">
-                                        Shoes
-                                    </Text>
-                                </Box>
-                            </TouchableOpacity>
-                        </Box>
-                        <Box
-                            width={width * 0.6}
-                            height={150}
-                            marginHorizontal="s"
-                        >
-                            <TouchableOpacity activeOpacity={0.6}>
-                                <Image
-                                    style={{
-                                        width: width * 0.6,
-                                        height: 150,
-                                        borderRadius: 20,
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{
-                                        uri: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=626&q=80",
-                                    }}
-                                />
-                                <Box position="absolute" bottom={10} left={10}>
-                                    <Text variant="body2" color="white">
-                                        Jeans
-                                    </Text>
-                                </Box>
-                            </TouchableOpacity>
-                        </Box>
-                        <Box
-                            width={width * 0.6}
-                            height={150}
-                            marginHorizontal="s"
-                        >
-                            <TouchableOpacity activeOpacity={0.6}>
-                                <Image
-                                    style={{
-                                        width: width * 0.6,
-                                        height: 150,
-                                        borderRadius: 20,
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{
-                                        uri: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-                                    }}
-                                />
-                                <Box position="absolute" bottom={10} left={10}>
-                                    <Text variant="body2" color="white">
-                                        Shirts
-                                    </Text>
-                                </Box>
-                            </TouchableOpacity>
-                        </Box>
-                        <Box
-                            width={width * 0.6}
-                            height={150}
-                            marginHorizontal="s"
-                        >
-                            <TouchableOpacity activeOpacity={0.6}>
-                                <Image
-                                    style={{
-                                        width: width * 0.6,
-                                        height: 150,
-                                        borderRadius: 20,
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{
-                                        uri: "https://images.unsplash.com/photo-1518520247810-9d56f8bc5556?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-                                    }}
-                                />
-                                <Box position="absolute" bottom={10} left={10}>
-                                    <Text variant="body2" color="white">
-                                        Watches
-                                    </Text>
-                                </Box>
-                            </TouchableOpacity>
-                        </Box>
+                        {EXPORLE_SETION.map((s) => (
+                            <Box
+                                key={s.id}
+                                width={width * 0.6}
+                                height={150}
+                                marginHorizontal="s"
+                            >
+                                <TouchableOpacity activeOpacity={0.6}>
+                                    <Image
+                                        style={{
+                                            width: width * 0.6,
+                                            height: 150,
+                                            borderRadius: 20,
+                                            overflow: "hidden",
+                                        }}
+                                        resizeMode="cover"
+                                        source={{
+                                            uri: s.image_uri,
+                                        }}
+                                    />
+                                    <Box
+                                        position="absolute"
+                                        bottom={10}
+                                        left={10}
+                                    >
+                                        <Text variant="body2" color="white">
+                                            {s.title}
+                                        </Text>
+                                    </Box>
+                                </TouchableOpacity>
+                            </Box>
+                        ))}
                     </ScrollView>
                 </Box>
                 <Box marginVertical="m">
@@ -207,46 +140,46 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        decelerationRate={0}
+                        snapToInterval={width * .6 + theme.spacing.s * 2}
                     >
                         {products.slice(0, 3).map((p) => (
-                            <Box
-                                
-                                key={p.id}
-                                width={width * 0.6}
-                                height={150}
-                                marginHorizontal="s"
+                            <Box 
+                                elevation={1}
+                                key={p.id} 
+                                width={width * 0.6} 
+                                marginHorizontal="s" 
+                                bg="white"
+                                borderRadius="m"
+                                overflow='hidden'
                             >
-                                <TouchableOpacity
-                                    activeOpacity={0.6}
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            "Shop_Product_Detail",
-                                            { item: p }
-                                        )
-                                    }
-                                >
-                                    <SharedElement id={`image-${p.id}`}>
-                                        <Image
-                                            style={{
-                                                width: width * 0.6,
-                                                height: 150,
-                                                borderRadius: 20,
-                                                overflow: "hidden",
-                                            }}
-                                            resizeMode="cover"
-                                            source={{ uri: p.thumbnail! }}
-                                        />
-                                    </SharedElement>
-                                    <Box
-                                        position="absolute"
-                                        bottom={10}
-                                        left={10}
+                                
+                                    <TouchableOpacity
+                                        activeOpacity={0.6}
+                                        onPress={() =>
+                                            navigation.navigate(
+                                                "Shop_Product_Detail",
+                                                { item: p }
+                                            )
+                                        }
                                     >
-                                        <Text variant="body2" color="white">
-                                            {p.name}
-                                        </Text>
-                                    </Box>
-                                </TouchableOpacity>
+                                        <SharedElement id={`image-${p.id}`}>
+                                            <Image
+                                                style={{
+                                                    width: width * 0.6,
+                                                    height: 150,
+                                                    
+                                                    overflow: "hidden",
+                                                }}
+                                                resizeMode="cover"
+                                                source={{ uri: p.thumbnail! }}
+                                            />
+                                        </SharedElement>
+                                    </TouchableOpacity>
+                                
+                                <Box p='m'>
+                                    <Text variant="body2">{p.name}</Text>
+                                </Box>
                             </Box>
                         ))}
                     </ScrollView>
@@ -258,14 +191,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        decelerationRate={0}
+                        snapToInterval={width * .6 + theme.spacing.s * 2}
                     >
                         {products.slice(3, 7).map((p) => (
-                            <Box
-                                key={p.id}
-                                width={width * 0.6}
-                                height={150}
-                                marginHorizontal="s"
-                            >
+                            <Box 
+                            elevation={1}
+                            key={p.id} 
+                            width={width * 0.6} 
+                            marginHorizontal="s" 
+                            bg="white"
+                            borderRadius="m"
+                            overflow='hidden'
+                        >
+                            
                                 <TouchableOpacity
                                     activeOpacity={0.6}
                                     onPress={() =>
@@ -280,25 +219,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                             style={{
                                                 width: width * 0.6,
                                                 height: 150,
-                                                borderRadius: 20,
+                                                
                                                 overflow: "hidden",
                                             }}
                                             resizeMode="cover"
                                             source={{ uri: p.thumbnail! }}
                                         />
                                     </SharedElement>
-
-                                    <Box
-                                        position="absolute"
-                                        bottom={10}
-                                        left={10}
-                                    >
-                                        <Text variant="body2" color="white">
-                                            {p.name}
-                                        </Text>
-                                    </Box>
                                 </TouchableOpacity>
+                            
+                            <Box p='m'>
+                                <Text variant="body2">{p.name}</Text>
                             </Box>
+                        </Box>
                         ))}
                     </ScrollView>
                 </Box>
@@ -309,14 +242,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        decelerationRate={0}
+                        snapToInterval={width * .6 + theme.spacing.s * 2}
                     >
                         {products.slice(8, 12).map((p) => (
-                            <Box
-                                key={p.id}
-                                width={width * 0.6}
-                                height={150}
-                                marginHorizontal="s"
-                            >
+                            <Box 
+                            elevation={1}
+                            key={p.id} 
+                            width={width * 0.6} 
+                            marginHorizontal="s" 
+                            bg="white"
+                            borderRadius="m"
+                            overflow='hidden'
+                        >
+                            
                                 <TouchableOpacity
                                     activeOpacity={0.6}
                                     onPress={() =>
@@ -331,25 +270,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                             style={{
                                                 width: width * 0.6,
                                                 height: 150,
-                                                borderRadius: 20,
+                                                
                                                 overflow: "hidden",
                                             }}
                                             resizeMode="cover"
                                             source={{ uri: p.thumbnail! }}
                                         />
                                     </SharedElement>
-
-                                    <Box
-                                        position="absolute"
-                                        bottom={10}
-                                        left={10}
-                                    >
-                                        <Text variant="body2" color="white">
-                                            {p.name}
-                                        </Text>
-                                    </Box>
                                 </TouchableOpacity>
+                            
+                            <Box p='m'>
+                                <Text variant="body2">{p.name}</Text>
                             </Box>
+                        </Box>
                         ))}
                     </ScrollView>
                 </Box>

@@ -549,9 +549,9 @@ export const PRODUCTS: Product[] = [
         },
         is_discount: false,
         is_in_stock: true,
-        name: "Ensemble bébé garçon cérémonie gilet + chemise + noeud papillon + pantalon - encre",
+        name: "Ensemble bébé garçon",
         display_name:
-            "Ensemble bébé garçon cérémonie gilet + chemise + noeud papillon + pantalon - encre",
+            "Ensemble bébé garçon",
         price: 150,
         number_reviews: 2,
         number_views: 30,
@@ -944,3 +944,27 @@ export const CURRENT_USER: User = {
         },
     ],
 };
+
+
+export const EXPORLE_SETION = [
+    {
+        id: 0,
+        image_uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/white-female-shoes-on-feet-royalty-free-image-912581410-1563805834.jpg?crop=0.66667xw:1xh;center,top&resize=768:*",
+        title: 'Shoes'
+    },
+    {
+        id: 1,
+        image_uri: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=626&q=80",
+        title: 'Jeans'
+    },
+    {
+        id: 2,
+        image_uri: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+        title: 'Shirts'
+    },
+    {
+        id: 3,
+        image_uri: "https://images.unsplash.com/photo-1518520247810-9d56f8bc5556?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+        title: 'Watches'
+    },
+]
