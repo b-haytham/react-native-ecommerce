@@ -32,7 +32,9 @@ export type MainStackParamList = {
     Shop_Category: {
         category: Category & {image: ImageSourcePropType}
     }
-    Shop_Search: undefined
+    Shop_Search: {
+        search_term: string | null
+    }
     Shop_Product_Detail: {
         item: Product
     } 

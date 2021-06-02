@@ -131,26 +131,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             </TouchableOpacity>
                         }
                     />
-                    <ListItem
-                        title="My Reviews"
-                        description="Already have 7"
-                        left_icon={
-                            <MaterialIcons
-                                name="rate-review"
-                                size={30}
-                                color={theme.colors.primary}
-                            />
-                        }
-                        right_icon={
-                            <TouchableOpacity onPress={() => navigation.navigate('Profile_Reviews')}> 
-                                <MaterialIcons
-                                    name="keyboard-arrow-right"
-                                    size={30}
-                                    color={theme.colors.primary}
-                                />
-                            </TouchableOpacity>
-                        }
-                    />
+               
                     <ListItem
                         title="Settings"
                         description="Password, notifications ..."

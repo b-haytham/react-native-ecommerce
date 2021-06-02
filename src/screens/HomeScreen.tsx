@@ -67,7 +67,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                 </Box>
                 <Box p="m">
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Shop_Search")}
+                        onPress={() => navigation.navigate("Shop_Search", {search_term: null})}
                     >
                         <Box
                             bg="white"
@@ -106,7 +106,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 height={150}
                                 marginHorizontal="s"
                             >
-                                <TouchableOpacity activeOpacity={0.6}>
+                                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Shop_Search', {search_term: s.title})}>
                                     <Image
                                         style={{
                                             width: width * 0.6,

@@ -144,7 +144,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     paddingHorizontal="m"
                     variant="body2"
                     marginVertical="s"
-                >{`$${product.price}`}</Text>
+                >{`${product.price} DT`}</Text>
             </Box>
         );
     // }

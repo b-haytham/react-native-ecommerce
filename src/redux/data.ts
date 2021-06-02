@@ -824,6 +824,55 @@ export const PRODUCTS: Product[] = [
         color: [],
         sizes: [],
     },
+    {
+        id: 17,
+        thumbnail:
+            "https://www.c-and-a.com/productimages/c_scale,h_790,q_70,e_sharpen:70/v1619012512/2137660-2-08.jpg",
+        images: [
+            "https://www.c-and-a.com/productimages/c_scale,h_790,q_70,e_sharpen:70/v1619012512/2137660-2-08.jpg",
+            "https://www.c-and-a.com/productimages/c_scale,h_790,q_70,e_sharpen:70/v1619012508/2137660-2-05.jpg",
+        ],
+        is_new: false,
+        avg_rating: 5,
+        brand: {
+            name: "Levis",
+            display_name: "Levis",
+        },
+        category: {
+            id: 0,
+            display_name: "Men",
+            name: "MEN",
+            number_product: 3,
+            sub_categories: [],
+        },
+        discount: {
+            percentage: 0,
+        },
+        is_discount: false,
+        is_in_stock: true,
+        name: "T-Shirt",
+        display_name: "T-Shirt",
+        price: 89.99,
+        number_reviews: 2,
+        number_views: 30,
+        number_sold: 10,
+        sub_category: {
+            id: 1,
+            name: "Shirts",
+            display_name: "Shirts",
+            number_product: 10,
+            parent_category: 3,
+        },
+        details: {
+            title: "",
+            detail_list: [
+                "Neckline crew neck",
+                "Cut Slim Fit"
+            ],
+        },
+        color: [],
+        sizes: [],
+    },
 ];
 
 export const CATEGORIES: (Category & { image: ImageSourcePropType })[] = [
@@ -950,7 +999,7 @@ export const EXPORLE_SETION = [
     {
         id: 0,
         image_uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/white-female-shoes-on-feet-royalty-free-image-912581410-1563805834.jpg?crop=0.66667xw:1xh;center,top&resize=768:*",
-        title: 'Shoes'
+        title: 'Chaussure'
     },
     {
         id: 1,
@@ -965,6 +1014,11 @@ export const EXPORLE_SETION = [
     {
         id: 3,
         image_uri: "https://images.unsplash.com/photo-1518520247810-9d56f8bc5556?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
-        title: 'Watches'
+        title: 'Montre'
+    },
+    {
+        id: 4,
+        image_uri: "https://images.unsplash.com/photo-1518077738226-1607ea7f1846?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c3VuJTIwZ2xhc3Nlc3xlbnwwfDB8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        title: 'Lunette'
     },
 ]
