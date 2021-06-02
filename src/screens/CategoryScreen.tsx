@@ -57,6 +57,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
+    const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
     const products = useAppSelector((state) => state.products.products).filter(
         (p) => p.category.name === route.params.category.name
     );
@@ -170,6 +171,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                                         width={
                                             PRODUCT_WIDTH - theme.spacing.s * 2
                                         }
+                                        is_in_bag={products_in_bag.includes(item.id)}
                                         product={item}
                                         onAddToBagPress={() => {
                                             setSelectedProduct(item);

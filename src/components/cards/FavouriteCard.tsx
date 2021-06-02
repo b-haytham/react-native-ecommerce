@@ -3,17 +3,12 @@ import { Dimensions, Image } from "react-native";
 import { BoxProps, useTheme } from "@shopify/restyle";
 import { Theme } from "../../utils/theme";
 import { Box, Text } from "../../utils/restyle";
-import {
-    BagItem,
-    decrementQuantity,
-    incrementQuantity,
-} from "../../redux/bag/bagSlice";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+
+import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 import { useAppDispatch } from "../../redux/hooks";
 import { FavouriteItem } from "../../redux/favourite/favouriteSlice";
-import AddToBagIcon from "../forms/form_elements/AddToBagIcon";
 import IconButton from "../forms/form_elements/IconButton";
 
 interface FavouriteCardProps extends BoxProps<Theme> {
@@ -21,6 +16,7 @@ interface FavouriteCardProps extends BoxProps<Theme> {
     onImagePress(): void;
     onDeletePress(): void;
     onAddToBagPress(): void 
+    is_in_bag?: boolean
 }
 
 const { width, height } = Dimensions.get("screen");
@@ -30,6 +26,7 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
     onDeletePress,
     onImagePress,
     onAddToBagPress,
+    is_in_bag,
     ...rest
 }) => {
     const theme = useTheme<Theme>();
@@ -65,9 +62,9 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
                     />
                 </SharedElement>
             </TouchableOpacity>
-            <Box flex={1} width={width * 0.7}>
-                <Box>
-                    <Text p="m" variant="body2">
+            <Box flex={1} width={width * 0.7} justifyContent='space-between'>
+                <Box><Box>
+                    <Text paddingHorizontal="m" paddingVertical='s' variant="body2">
                         {favouriteItem.product.display_name}
                     </Text>
                 </Box>
@@ -87,13 +84,15 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
                         <Text variant="body">{favouriteItem.size}</Text>
                     </Box>
                 </Box>
+                </Box>
                 <Box
+                    paddingBottom='s'
                     flexDirection="row"
                     paddingHorizontal="m"
                     justifyContent="space-between"
                 >
                     <Text variant="body">{`${favouriteItem.product.price} DT`}</Text>
-                    <Box flexDirection="row" alignItems="center">
+                    {!is_in_bag && <Box flexDirection="row" alignItems="center">
                         <IconButton
                             elevation={10}
                             width={30}
@@ -108,7 +107,7 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
                             }
                             onPress={onAddToBagPress}
                         />
-                    </Box>
+                    </Box>}
                 </Box>
             </Box>
         </Box>

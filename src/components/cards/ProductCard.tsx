@@ -24,6 +24,7 @@ interface ProductCardProps extends BoxProps<Theme> {
     is_new?: boolean;
     onImagePress(item: Product): void;
     onAddToBagPress(item: Product): void;
+    is_in_bag?: boolean
 }
 
 const { width: SWitch, height } = Dimensions.get("screen");
@@ -34,6 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     is_new,
     onImagePress,
     onAddToBagPress,
+    is_in_bag,
     ...rest
 }) => {
     const theme = useTheme<Theme>();
@@ -102,7 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         </SharedElement>
                     </Box>
 
-                    <Box position="absolute" zIndex={50} bottom={-10} right={0}>
+                    {!is_in_bag &&<Box position="absolute" zIndex={50} bottom={-10} right={0}>
                         <IconButton
                             bg="primary"
                             icon={
@@ -114,7 +116,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             }
                             onPress={() => onAddToBagPress(product)}
                         />
-                    </Box>
+                    </Box>}
                 </TouchableOpacity>
                 <Box
                     marginTop="s"

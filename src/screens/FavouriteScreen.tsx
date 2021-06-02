@@ -38,6 +38,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
     const theme = useTheme<Theme>();
     const dispatch = useAppDispatch()
     const favourites = useAppSelector((state) => state.favourite.favourites);
+    const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
     return (
         <Layout>
             <Header
@@ -86,6 +87,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                                 }}
                             >
                                 <FavouriteCard
+                                    is_in_bag={products_in_bag.includes(f.product.id)}
                                     favouriteItem={f}
                                     onDeletePress={() => dispatch(removeFromFavourite(f.product.id))}
                                     onImagePress={() => navigation.navigate('Shop_Product_Detail', {item: f.product})}
