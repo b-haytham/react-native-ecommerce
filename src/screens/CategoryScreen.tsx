@@ -37,6 +37,9 @@ import Input from "../components/forms/form_elements/Input";
 import { useKeyboard } from "../utils/useKeyboardHeight";
 import { Product } from "../redux/data_types";
 import { useAppSelector } from "../redux/hooks";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import FilterView from "../components/FilterView";
+import SortView from "../components/SortView";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -48,6 +51,7 @@ const { width, height } = Dimensions.get("screen");
 const IMAGE_HEIGHT = height * 0.6;
 const PRODUCT_WIDTH = width / 2;
 const HIDDEN_VIEW_HEIGHT = height * 0.4;
+const FILTER_VIEW_HEIGHT = height * 0.5;
 
 const AnimatedFlatlist = Animated.createAnimatedComponent(FlatList);
 const AnimatedBox = Animated.createAnimatedComponent(Box);
@@ -57,6 +61,10 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     navigation,
 }) => {
     const theme = useTheme<Theme>();
+
+    const filterTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15)
+    const sortTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15)
+
     const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
     const products = useAppSelector((state) => state.products.products).filter(
         (p) => p.category.name === route.params.category.name
@@ -76,9 +84,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     const hiddenViewStyles = useAnimatedStyle(() => ({
         transform: [
             {
-                translateY: withTiming(hiddenViewTranslateY.value, {
-                    easing: Easing.circle,
-                }),
+                translateY: withTiming(hiddenViewTranslateY.value),
             },
         ],
     }));
@@ -90,6 +96,20 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
 
     return (
         <Layout no_padding>
+            <FilterView 
+                height={FILTER_VIEW_HEIGHT}
+                width={width}
+                translateY={filterTranslateY}
+                onApply={() => {}}
+                onClose={() => filterTranslateY.value = FILTER_VIEW_HEIGHT + 15}
+            />
+            <SortView
+                height={FILTER_VIEW_HEIGHT}
+                width={width}
+                translateY={sortTranslateY}
+                onApply={() => {}}
+                onClose={() => sortTranslateY.value = FILTER_VIEW_HEIGHT + 15}
+            />
             <AnimatedBox
                 position="absolute"
                 bg="background"
@@ -119,7 +139,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
 
                 <ScrollView style={{ flex: 1 }}>
                     <Box paddingTop="xl" paddingHorizontal="m">
-                        <Input placeholder="Name" />
+                      
                     </Box>
                 </ScrollView>
             </AnimatedBox>
@@ -161,6 +181,56 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                     <Box>
                         {products.length > 0 && (
                             <AnimatedFlatlist
+                                ListHeaderComponent={<Box
+                                    padding="m"
+                                    flexDirection="row"
+                                    justifyContent="space-between"
+                                    
+                                    borderRadius="m"
+                                >
+                                    <TouchableOpacity
+                                        onPress={() => (filterTranslateY.value = 0)}
+                                    >
+                                        <Box
+                                            flexDirection="row"
+                                            alignItems="center"
+                                        >
+                                            <Ionicons
+                                                name="filter-sharp"
+                                                size={24}
+                                                color={theme.colors.darkColor}
+                                            />
+                                            <Text
+                                                marginLeft="s"
+                                                variant="body2"
+                                                opacity={0.7}
+                                            >
+                                                Filter
+                                            </Text>
+                                        </Box>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => (sortTranslateY.value = 0)}
+                                    >
+                                        <Box
+                                            flexDirection="row"
+                                            alignItems="center"
+                                        >
+                                            <MaterialCommunityIcons
+                                                name="sort"
+                                                size={24}
+                                                color={theme.colors.darkColor}
+                                            />
+                                            <Text
+                                                marginLeft="s"
+                                                variant="body2"
+                                                opacity={0.7}
+                                            >
+                                                Sort
+                                            </Text>
+                                        </Box>
+                                    </TouchableOpacity>
+                                </Box>}
                                 data={products}
                                 keyExtractor={(p, i) => p.id.toString()}
                                 numColumns={2}

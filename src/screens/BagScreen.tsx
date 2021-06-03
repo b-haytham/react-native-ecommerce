@@ -1,6 +1,6 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
-import React from "react";
+import React, { useState } from "react";
 import { Dimensions, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -19,6 +19,8 @@ import { Theme } from "../utils/theme";
 import { AnimatePresence, MotiView } from "moti";
 import { Box, Text } from "../utils/restyle";
 import Button from "../components/forms/form_elements/Button";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import CheckoutView from "../components/CheckoutView";
 
 interface BagScreenProps {
     navigation: BagScreenNavigationProps;
@@ -27,31 +29,63 @@ interface BagScreenProps {
 const { width, height } = Dimensions.get("screen");
 const HEADER_HEIGHT = height * 0.15;
 
+const AnimatedBox = Animated.createAnimatedComponent(Box)
+
 const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
     const dispatch = useAppDispatch();
     const bagItems = useAppSelector((state) => state.bag.bagItems);
-    const total = useAppSelector(state => state.bag.total) 
+    const total = useAppSelector((state) => state.bag.total);
+
+    const headerTranslateY = useSharedValue(0)
+    const checkoutTranslateY = useSharedValue(height);
+    
+    const headerStyles = useAnimatedStyle(() => ({
+        transform: [{translateY: withSpring(headerTranslateY.value)}]
+    }))
+
     return (
         <Layout>
-            <Header
-                height={HEADER_HEIGHT}
-                elevation={2}
-                title="Bag"
+            <CheckoutView
+                navigation={navigation}
+                bagItems={bagItems!}
+                total={total}
+                headerHeight={HEADER_HEIGHT}
+                headerTranslateY={headerTranslateY}
+                zIndex={999999}
                 position="absolute"
-                top={0}
-                left_icon={
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate("Profile_Main")}
-                    >
-                        <Ionicons
-                            name="arrow-back"
-                            size={30}
-                            color={theme.colors.darkColor}
-                        />
-                    </TouchableOpacity>
-                }
+                width={width}
+                height={height}
+                translateY={checkoutTranslateY}
             />
+            
+            <AnimatedBox
+            width={width}
+            height={HEADER_HEIGHT}
+            position="absolute"
+            top={0}
+            elevation={2}
+            style={headerStyles}
+            >
+                <Header
+                    height={HEADER_HEIGHT}
+                    elevation={2}
+                    title="Bag"
+                    position="absolute"
+                    top={0}
+                    left_icon={
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("Profile_Main")}
+                        >
+                            <Ionicons
+                                name="arrow-back"
+                                size={30}
+                                color={theme.colors.darkColor}
+                            />
+                        </TouchableOpacity>
+                    }
+                />
+            </AnimatedBox>
             <BottomTab route_name={route.name} position="absolute" bottom={0} />
             <ScrollView
                 style={{
@@ -117,8 +151,11 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                         <Box marginHorizontal="m">
                             <Button
                                 title="CHECKOUT"
-                                onPress={() => {}}
-                                variant="PRIMARY"
+                                onPress={() => {
+                                    headerTranslateY.value = -HEADER_HEIGHT
+                                    checkoutTranslateY.value = 0;
+                                }}
+                                variant="PRIMARY" 
                             />
                         </Box>
                     </Box>

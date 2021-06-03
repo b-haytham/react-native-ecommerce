@@ -14,7 +14,7 @@ interface ShippingAddressCardProps extends BoxProps<Theme> {
     onCheckBoxChange(value: boolean | undefined): void
     onEditPress(): void;
     in_checkout?: boolean
-    onDeletePress(): void
+    onDeletePress?(): void
 }
 
 const ShippingAddressCard: React.FC<ShippingAddressCardProps> = ({
@@ -41,9 +41,11 @@ const ShippingAddressCard: React.FC<ShippingAddressCardProps> = ({
                 marginBottom='s'
             >
                 <Text variant="body2">{address.full_name}</Text>
-                <TouchableOpacity onPress={onDeletePress} >
+                {in_checkout ? <TouchableOpacity onPress={onEditPress} >
+                   <Text variant='body' color='primary'>Change</Text>
+                </TouchableOpacity> :  <TouchableOpacity onPress={onDeletePress} >
                     <Entypo name='cross' size={25} color={theme.colors.primary} />
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </Box>
             <Box marginBottom='m'>
                 <Text variant='body' > {`${address.address}, ${address.city}, ${address.state} ${address.zip_code}, ${address.country}`}</Text>
