@@ -33,7 +33,7 @@ const Selectables: React.FC<SelectablesProps> = ({
                         return (
                             <Chip
                                 marginHorizontal="s"
-                                width={80}
+                                maxWidth={150}
                                 borderWidth={selected === it ? 1 : 0}
                                 overflow="hidden"
                                 bg={selected === it ? "white" : "darkColor"}
