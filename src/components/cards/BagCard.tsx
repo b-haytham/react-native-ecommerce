@@ -30,25 +30,7 @@ const BagCard: React.FC<BagCardProps> = ({
     const theme = useTheme<Theme>();
     const dispatch = useAppDispatch();
     return (
-        <Box
-            elevation={1}
-            marginHorizontal="m"
-            marginVertical="s"
-            overflow="hidden"
-            flexDirection="row"
-            borderRadius="m"
-            bg="white"
-            {...rest}
-        >
-            <Box zIndex={1} position="absolute" top={10} right={10}>
-                <TouchableOpacity onPress={onDeletePress}>
-                    <Entypo
-                        name="cross"
-                        size={24}
-                        color={theme.colors.primary}
-                    />
-                </TouchableOpacity>
-            </Box>
+        <Box borderRadius='s' overflow='hidden' marginVertical="s" flexDirection="row" bg="white" {...rest}>
             <TouchableOpacity onPress={onImagePress}>
                 <SharedElement id={`image-${bagItem.product.id}`}>
                     <Image
@@ -60,35 +42,61 @@ const BagCard: React.FC<BagCardProps> = ({
                     />
                 </SharedElement>
             </TouchableOpacity>
-            <Box flex={1} width={width * 0.7} justifyContent='space-between'>
-                <Box><Box>
-                    <Text paddingHorizontal="m" paddingVertical='s' variant="body2">
-                        {bagItem.product.display_name}
-                    </Text>
-                </Box>
-                <Box flexDirection="row" paddingHorizontal="m">
-                    <Box flexDirection="row" alignItems="center">
+            <Box flex={1} width={width * 0.7} justifyContent="space-between">
+                <Box>
+                    <Box
+                        flex={1}
+                        paddingHorizontal='m'
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                    >
+                        <Box flex={10}>
                         <Text
-                            variant="description"
-                            opacity={0.5}
-                        >{`Color: `}</Text>
-                        <Text variant="body">{bagItem.color}</Text>
+                            
+                            paddingVertical="s"
+                            variant="body2"
+                        >
+                            {bagItem.product.display_name}
+                        </Text>
+                        </Box>
+                        <Box flex={1} marginHorizontal='m'>
+                            <TouchableOpacity onPress={onDeletePress}>
+                                <Entypo
+                                    name="cross"
+                                    size={24}
+                                    color={theme.colors.primary}
+                                />
+                            </TouchableOpacity>
+                        </Box>
                     </Box>
-                    <Box marginLeft="s" flexDirection="row" alignItems="center">
-                        <Text
-                            variant="description"
-                            opacity={0.5}
-                        >{`Size: `}</Text>
-                        <Text variant="body">{bagItem.size}</Text>
+                    <Box flexDirection="row" paddingHorizontal="m">
+                        <Box flexDirection="row" alignItems="center">
+                            <Text
+                                variant="description"
+                                opacity={0.5}
+                            >{`Color: `}</Text>
+                            <Text variant="body">{bagItem.color}</Text>
+                        </Box>
+                        <Box
+                            marginLeft="s"
+                            flexDirection="row"
+                            alignItems="center"
+                        >
+                            <Text
+                                variant="description"
+                                opacity={0.5}
+                            >{`Size: `}</Text>
+                            <Text variant="body">{bagItem.size}</Text>
+                        </Box>
                     </Box>
                 </Box>
-                </Box>
-                <Box    
-                    paddingBottom='s'
+                <Box
+                    paddingBottom="s"
                     flexDirection="row"
                     paddingHorizontal="s"
                     justifyContent="space-between"
-                    alignItems='center'
+                    alignItems="center"
                 >
                     <Box flexDirection="row" alignItems="center">
                         <TouchableOpacity

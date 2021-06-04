@@ -75,6 +75,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                     marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
+                <Box marginVertical='m'>
                 <AnimatePresence>
                     {favourites &&
                         favourites.length > 0 &&
@@ -104,6 +105,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                             </MotiView>
                         ))}
                 </AnimatePresence>
+                </Box>
             </ScrollView> : (
                 <Box flex={1} justifyContent="center" alignItems="center">
                     <ActivityIndicator

@@ -98,7 +98,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                     }
                 />
             </AnimatedBox>
-            <BottomTab route_name={route.name} position="absolute" bottom={0} />
+            <BottomTab  route_name={route.name} position="absolute" bottom={0} />
             {display ? (
                 <ScrollView
                     style={{
@@ -107,6 +107,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                         marginTop: HEADER_HEIGHT - theme.spacing.l,
                     }}
                 >
+                    <Box marginVertical='m'>
                     <AnimatePresence>
                         {bagItems &&
                             bagItems.length > 0 &&
@@ -152,14 +153,15 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                                 );
                             })}
                     </AnimatePresence>
+                    </Box>
                     {bagItems && bagItems.length > 0 && (
                         <Box>
                             <Box
-                                elevation={1}
-                                m="m"
+                                
+                                
                                 p="m"
                                 bg="white"
-                                borderRadius="m"
+                                
                                 flexDirection="row"
                                 justifyContent="space-between"
                                 alignItems="center"

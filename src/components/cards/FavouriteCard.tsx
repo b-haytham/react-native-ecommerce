@@ -15,8 +15,8 @@ interface FavouriteCardProps extends BoxProps<Theme> {
     favouriteItem: FavouriteItem;
     onImagePress(): void;
     onDeletePress(): void;
-    onAddToBagPress(): void 
-    is_in_bag?: boolean
+    onAddToBagPress(): void;
+    is_in_bag?: boolean;
 }
 
 const { width, height } = Dimensions.get("screen");
@@ -33,24 +33,13 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
     const dispatch = useAppDispatch();
     return (
         <Box
-            elevation={1}
-            marginHorizontal="m"
-            marginVertical="s"
+            borderRadius="s"
             overflow="hidden"
+            marginVertical="s"
             flexDirection="row"
-            borderRadius="m"
             bg="white"
             {...rest}
         >
-            <Box zIndex={1} position="absolute" top={10} right={10}>
-                <TouchableOpacity onPress={onDeletePress}>
-                    <Entypo
-                        name="cross"
-                        size={24}
-                        color={theme.colors.primary}
-                    />
-                </TouchableOpacity>
-            </Box>
             <TouchableOpacity onPress={onImagePress}>
                 <SharedElement id={`image-${favouriteItem.product.id}`}>
                     <Image
@@ -62,52 +51,84 @@ const FavouriteCard: React.FC<FavouriteCardProps> = ({
                     />
                 </SharedElement>
             </TouchableOpacity>
-            <Box flex={1} width={width * 0.7} justifyContent='space-between'>
-                <Box><Box>
-                    <Text paddingHorizontal="m" paddingVertical='s' variant="body2">
-                        {favouriteItem.product.display_name}
-                    </Text>
-                </Box>
-                <Box flexDirection="row" paddingHorizontal="m">
-                    <Box flexDirection="row" alignItems="center">
-                        <Text
-                            variant="description"
-                            opacity={0.5}
-                        >{`Color: `}</Text>
-                        <Text variant="body">{favouriteItem.color}</Text>
+            <Box flex={1} width={width * 0.7} justifyContent="space-between">
+                <Box>
+                    <Box
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        alignItems={"flex-start"}
+                    >
+                        <Box flex={10}>
+                            <Text
+                                paddingHorizontal="m"
+                                paddingVertical="s"
+                                variant="body2"
+                            >
+                                {favouriteItem.product.display_name}
+                            </Text>
+                        </Box>
+                        <Box flex={1} marginHorizontal="m">
+                            <TouchableOpacity onPress={onDeletePress}>
+                                <Entypo
+                                    name="cross"
+                                    size={24}
+                                    color={theme.colors.primary}
+                                />
+                            </TouchableOpacity>
+                        </Box>
                     </Box>
-                    <Box marginLeft="s" flexDirection="row" alignItems="center">
-                        <Text
-                            variant="description"
-                            opacity={0.5}
-                        >{`Size: `}</Text>
-                        <Text variant="body">{favouriteItem.size}</Text>
+                    <Box flexDirection="row" paddingHorizontal="m">
+                        <Box flexDirection="row" alignItems="center">
+                            <Text
+                                variant="description"
+                                opacity={0.5}
+                            >{`Color: `}</Text>
+                            <Text variant="body">{favouriteItem.color}</Text>
+                        </Box>
+                        <Box
+                            marginLeft="s"
+                            flexDirection="row"
+                            alignItems="center"
+                        >
+                            <Text
+                                variant="description"
+                                opacity={0.5}
+                            >{`Size: `}</Text>
+                            <Text variant="body">{favouriteItem.size}</Text>
+                        </Box>
                     </Box>
-                </Box>
                 </Box>
                 <Box
-                    paddingBottom='s'
+                    paddingBottom="s"
                     flexDirection="row"
                     paddingHorizontal="m"
                     justifyContent="space-between"
                 >
-                    <Text variant="body">{`${favouriteItem.product.price} DT`}</Text>
-                    {!is_in_bag && <Box flexDirection="row" alignItems="center">
-                        <IconButton
-                            elevation={10}
-                            width={30}
-                            height={30}
-                            bg="primary"
-                            icon={
-                                <Entypo
-                                    name="shopping-bag"
-                                    size={20}
-                                    color={"#ffffff"}
-                                />
-                            }
-                            onPress={onAddToBagPress}
-                        />
-                    </Box>}
+                    <Text marginBottom='m' variant="body">{`${favouriteItem.product.price} DT`}</Text>
+                    {!is_in_bag && (
+                        <Box
+                            position="absolute"
+                            bottom={theme.spacing.m}
+                            right={theme.spacing.m}
+                            flexDirection="row"
+                            alignItems="center"
+                        >
+                            <IconButton
+                                elevation={10}
+                                width={30}
+                                height={30}
+                                bg="primary"
+                                icon={
+                                    <Entypo
+                                        name="shopping-bag"
+                                        size={20}
+                                        color={"#ffffff"}
+                                    />
+                                }
+                                onPress={onAddToBagPress}
+                            />
+                        </Box>
+                    )}
                 </Box>
             </Box>
         </Box>
