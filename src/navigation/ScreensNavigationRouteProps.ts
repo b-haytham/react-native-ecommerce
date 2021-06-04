@@ -71,6 +71,10 @@ export type OrdersScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<MainStackParamList, 'Profile_Orders'>,
     StackNavigationProp<AppStackParamList>
 >
+export type OrderDetailScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Profile_Order_Detail'>,
+    StackNavigationProp<AppStackParamList>
+>
 
 export type UserReviewsScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<MainStackParamList, 'Profile_Reviews'>,
@@ -106,6 +110,7 @@ export type FavouriteScreenRouteProps = RouteProp<MainStackParamList, 'Favourite
 export type ProfileScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Main'>
 export type ShippingAdressesScreenRouteProps = RouteProp<MainStackParamList, 'Profile_ShippingAddresses'>
 export type OrdersScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Orders'>
+export type OrderDetailScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Order_Detail'>
 export type UserReviewsScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Reviews'>
 export type SettingsScreenRouteProps = RouteProp<MainStackParamList, 'Profile_Settings'>
 export type NewShippingAddessScreenRouteProps = RouteProp<MainStackParamList, 'Profile_New_Address'>

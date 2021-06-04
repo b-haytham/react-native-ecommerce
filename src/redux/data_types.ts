@@ -90,15 +90,18 @@ export type Review = {
 export type Order = {
     id: number
     user: number
+    date: string
+    tracking_number: string
     order_items: OrderItem[]
     status: OrderStatus
     total_amount: number
 }
 
 export type OrderItem = {
-    product: number
+    product: Product
     quantity: number
-    price: number
+    color: string
+    size: string
 }
 
 export type User = {

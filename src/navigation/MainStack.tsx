@@ -7,6 +7,7 @@ import CategoryScreen from "../screens/CategoryScreen";
 import FavouriteScreen from "../screens/FavouriteScreen";
 import HomeScreen from "../screens/HomeScreen";
 import NewShippingAddressScreen from "../screens/NewShippingAddressScreen";
+import OrderDetailScreen from "../screens/OrderDetailScreen";
 import OrdersScreen from "../screens/OrdersScreen";
 import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -64,6 +65,7 @@ const MainStack = () => {
             <Stack.Screen name="Profile_Main" component={ProfileScreen} />
             <Stack.Screen name="Profile_ShippingAddresses" component={ShippingAddressesScreen} />
             <Stack.Screen name="Profile_Orders" component={OrdersScreen} />
+            <Stack.Screen name="Profile_Order_Detail" component={OrderDetailScreen} />
             <Stack.Screen name="Profile_Reviews" component={UserReviewsScreen} />
             <Stack.Screen name="Profile_Settings" component={SettingScreen} />
             <Stack.Screen name='Profile_New_Address' component={NewShippingAddressScreen} />

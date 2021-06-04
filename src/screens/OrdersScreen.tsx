@@ -1,7 +1,7 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
-import React, { useState } from "react";
-import { Dimensions, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, {
     useAnimatedStyle,
@@ -20,6 +20,7 @@ import {
     OrdersScreenRouteProps,
 } from "../navigation/ScreensNavigationRouteProps";
 import { OrderStatus } from "../redux/data_types";
+import { useAppSelector } from "../redux/hooks";
 import { Box } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
@@ -36,6 +37,10 @@ const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
     const theme = useTheme<Theme>();
+    const orders = useAppSelector((state) => state.orders.orderItems);
+
+    const [display, setDisplay] = useState(false);
+
     const [selectedStatus, setSelectedStatus] =
         useState<"Processed" | "Delivered" | "Cancelled">("Processed");
 
@@ -44,6 +49,10 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
     const animatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateX: withTiming(translateX.value) }],
     }));
+
+    useEffect(() => {
+        setDisplay(true);
+    }, []);
 
     return (
         <Layout>
@@ -140,155 +149,89 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                         }}
                     />
                 </ScrollView>
-                <AnimatedBox
-                    flex={1}
-                    width={width * 3}
-                    flexDirection="row"
-                    style={animatedStyles}
-                >
-                    <Box width={width}>
-                        <ScrollView style={{}}>
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.PENDING}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.PENDING}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.PENDING}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                        </ScrollView>
+                {display ? (
+                    <AnimatedBox
+                        flex={1}
+                        width={width * 3}
+                        flexDirection="row"
+                        style={animatedStyles}
+                    >
+                        <Box width={width}>
+                            <ScrollView style={{}}>
+                                {orders
+                                    .filter(
+                                        (o) => o.status === OrderStatus.PENDING
+                                    )
+                                    .map((o) => (
+                                        <OrderCard
+                                            key={o.id}
+                                            order={o}
+                                            marginHorizontal="s"
+                                            onDetailPress={() =>
+                                                navigation.navigate(
+                                                    "Profile_Order_Detail",
+                                                    { order: o }
+                                                )
+                                            }
+                                            elevation={1}
+                                        />
+                                    ))}
+                            </ScrollView>
+                        </Box>
+                        <Box width={width}>
+                            <ScrollView style={{}}>
+                                {orders
+                                    .filter(
+                                        (o) => o.status === OrderStatus.SUCCESS
+                                    )
+                                    .map((o) => (
+                                        <OrderCard
+                                            key={o.id}
+                                            order={o}
+                                            marginHorizontal="s"
+                                            onDetailPress={() =>
+                                                navigation.navigate(
+                                                    "Profile_Order_Detail",
+                                                    { order: o }
+                                                )
+                                            }
+                                            elevation={1}
+                                        />
+                                    ))}
+                            </ScrollView>
+                        </Box>
+                        <Box width={width}>
+                            <ScrollView style={{}}>
+                                {orders
+                                    .filter(
+                                        (o) =>
+                                            o.status === OrderStatus.CANCELLED
+                                    )
+                                    .map((o) => (
+                                        <OrderCard
+                                            key={o.id}
+                                            order={o}
+                                            marginHorizontal="s"
+                                            onDetailPress={() =>
+                                                navigation.navigate(
+                                                    "Profile_Order_Detail",
+                                                    { order: o }
+                                                )
+                                            }
+                                            elevation={1}
+                                        />
+                                    ))}
+                            </ScrollView>
+                        </Box>
+                    </AnimatedBox>
+                ) : (
+                    <Box flex={1} justifyContent="center" alignItems="center">
+                        <ActivityIndicator
+                            size="large"
+                            color={theme.colors.primary}
+                        />
                     </Box>
-                    <Box width={width}>
-                        <ScrollView style={{}}>
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.SUCCESS}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.SUCCESS}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.SUCCESS}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                        </ScrollView>
-                    </Box>
-                    <Box width={width}>
-                        <ScrollView style={{}}>
-                            <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.CANCELLED}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                             <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.CANCELLED}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                             <OrderCard
-                                marginHorizontal="s"
-                                date="2021-04-16"
-                                number_items={3}
-                                onDetailPress={() => {}}
-                                status={OrderStatus.CANCELLED}
-                                total_amount={210}
-                                tracking_number="IW5481321694"
-                                elevation={1}
-                            />
-                        </ScrollView>
-                    </Box>
-                </AnimatedBox>
-                {/* <OrderCard
-                    date="2021-04-16"
-                    number_items={3}
-                    onDetailPress={() => {}}
-                    status={OrderStatus.SUCCESS}
-                    total_amount={210}
-                    tracking_number="IW5481321694"
-                    elevation={1}
-                    margin="m"
-                />
-                <OrderCard
-                    date="2021-04-16"
-                    number_items={3}
-                    onDetailPress={() => {}}
-                    status={OrderStatus.SUCCESS}
-                    total_amount={210}
-                    tracking_number="IW5481321694"
-                    elevation={1}
-                    margin="m"
-                />
-                <OrderCard
-                    date="2021-04-16"
-                    number_items={3}
-                    onDetailPress={() => {}}
-                    status={OrderStatus.SUCCESS}
-                    total_amount={210}
-                    tracking_number="IW5481321694"
-                    elevation={1}
-                    margin="m"
-                />
-                <OrderCard
-                    date="2021-04-16"
-                    number_items={3}
-                    onDetailPress={() => {}}
-                    status={OrderStatus.SUCCESS}
-                    total_amount={210}
-                    tracking_number="IW5481321694"
-                    elevation={1}
-                    margin="m"
-                /> */}
+                )}
             </ScrollView>
         </Layout>
     );

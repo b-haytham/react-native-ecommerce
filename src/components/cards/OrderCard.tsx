@@ -4,25 +4,17 @@ import { BoxProps } from "@shopify/restyle";
 import { StyleSheet } from "react-native";
 import { Theme } from "../../utils/theme";
 import { Box, Text } from "../../utils/restyle";
-import { OrderStatus } from "../../redux/data_types";
+import { Order, OrderStatus } from "../../redux/data_types";
 import Button from "../forms/form_elements/Button";
 
 interface OrderCardProps extends BoxProps<Theme> {
-    tracking_number: string;
-    date: string;
-    number_items: number;
-    total_amount: number;
-    status: OrderStatus;
+    order: Order
     onDetailPress(): void;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({
-    status,
+    order,
     onDetailPress,
-    total_amount,
-    number_items,
-    tracking_number,
-    date,
     ...rest
 }) => {
     return (
@@ -33,14 +25,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 alignItems="center"
                 marginBottom="m"
             >
-                <Text variant="body2">{`Tracking Number: ${tracking_number}`}</Text>
+                <Text variant="body2">{`Tracking Number: ${order.tracking_number}`}</Text>
             </Box>
             <Box
                 flexDirection='row'
                 alignItems='center'
             >
                 <Text variant='description'>{`Date:`}</Text>
-                <Text ml='s' variant="body">{date}</Text>
+                <Text ml='s' variant="body">{order.date}</Text>
             </Box>
             <Box
                 flexDirection="row"
@@ -50,7 +42,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 <Text variant="body" opacity={0.6}>
                     Items:{" "}
                     <Text variant="body" fontWeight="bold">
-                        {number_items}
+                        {order.order_items.length}
                     </Text>
                 </Text>
                 <Text variant="body" opacity={0.6}>
@@ -58,7 +50,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     <Text
                         variant="body"
                         fontWeight="bold"
-                    >{`$${total_amount}`}</Text>
+                    >{`$${order.total_amount}`}</Text>
                 </Text>
             </Box>
             <Box
@@ -76,14 +68,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 <Text
                     variant="body"
                     color={
-                        status === OrderStatus.SUCCESS
+                        order.status === OrderStatus.SUCCESS
                             ? "success"
-                            : status === OrderStatus.PENDING
+                            : order.status === OrderStatus.PENDING
                             ? "darkColor"
                             : "error"
                     }
                 >
-                    {status}
+                    {order.status}
                 </Text>
             </Box>
         </Box>

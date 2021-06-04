@@ -1,6 +1,6 @@
 import { NavigatorScreenParams } from "@react-navigation/core"
 import { ImageSourcePropType } from "react-native"
-import { Category, Product, ShippingAddress } from "../redux/data_types"
+import { Category, Order, Product, ShippingAddress } from "../redux/data_types"
 
 export type AppStackParamList = {
     Auth: NavigatorScreenParams<AuthStackParamList>
@@ -21,6 +21,9 @@ export type MainStackParamList = {
     
     Profile_Main: undefined
     Profile_Orders: undefined
+    Profile_Order_Detail: {
+        order: Order
+    }
     Profile_ShippingAddresses: undefined
     Profile_Reviews: undefined
     Profile_Settings: undefined

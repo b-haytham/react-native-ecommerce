@@ -20,12 +20,14 @@ import {
 
 import Constants from "expo-constants";
 import { snapPoint } from "react-native-redash";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import ShippingAddressCard from "./cards/ShippingAddressCard";
 import Button from "./forms/form_elements/Button";
 import { BagItem } from "../redux/bag/bagSlice";
 import { BagScreenNavigationProps } from "../navigation/ScreensNavigationRouteProps";
 import { SharedElement } from "react-navigation-shared-element";
+import { addOrder } from "../redux/orders/orderSlice";
+import { OrderStatus } from "../redux/data_types";
 
 interface CheckoutViewProps extends BoxProps<Theme> {
     translateY: Animated.SharedValue<number>;
@@ -53,6 +55,8 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
     navigation,
     ...rest
 }) => {
+    const dispatch = useAppDispatch()
+
     const defaultshippingAddress = useAppSelector(
         (state) => state.user.current_user?.shipping_addresses
     )?.find((add) => add.is_default);
@@ -248,12 +252,28 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                     <Button
                         title="SUBMIT ORDER"
                         variant="PRIMARY"
-                        onPress={() => {}}
+                        onPress={() => {
+                            dispatch(addOrder({
+                                id: Math.floor(Math.random() * 10),
+                                date: setDate(new Date()),
+                                status: OrderStatus.PENDING,
+                                order_items: bagItems,
+                                tracking_number: `IW${Math.floor(Math.random()*100000) }`,
+                                total_amount: total,
+                                user: 1 
+                            }))
+                            headerTranslateY.value= 0
+                            translateY.value = height
+                        }}
                     />
                 </Box>
             </ScrollView>
         </AnimatedBox>
     );
 };
+
+const setDate =(date: Date) => {
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
+}
 
 export default CheckoutView;
