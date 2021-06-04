@@ -2,11 +2,11 @@ import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React from "react";
 import { Dimensions, ScrollView } from "react-native";
-import Avatar from "../components/Avatar";
+
 import Layout from "../components/Layout";
 import ListItem from "../components/ListItem";
 import BottomTab from "../components/navigation/BottomTab";
-import UserInfo from "../components/UserInfo";
+
 import {
     ProfileScreenNavigationProps,
     ProfileScreenRouteProps,
@@ -14,20 +14,24 @@ import {
 import { Box, Text } from "../utils/restyle";
 import { Theme } from "../utils/theme";
 
-import Constants from "expo-constants";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ProfileHeader from "../components/navigation/ProfileHeader";
+import { useAppSelector } from "../redux/hooks";
 interface ProfileScreenProps {
     navigation: ProfileScreenNavigationProps;
     route: ProfileScreenRouteProps;
 }
 const { width, height } = Dimensions.get("screen");
 
-const HEADER_HEIGHT = height * 0.2;
+const HEADER_HEIGHT = height * 0.15;
 const AVATAR_SIZE = 80;
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
+    const shippingAddressCount = useAppSelector(state => state.user.current_user?.shipping_addresses)?.length
+    const ordersCount = useAppSelector(state => state.orders.orderItems).length
+    
     return (
         <Layout no_padding>
             <ProfileHeader
@@ -94,7 +98,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                     </Box>
                     <ListItem
                         title="My Orders"
-                        description="Already have 4 Orders"
+                        description={ordersCount === 0 ? "Don't have any" : `Already have ${ordersCount}`}
                         left_icon={
                             <Entypo
                                 name="shopping-bag"
@@ -114,7 +118,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                     />
                     <ListItem
                         title="Shipping Addresses"
-                        description="Already have 2"
+                        description={shippingAddressCount === 0 ? "Don't have any" : `Already have ${shippingAddressCount}`}
                         left_icon={
                             <Entypo
                                 name="address"

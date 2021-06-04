@@ -2,18 +2,13 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
     Dimensions,
     Image,
     ScrollView,
     TouchableOpacity,
 } from "react-native";
-import Carousel from "react-native-snap-carousel";
+
 import { SharedElement } from "react-navigation-shared-element";
-import ProductCard from "../components/cards/ProductCard";
-import Button from "../components/forms/form_elements/Button";
-import Input from "../components/forms/form_elements/Input";
-import HomeHero from "../components/HomeHero";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
 
@@ -33,6 +28,8 @@ interface HomeScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
+
+const PRODUCT_WIDTH = width * 0.5
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     const [display, setDisplay] = useState(false);
@@ -97,20 +94,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.m * 2}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m * 2}
                     >
                         {EXPORLE_SETION.map((s) => (
                             <Box
                                 key={s.id}
                                 width={width * 0.6}
-                                height={150}
+                                height={100}
                                 marginHorizontal="m"
                             >
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Shop_Search', {search_term: s.title})}>
                                     <Image
                                         style={{
                                             width: width * 0.6,
-                                            height: 150,
+                                            height: 100,
                                             borderRadius: 20,
                                             overflow: "hidden",
                                         }}
@@ -141,14 +138,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.m * 2}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m }
                     >
                         {products.slice(0, 3).map((p) => (
                             <Box 
                                 elevation={1}
                                 key={p.id} 
-                                width={width * 0.6} 
-                                marginHorizontal="m" 
+                                width={PRODUCT_WIDTH} 
+                                marginLeft="m" 
                                 bg="white"
                                 borderRadius="m"
                                 overflow='hidden'
@@ -166,8 +163,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         <SharedElement id={`image-${p.id}`}>
                                             <Image
                                                 style={{
-                                                    width: width * 0.6,
-                                                    height: 150,
+                                                    width: PRODUCT_WIDTH,
+                                                    height: 100,
                                                     
                                                     overflow: "hidden",
                                                 }}
@@ -192,14 +189,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.m * 2}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m }
                     >
                         {products.slice(3, 7).map((p) => (
                             <Box 
                             elevation={1}
                             key={p.id} 
-                            width={width * 0.6} 
-                            marginHorizontal="m" 
+                            width={PRODUCT_WIDTH} 
+                            marginLeft="m" 
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'
@@ -217,8 +214,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     <SharedElement id={`image-${p.id}`}>
                                         <Image
                                             style={{
-                                                width: width * 0.6,
-                                                height: 150,
+                                                width: PRODUCT_WIDTH,
+                                                height: 100,
                                                 
                                                 overflow: "hidden",
                                             }}
@@ -227,10 +224,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         />
                                     </SharedElement>
                                 </TouchableOpacity>
+                                <Box p='m'>
+                                    <Text variant="body2">{p.name}</Text>
+                                </Box>
                             
-                            <Box p='m'>
-                                <Text variant="body2">{p.name}</Text>
-                            </Box>
                         </Box>
                         ))}
                     </ScrollView>
@@ -243,14 +240,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.m * 2}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
                     >
                         {products.slice(8, 12).map((p) => (
                             <Box 
                             elevation={1}
                             key={p.id} 
-                            width={width * 0.6} 
-                            marginHorizontal="m" 
+                            width={PRODUCT_WIDTH} 
+                            marginLeft="m" 
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'
@@ -268,8 +265,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     <SharedElement id={`image-${p.id}`}>
                                         <Image
                                             style={{
-                                                width: width * 0.6,
-                                                height: 150,
+                                                width: PRODUCT_WIDTH,
+                                                height: 100,
                                                 
                                                 overflow: "hidden",
                                             }}

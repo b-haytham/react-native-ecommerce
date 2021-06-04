@@ -50,7 +50,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     <Text
                         variant="body"
                         fontWeight="bold"
-                    >{`$${order.total_amount}`}</Text>
+                    >{`${order.total_amount} DT`}</Text>
                 </Text>
             </Box>
             <Box
