@@ -11,6 +11,7 @@ import {
 import { SharedElement } from "react-navigation-shared-element";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
+import TowColumnScrollView from "../components/TowColumnScrollView";
 
 import {
     HomeScreenNavigationProps,
@@ -285,6 +286,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         </Box>
                         ))}
                     </ScrollView>
+                </Box>
+                <Box marginVertical="m">
+                    <Text margin="m" variant="body2" opacity={0.8}>
+                        RECEMENDED
+                    </Text>
+                    <TowColumnScrollView width={width} products={products.slice(12, 16)} />
                 </Box>
             </ScrollView>
         </Layout>
