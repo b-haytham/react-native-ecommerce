@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
-import React from "react";
-import { Dimensions, ScrollView, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
@@ -36,9 +36,17 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
     route,
 }) => {
     const theme = useTheme<Theme>();
+    const [display, setDisplay] = useState(false)
+
     const dispatch = useAppDispatch()
     const favourites = useAppSelector((state) => state.favourite.favourites);
     const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
+
+    useEffect(() => {
+        setDisplay(true);
+    }, []);
+
+
     return (
         <Layout>
             <Header
@@ -60,7 +68,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                 }
             />
             <BottomTab route_name={route.name} position="absolute" bottom={0} />
-            <ScrollView
+            {display ? <ScrollView
                 style={{
                     flex: 1,
                     marginBottom: height * 0.1,
@@ -96,7 +104,14 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                             </MotiView>
                         ))}
                 </AnimatePresence>
-            </ScrollView>
+            </ScrollView> : (
+                <Box flex={1} justifyContent="center" alignItems="center">
+                    <ActivityIndicator
+                        size={"large"}
+                        color={theme.colors.primary}
+                    />
+                </Box>
+            )}
         </Layout>
     );
 };

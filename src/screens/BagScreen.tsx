@@ -1,7 +1,7 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
-import React, { useState } from "react";
-import { Dimensions, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import BagCard from "../components/cards/BagCard";
@@ -19,7 +19,11 @@ import { Theme } from "../utils/theme";
 import { AnimatePresence, MotiView } from "moti";
 import { Box, Text } from "../utils/restyle";
 import Button from "../components/forms/form_elements/Button";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+} from "react-native-reanimated";
 import CheckoutView from "../components/CheckoutView";
 
 interface BagScreenProps {
@@ -29,43 +33,51 @@ interface BagScreenProps {
 const { width, height } = Dimensions.get("screen");
 const HEADER_HEIGHT = height * 0.15;
 
-const AnimatedBox = Animated.createAnimatedComponent(Box)
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
+    const [display, setDisplay] = useState(false);
+
     const dispatch = useAppDispatch();
     const bagItems = useAppSelector((state) => state.bag.bagItems);
     const total = useAppSelector((state) => state.bag.total);
 
-    const headerTranslateY = useSharedValue(0)
+    const headerTranslateY = useSharedValue(0);
     const checkoutTranslateY = useSharedValue(height);
-    
+
     const headerStyles = useAnimatedStyle(() => ({
-        transform: [{translateY: withSpring(headerTranslateY.value)}]
-    }))
+        transform: [{ translateY: withSpring(headerTranslateY.value) }],
+    }));
+
+    useEffect(() => {
+        setDisplay(true);
+    }, []);
 
     return (
         <Layout>
-            <CheckoutView
-                navigation={navigation}
-                bagItems={bagItems!}
-                total={total}
-                headerHeight={HEADER_HEIGHT}
-                headerTranslateY={headerTranslateY}
-                zIndex={999999}
-                position="absolute"
-                width={width}
-                height={height}
-                translateY={checkoutTranslateY}
-            />
-            
+            {display && (
+                <CheckoutView
+                    navigation={navigation}
+                    bagItems={bagItems!}
+                    total={total}
+                    headerHeight={HEADER_HEIGHT}
+                    headerTranslateY={headerTranslateY}
+                    zIndex={999999}
+                    position="absolute"
+                    width={width}
+                    height={height}
+                    translateY={checkoutTranslateY}
+                />
+            )}
+
             <AnimatedBox
-            width={width}
-            height={HEADER_HEIGHT}
-            position="absolute"
-            top={0}
-            elevation={2}
-            style={headerStyles}
+                width={width}
+                height={HEADER_HEIGHT}
+                position="absolute"
+                top={0}
+                elevation={2}
+                style={headerStyles}
             >
                 <Header
                     height={HEADER_HEIGHT}
@@ -87,80 +99,95 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                 />
             </AnimatedBox>
             <BottomTab route_name={route.name} position="absolute" bottom={0} />
-            <ScrollView
-                style={{
-                    flex: 1,
-                    marginBottom: height * 0.1,
-                    marginTop: HEADER_HEIGHT - theme.spacing.l,
-                }}
-            >
-                <AnimatePresence>
-                    {bagItems &&
-                        bagItems.length > 0 &&
-                        bagItems.map((b, i) => {
-                            return (
-                                <MotiView
-                                    key={b.product.id}
-                                    from={{ opacity: 0, translateX: -width }}
-                                    animate={{ opacity: 1, translateX: 0 }}
-                                    exit={{ opacity: 0, translateX: -width }}
-                                    transition={{
-                                        type: "timing",
-                                        duration: 300,
-                                    }}
-                                    exitTransition={{
-                                        type: "timing",
-                                        duration: 300,
-                                    }}
-                                >
-                                    <BagCard
-                                        bagItem={b}
-                                        onImagePress={() =>
-                                            navigation.navigate(
-                                                "Shop_Product_Detail",
-                                                {
-                                                    item: b.product,
-                                                }
-                                            )
-                                        }
-                                        onDeletePress={() => {
-                                            dispatch(
-                                                removeFromBag(b.product.id)
-                                            );
+            {display ? (
+                <ScrollView
+                    style={{
+                        flex: 1,
+                        marginBottom: height * 0.1,
+                        marginTop: HEADER_HEIGHT - theme.spacing.l,
+                    }}
+                >
+                    <AnimatePresence>
+                        {bagItems &&
+                            bagItems.length > 0 &&
+                            bagItems.map((b, i) => {
+                                return (
+                                    <MotiView
+                                        key={b.product.id}
+                                        from={{
+                                            opacity: 0,
+                                            translateX: -width,
                                         }}
-                                    />
-                                </MotiView>
-                            );
-                        })}
-                </AnimatePresence>
-                {bagItems && bagItems.length > 0 && (
-                    <Box>
-                        <Box
-                            elevation={1}
-                            m="m"
-                            p="m"
-                            bg="white"
-                            borderRadius="m"
-                            flexDirection="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                        >
-                            <Text variant="body2">Total</Text>
-                            <Text variant="body2">{`${total} DT`}</Text>
+                                        animate={{ opacity: 1, translateX: 0 }}
+                                        exit={{
+                                            opacity: 0,
+                                            translateX: -width,
+                                        }}
+                                        transition={{
+                                            type: "timing",
+                                            duration: 300,
+                                        }}
+                                        exitTransition={{
+                                            type: "timing",
+                                            duration: 300,
+                                        }}
+                                    >
+                                        <BagCard
+                                            bagItem={b}
+                                            onImagePress={() =>
+                                                navigation.navigate(
+                                                    "Shop_Product_Detail",
+                                                    {
+                                                        item: b.product,
+                                                    }
+                                                )
+                                            }
+                                            onDeletePress={() => {
+                                                dispatch(
+                                                    removeFromBag(b.product.id)
+                                                );
+                                            }}
+                                        />
+                                    </MotiView>
+                                );
+                            })}
+                    </AnimatePresence>
+                    {bagItems && bagItems.length > 0 && (
+                        <Box>
+                            <Box
+                                elevation={1}
+                                m="m"
+                                p="m"
+                                bg="white"
+                                borderRadius="m"
+                                flexDirection="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                            >
+                                <Text variant="body2">Total</Text>
+                                <Text variant="body2">{`${total} DT`}</Text>
+                            </Box>
+                            <Box marginHorizontal="m">
+                                <Button
+                                    title="CHECKOUT"
+                                    onPress={() => {
+                                        headerTranslateY.value = -HEADER_HEIGHT;
+                                        checkoutTranslateY.value = 0;
+                                    }}
+                                    variant="PRIMARY"
+                                />
+                            </Box>
                         </Box>
-                        <Box marginHorizontal="m">
-                            <Button
-                                title="CHECKOUT"
-                                onPress={() => {
-                                    headerTranslateY.value = -HEADER_HEIGHT
-                                    checkoutTranslateY.value = 0;
-                                }}
-                                variant="PRIMARY" 
-                            />
-                        </Box>
-                    </Box>
-                )}
-            </ScrollView>
+                    )}
+                </ScrollView>
+            ) : (
+                <Box flex={1} justifyContent="center" alignItems="center">
+                    <ActivityIndicator
+                        size={"large"}
+                        color={theme.colors.primary}
+                    />
+                </Box>
+            )}
         </Layout>
     );
 };

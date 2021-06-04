@@ -97,14 +97,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.s * 2}
+                        snapToInterval={width * .6 + theme.spacing.m * 2}
                     >
                         {EXPORLE_SETION.map((s) => (
                             <Box
                                 key={s.id}
                                 width={width * 0.6}
                                 height={150}
-                                marginHorizontal="s"
+                                marginHorizontal="m"
                             >
                                 <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Shop_Search', {search_term: s.title})}>
                                     <Image
@@ -141,14 +141,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.s * 2}
+                        snapToInterval={width * .6 + theme.spacing.m * 2}
                     >
                         {products.slice(0, 3).map((p) => (
                             <Box 
                                 elevation={1}
                                 key={p.id} 
                                 width={width * 0.6} 
-                                marginHorizontal="s" 
+                                marginHorizontal="m" 
                                 bg="white"
                                 borderRadius="m"
                                 overflow='hidden'
@@ -192,14 +192,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.s * 2}
+                        snapToInterval={width * .6 + theme.spacing.m * 2}
                     >
                         {products.slice(3, 7).map((p) => (
                             <Box 
                             elevation={1}
                             key={p.id} 
                             width={width * 0.6} 
-                            marginHorizontal="s" 
+                            marginHorizontal="m" 
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'
@@ -243,14 +243,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={width * .6 + theme.spacing.s * 2}
+                        snapToInterval={width * .6 + theme.spacing.m * 2}
                     >
                         {products.slice(8, 12).map((p) => (
                             <Box 
                             elevation={1}
                             key={p.id} 
                             width={width * 0.6} 
-                            marginHorizontal="s" 
+                            marginHorizontal="m" 
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'

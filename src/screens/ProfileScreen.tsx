@@ -31,6 +31,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
     return (
         <Layout no_padding>
             <ProfileHeader
+                zIndex={555555}
                 header_width={width}
                 header_height={HEADER_HEIGHT}
                 avatar_size={AVATAR_SIZE}
@@ -152,6 +153,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, route }) => {
                             </TouchableOpacity>
                         }
                     />
+                    
+
                 </Box>
             </ScrollView>
         </Layout>

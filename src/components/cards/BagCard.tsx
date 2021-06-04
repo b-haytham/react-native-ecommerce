@@ -122,4 +122,4 @@ const BagCard: React.FC<BagCardProps> = ({
     );
 };
 
-export default BagCard;
+export default React.memo(BagCard);

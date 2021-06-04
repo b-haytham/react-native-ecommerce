@@ -3,6 +3,12 @@ import { useTheme } from "@shopify/restyle";
 import React, { useState } from "react";
 import { Dimensions, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+    withTiming,
+} from "react-native-reanimated";
 import OrderCard from "../components/cards/OrderCard";
 import Chip from "../components/Chip";
 
@@ -22,12 +28,23 @@ interface OrdersScreenProps {
     route: OrdersScreenRouteProps;
 }
 
-const { width, height } = Dimensions.get('screen')
+const { width, height } = Dimensions.get("screen");
 
-const HEADER_HEIGHT = height * .15
+const HEADER_HEIGHT = height * 0.15;
+
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
-    const theme = useTheme<Theme>()
+    const theme = useTheme<Theme>();
+    const [selectedStatus, setSelectedStatus] =
+        useState<"Processed" | "Delivered" | "Cancelled">("Processed");
+
+    const translateX = useSharedValue(0);
+
+    const animatedStyles = useAnimatedStyle(() => ({
+        transform: [{ translateX: withTiming(translateX.value) }],
+    }));
+
     return (
         <Layout>
             <Header
@@ -37,11 +54,16 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                 position="absolute"
                 top={0}
                 left_icon={
-                    <TouchableOpacity onPress={() => navigation.navigate('Profile_Main')}>
-                        <Ionicons name="arrow-back" size={30} color={theme.colors.darkColor} />
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("Profile_Main")}
+                    >
+                        <Ionicons
+                            name="arrow-back"
+                            size={30}
+                            color={theme.colors.darkColor}
+                        />
                     </TouchableOpacity>
                 }
-               
             />
             <BottomTab
                 elevation={5}
@@ -57,51 +79,216 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                 }}
             >
                 <ScrollView horizontal>
-                    <Chip margin='m' bg='darkColor' name='Processed' onPress={() => {}} />
-                    <Chip margin='m' bg='darkColor' name='Delivered' onPress={() => {}} />
-                    <Chip margin='m' bg='darkColor' name='cancelled' onPress={() => {}} />
+                    <Chip
+                        textProps={{
+                            color:
+                                selectedStatus === "Processed"
+                                    ? "darkColor"
+                                    : "white",
+                        }}
+                        margin="m"
+                        bg={
+                            selectedStatus === "Processed"
+                                ? "white"
+                                : "darkColor"
+                        }
+                        name="Processed"
+                        borderWidth={selectedStatus === "Processed" ? 1 : 0}
+                        onPress={() => {
+                            setSelectedStatus("Processed");
+                            translateX.value = 0;
+                        }}
+                    />
+                    <Chip
+                        textProps={{
+                            color:
+                                selectedStatus === "Delivered"
+                                    ? "darkColor"
+                                    : "white",
+                        }}
+                        margin="m"
+                        bg={
+                            selectedStatus === "Delivered"
+                                ? "white"
+                                : "darkColor"
+                        }
+                        borderWidth={selectedStatus === "Delivered" ? 1 : 0}
+                        name="Delivered"
+                        onPress={() => {
+                            setSelectedStatus("Delivered");
+                            translateX.value = -width;
+                        }}
+                    />
+                    <Chip
+                        textProps={{
+                            color:
+                                selectedStatus === "Cancelled"
+                                    ? "darkColor"
+                                    : "white",
+                        }}
+                        margin="m"
+                        bg={
+                            selectedStatus === "Cancelled"
+                                ? "white"
+                                : "darkColor"
+                        }
+                        borderWidth={selectedStatus === "Cancelled" ? 1 : 0}
+                        name="cancelled"
+                        onPress={() => {
+                            setSelectedStatus("Cancelled");
+                            translateX.value = 2 * -width;
+                        }}
+                    />
                 </ScrollView>
-                <OrderCard
-                    date='2021-04-16'
+                <AnimatedBox
+                    flex={1}
+                    width={width * 3}
+                    flexDirection="row"
+                    style={animatedStyles}
+                >
+                    <Box width={width}>
+                        <ScrollView style={{}}>
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.PENDING}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.PENDING}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.PENDING}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                        </ScrollView>
+                    </Box>
+                    <Box width={width}>
+                        <ScrollView style={{}}>
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.SUCCESS}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.SUCCESS}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.SUCCESS}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                        </ScrollView>
+                    </Box>
+                    <Box width={width}>
+                        <ScrollView style={{}}>
+                            <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.CANCELLED}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                             <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.CANCELLED}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                             <OrderCard
+                                marginHorizontal="s"
+                                date="2021-04-16"
+                                number_items={3}
+                                onDetailPress={() => {}}
+                                status={OrderStatus.CANCELLED}
+                                total_amount={210}
+                                tracking_number="IW5481321694"
+                                elevation={1}
+                            />
+                        </ScrollView>
+                    </Box>
+                </AnimatedBox>
+                {/* <OrderCard
+                    date="2021-04-16"
                     number_items={3}
                     onDetailPress={() => {}}
                     status={OrderStatus.SUCCESS}
                     total_amount={210}
-                    tracking_number='IW5481321694'
+                    tracking_number="IW5481321694"
                     elevation={1}
-                    margin='m'
+                    margin="m"
                 />
                 <OrderCard
-                    date='2021-04-16'
+                    date="2021-04-16"
                     number_items={3}
                     onDetailPress={() => {}}
                     status={OrderStatus.SUCCESS}
                     total_amount={210}
-                    tracking_number='IW5481321694'
+                    tracking_number="IW5481321694"
                     elevation={1}
-                    margin='m'
+                    margin="m"
                 />
                 <OrderCard
-                    date='2021-04-16'
+                    date="2021-04-16"
                     number_items={3}
                     onDetailPress={() => {}}
                     status={OrderStatus.SUCCESS}
                     total_amount={210}
-                    tracking_number='IW5481321694'
+                    tracking_number="IW5481321694"
                     elevation={1}
-                    margin='m'
+                    margin="m"
                 />
                 <OrderCard
-                    date='2021-04-16'
+                    date="2021-04-16"
                     number_items={3}
                     onDetailPress={() => {}}
                     status={OrderStatus.SUCCESS}
                     total_amount={210}
-                    tracking_number='IW5481321694'
+                    tracking_number="IW5481321694"
                     elevation={1}
-                    margin='m'
-                />
-                
+                    margin="m"
+                /> */}
             </ScrollView>
         </Layout>
     );

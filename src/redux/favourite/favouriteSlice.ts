@@ -39,7 +39,10 @@ export const favouriteSlice = createSlice({
     initialState,
     reducers: {
         addToFavourite(state, action:PayloadAction<FavouriteItem>){
-            state.favourites.push(action.payload)
+            const favourite = state.favourites.find(f => f.product.id === action.payload.product.id) 
+            if(!favourite) {
+                state.favourites.push(action.payload)
+            }
         },
         removeFromFavourite(state, action:PayloadAction<number>){
             state.favourites = state.favourites.filter(f => f.product.id !== action.payload)
