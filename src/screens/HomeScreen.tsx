@@ -149,6 +149,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 bg="white"
                                 borderRadius="m"
                                 overflow='hidden'
+                            marginBottom='s'
                             >
                                 
                                     <TouchableOpacity
@@ -175,7 +176,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     </TouchableOpacity>
                                 
                                 <Box p='m'>
-                                    <Text variant="body2">{p.name}</Text>
+                                    <Text variant="small" fontWeight='bold'>{p.name}</Text>
                                 </Box>
                             </Box>
                         ))}
@@ -200,6 +201,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'
+                            marginBottom='s'
                         >
                             
                                 <TouchableOpacity
@@ -225,7 +227,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     </SharedElement>
                                 </TouchableOpacity>
                                 <Box p='m'>
-                                    <Text variant="body2">{p.name}</Text>
+                                    <Text variant="small" fontWeight='bold'>{p.name}</Text>
                                 </Box>
                             
                         </Box>
@@ -251,6 +253,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             bg="white"
                             borderRadius="m"
                             overflow='hidden'
+                            marginBottom='s'
                         >
                             
                                 <TouchableOpacity
@@ -277,7 +280,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                 </TouchableOpacity>
                             
                             <Box p='m'>
-                                <Text variant="body2">{p.name}</Text>
+                                <Text variant="small" fontWeight='bold'>{p.name}</Text>
                             </Box>
                         </Box>
                         ))}
