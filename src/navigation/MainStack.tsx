@@ -63,16 +63,53 @@ const MainStack = () => {
             <Stack.Screen name="Favourite_Main" component={FavouriteScreen} />
 
             <Stack.Screen name="Profile_Main" component={ProfileScreen} />
-            <Stack.Screen name="Profile_ShippingAddresses" component={ShippingAddressesScreen} />
+            <Stack.Screen
+                name="Profile_ShippingAddresses"
+                component={ShippingAddressesScreen}
+            />
             <Stack.Screen name="Profile_Orders" component={OrdersScreen} />
-            <Stack.Screen name="Profile_Order_Detail" component={OrderDetailScreen} />
-            <Stack.Screen name="Profile_Reviews" component={UserReviewsScreen} />
+            <Stack.Screen
+                name="Profile_Order_Detail"
+                component={OrderDetailScreen}
+            />
+            <Stack.Screen
+                name="Profile_Reviews"
+                component={UserReviewsScreen}
+            />
             <Stack.Screen name="Profile_Settings" component={SettingScreen} />
-            <Stack.Screen name='Profile_New_Address' component={NewShippingAddressScreen} />
-            
+            <Stack.Screen
+                name="Profile_New_Address"
+                component={NewShippingAddressScreen}
+            />
+
             <Stack.Screen name="Shop_Main" component={ShopScreen} />
-            <Stack.Screen name="Shop_Search" component={SearchScreen} />
-            <Stack.Screen name="Shop_Category" component={CategoryScreen} sharedElementsConfig={(route, otherRoute, showing) => {
+            <Stack.Screen
+                name="Shop_Search"
+                component={SearchScreen}
+                sharedElementsConfig={(route, otherRoute, showing) => {
+                    if (route.name === "Shop_Search" && showing) {
+                        // Open animation fades in image, title and description
+                        return [
+                            {
+                                id: `search-input`,
+                                animation: "fade",
+                            },
+                        ];
+                    } else {
+                        // Close animation only fades out image
+                        return [
+                            {
+                                id: `search-input`,
+                                animation: "fade",
+                            },
+                        ];
+                    }
+                }}
+            />
+            <Stack.Screen
+                name="Shop_Category"
+                component={CategoryScreen}
+                sharedElementsConfig={(route, otherRoute, showing) => {
                     const { category } = route.params;
                     if (route.name === "Shop_Category" && showing) {
                         // Open animation fades in image, title and description
@@ -89,7 +126,8 @@ const MainStack = () => {
                             },
                         ];
                     }
-                }}  />
+                }}
+            />
             <Stack.Screen
                 name="Shop_Product_Detail"
                 component={ProductDetail}

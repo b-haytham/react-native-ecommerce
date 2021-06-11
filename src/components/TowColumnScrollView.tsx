@@ -34,7 +34,7 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
             <Box>
                 {left_products.map((p) => (
                     <Box
-                        elevation={1}
+                        elevation={10}
                         key={p.id}
                         width={PRODUCT_WIDTH}
 
@@ -76,7 +76,7 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
             <Box style={{transform: [{translateY: 20}]}}>
                 {right_products.map((p) => (
                     <Box
-                        elevation={1}
+                        elevation={10}
                         key={p.id}
                         width={PRODUCT_WIDTH}
                         marginLeft="m"

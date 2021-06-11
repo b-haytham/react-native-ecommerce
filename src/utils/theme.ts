@@ -4,6 +4,10 @@ const palette = {
   black: '#222222',
   white: '#FFFFFF',
   gray: "#9B9B9B",
+  gray1: "#fafafafa",
+  gray2: "#f5f5f5f5",
+  gray3: "#e9e9e9e9",
+  gray4: "#c4c4c4c4",
   primary: "#DB3022",
   backgroundLight: "#F5F5F5F5",
   error: "#F01F0E",
@@ -15,13 +19,17 @@ const palette = {
 
 const theme = createTheme({
   colors: {
-    background: palette.backgroundLight,
+    background: palette.gray1,
     white: palette.white,
     gray: palette.gray,
     black: palette.black,
     error: palette.error,
     primary: palette.primary,
     success: palette.success,
+    gray1: palette.gray1,
+    gray2: palette.gray2,
+    gray3: palette.gray3,
+    gray4: palette.gray4,
     darkColor: palette.darkColor
   },
   spacing: {

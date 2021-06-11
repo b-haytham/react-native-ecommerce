@@ -1,12 +1,7 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React, { useEffect, useState } from "react";
-import {
-    Dimensions,
-    Image,
-    ScrollView,
-    TouchableOpacity,
-} from "react-native";
+import { Dimensions, Image, ScrollView, TouchableOpacity } from "react-native";
 
 import { SharedElement } from "react-navigation-shared-element";
 import Layout from "../components/Layout";
@@ -30,7 +25,7 @@ interface HomeScreenProps {
 
 const { width, height } = Dimensions.get("screen");
 
-const PRODUCT_WIDTH = width * 0.5
+const PRODUCT_WIDTH = width * 0.5;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     const [display, setDisplay] = useState(false);
@@ -55,7 +50,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <Text variant="headline" color="darkColor" opacity={0.9}>
                         Home
                     </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Bag_Main')}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("Bag_Main")}
+                    >
                         <Entypo
                             name="shopping-bag"
                             size={25}
@@ -63,32 +60,52 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         />
                     </TouchableOpacity>
                 </Box>
-                <Box p="m">
+                <Box
+                    p="m"
+                    margin="m"
+                    bg="primary"
+                    borderRadius="m"
+                    elevation={10}
+                >
+                    <Box marginBottom="m">
+                        <Text variant="headline" color="white">
+                            Welcome !
+                        </Text>
+                        <Text variant="body" color="white">
+                            Start typing!
+                        </Text>
+                    </Box>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Shop_Search", {search_term: null})}
+                        onPress={() =>
+                            navigation.navigate("Shop_Search", {
+                                search_term: null,
+                            })
+                        }
                     >
-                        <Box
-                            bg="white"
-                            borderRadius="s"
-                            paddingHorizontal="m"
-                            paddingVertical="s"
-                            flexDirection="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                        >
-                            <Text variant="description" opacity={0.5}>
-                                Search
-                            </Text>
-                            <Ionicons
-                                name="search"
-                                size={25}
-                                color={theme.colors.darkColor}
-                            />
-                        </Box>
+                        <SharedElement id="search-input">
+                            <Box
+                                bg="white"
+                                borderRadius="s"
+                                paddingHorizontal="m"
+                                paddingVertical="s"
+                                flexDirection="row"
+                                alignItems="center"
+                                justifyContent="space-between"
+                            >
+                                <Text variant="description" opacity={0.5}>
+                                    Search
+                                </Text>
+                                <Ionicons
+                                    name="search"
+                                    size={25}
+                                    color={theme.colors.primary}
+                                />
+                            </Box>
+                        </SharedElement>
                     </TouchableOpacity>
                 </Box>
                 <Box>
-                    <Text margin="m" variant="body2" opacity={0.8}>
+                    <Text margin="m" variant="body2" opacity={0.9}>
                         EXPLORE
                     </Text>
                     <ScrollView
@@ -101,14 +118,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                             <Box
                                 key={s.id}
                                 width={width * 0.6}
-                                height={100}
+                                height={200}
                                 marginHorizontal="m"
                             >
-                                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Shop_Search', {search_term: s.title})}>
+                                <TouchableOpacity
+                                    activeOpacity={0.6}
+                                    onPress={() =>
+                                        navigation.navigate("Shop_Search", {
+                                            search_term: s.title,
+                                        })
+                                    }
+                                >
                                     <Image
                                         style={{
                                             width: width * 0.6,
-                                            height: 100,
+                                            height: 200,
                                             borderRadius: 20,
                                             overflow: "hidden",
                                         }}
@@ -131,80 +155,28 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         ))}
                     </ScrollView>
                 </Box>
-                <Box marginVertical="m">
-                    <Text margin="m" variant="body2" opacity={0.8}>
+                <Box>
+                    <Text margin="m" variant="body2" opacity={0.9}>
                         POPULAR
                     </Text>
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m }
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
                     >
                         {products.slice(0, 3).map((p) => (
-                            <Box 
-                                elevation={1}
-                                key={p.id} 
-                                width={PRODUCT_WIDTH} 
-                                marginLeft="m" 
+                            <Box
+                                elevation={10}
+                                key={p.id}
+                                width={PRODUCT_WIDTH}
+                                marginLeft="m"
                                 bg="white"
                                 borderRadius="m"
-                                overflow='hidden'
-                            marginBottom='s'
+                                overflow="hidden"
+                                marginBottom="l"
+                                marginTop="s"
                             >
-                                
-                                    <TouchableOpacity
-                                        activeOpacity={0.6}
-                                        onPress={() =>
-                                            navigation.navigate(
-                                                "Shop_Product_Detail",
-                                                { item: p }
-                                            )
-                                        }
-                                    >
-                                        <SharedElement id={`image-${p.id}`}>
-                                            <Image
-                                                style={{
-                                                    width: PRODUCT_WIDTH,
-                                                    height: 100,
-                                                    
-                                                    overflow: "hidden",
-                                                }}
-                                                resizeMode="cover"
-                                                source={{ uri: p.thumbnail! }}
-                                            />
-                                        </SharedElement>
-                                    </TouchableOpacity>
-                                
-                                <Box p='m'>
-                                    <Text variant="small" fontWeight='bold'>{p.name}</Text>
-                                </Box>
-                            </Box>
-                        ))}
-                    </ScrollView>
-                </Box>
-                <Box marginVertical="m">
-                    <Text margin="m" variant="body2" opacity={0.8}>
-                        NEW
-                    </Text>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m }
-                    >
-                        {products.slice(3, 7).map((p) => (
-                            <Box 
-                            elevation={1}
-                            key={p.id} 
-                            width={PRODUCT_WIDTH} 
-                            marginLeft="m" 
-                            bg="white"
-                            borderRadius="m"
-                            overflow='hidden'
-                            marginBottom='s'
-                        >
-                            
                                 <TouchableOpacity
                                     activeOpacity={0.6}
                                     onPress={() =>
@@ -218,8 +190,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         <Image
                                             style={{
                                                 width: PRODUCT_WIDTH,
-                                                height: 100,
-                                                
+                                                height: 200,
+
                                                 overflow: "hidden",
                                             }}
                                             resizeMode="cover"
@@ -227,16 +199,71 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         />
                                     </SharedElement>
                                 </TouchableOpacity>
-                                <Box p='m'>
-                                    <Text variant="small" fontWeight='bold'>{p.name}</Text>
+
+                                <Box p="m">
+                                    <Text variant="small" fontWeight="bold">
+                                        {p.name}
+                                    </Text>
                                 </Box>
-                            
-                        </Box>
+                            </Box>
                         ))}
                     </ScrollView>
                 </Box>
-                <Box marginVertical="m">
-                    <Text margin="m" variant="body2" opacity={0.8}>
+                <Box>
+                    <Text margin="m" variant="body2" opacity={0.9}>
+                        NEW
+                    </Text>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        decelerationRate={0}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
+                    >
+                        {products.slice(3, 7).map((p) => (
+                            <Box
+                                elevation={10}
+                                key={p.id}
+                                width={PRODUCT_WIDTH}
+                                marginLeft="m"
+                                bg="white"
+                                borderRadius="m"
+                                overflow="hidden"
+                                marginBottom="l"
+                                marginTop="s"
+                            >
+                                <TouchableOpacity
+                                    activeOpacity={0.6}
+                                    onPress={() =>
+                                        navigation.navigate(
+                                            "Shop_Product_Detail",
+                                            { item: p }
+                                        )
+                                    }
+                                >
+                                    <SharedElement id={`image-${p.id}`}>
+                                        <Image
+                                            style={{
+                                                width: PRODUCT_WIDTH,
+                                                height: PRODUCT_WIDTH,
+
+                                                overflow: "hidden",
+                                            }}
+                                            resizeMode="cover"
+                                            source={{ uri: p.thumbnail! }}
+                                        />
+                                    </SharedElement>
+                                </TouchableOpacity>
+                                <Box p="m">
+                                    <Text variant="small" fontWeight="bold">
+                                        {p.name}
+                                    </Text>
+                                </Box>
+                            </Box>
+                        ))}
+                    </ScrollView>
+                </Box>
+                <Box>
+                    <Text margin="m" variant="body2" opacity={0.9}>
                         RECEMENDED
                     </Text>
                     <ScrollView
@@ -246,17 +273,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
                     >
                         {products.slice(8, 12).map((p) => (
-                            <Box 
-                            elevation={1}
-                            key={p.id} 
-                            width={PRODUCT_WIDTH} 
-                            marginLeft="m" 
-                            bg="white"
-                            borderRadius="m"
-                            overflow='hidden'
-                            marginBottom='s'
-                        >
-                            
+                            <Box
+                                elevation={10}
+                                key={p.id}
+                                width={PRODUCT_WIDTH}
+                                marginLeft="m"
+                                bg="white"
+                                borderRadius="m"
+                                overflow="hidden"
+                                marginBottom="l"
+                                marginTop="s"
+                            >
                                 <TouchableOpacity
                                     activeOpacity={0.6}
                                     onPress={() =>
@@ -270,8 +297,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         <Image
                                             style={{
                                                 width: PRODUCT_WIDTH,
-                                                height: 100,
-                                                
+                                                height: 200,
+
                                                 overflow: "hidden",
                                             }}
                                             resizeMode="cover"
@@ -279,19 +306,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                         />
                                     </SharedElement>
                                 </TouchableOpacity>
-                            
-                            <Box p='m'>
-                                <Text variant="small" fontWeight='bold'>{p.name}</Text>
+
+                                <Box p="m">
+                                    <Text variant="small" fontWeight="bold">
+                                        {p.name}
+                                    </Text>
+                                </Box>
                             </Box>
-                        </Box>
                         ))}
                     </ScrollView>
                 </Box>
-                <Box marginVertical="m">
-                    <Text margin="m" variant="body2" opacity={0.8}>
+                <Box>
+                    <Text margin="m" variant="body2" opacity={0.9}>
                         RECEMENDED
                     </Text>
-                    <TowColumnScrollView width={width} products={products.slice(12, 16)} />
+                    <TowColumnScrollView
+                        marginBottom='l'
+                        width={width}
+                        products={products.slice(12, 16)}
+                    />
                 </Box>
             </ScrollView>
         </Layout>

@@ -27,6 +27,9 @@ import { useKeyboard } from "../utils/useKeyboardHeight";
 
 import SortView from "../components/SortView";
 
+import { SharedElement } from "react-navigation-shared-element";
+
+
 interface SearchScreenProps {
     navigation: SearchScreenNavigationProps;
     route: SearchScreenRouteProps;
@@ -102,6 +105,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                 contentContainerStyle={{ marginBottom: height * 0.1 }}
                 ListHeaderComponent={
                     <Box margin="m">
+                        <SharedElement id='search-input'>
                         <Input
                             inputRef={inputRef}
                             placeholder="Search"
@@ -130,6 +134,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                                 </TouchableOpacity>
                             }
                         />
+                        </SharedElement>
                         {products.length !== 0 && (
                             <Box
                                 padding="m"
