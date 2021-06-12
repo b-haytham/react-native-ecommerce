@@ -23,7 +23,7 @@ interface SettingScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const HEADER_HEIGHT = height * .15
+const HEADER_HEIGHT = height * .12
 
 const SettingScreen: React.FC<SettingScreenProps> = ({ route, navigation }) => {
     const theme = useTheme<Theme>();

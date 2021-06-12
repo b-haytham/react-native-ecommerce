@@ -20,7 +20,7 @@ interface ShopScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const HEADER_HEIGHT = height * .15
+const HEADER_HEIGHT = height * .12
 
 const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();

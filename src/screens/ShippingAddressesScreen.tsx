@@ -29,7 +29,7 @@ interface ShippingAddressesScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const HEADER_HEIGHT = height * 0.15;
+const HEADER_HEIGHT = height * 0.12;
 
 const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
     route,

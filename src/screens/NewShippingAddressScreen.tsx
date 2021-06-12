@@ -23,9 +23,7 @@ interface NewShippingAddressScreenProps {
 }
 
 const { width, height } = Dimensions.get("screen");
-const HEADER_HEIGHT = height * 0.15;
-
-import { v4 as uuid } from 'uuid'
+const HEADER_HEIGHT = height * 0.12;
 
 const NewShippingAddressScreen: React.FC<NewShippingAddressScreenProps> = ({
     navigation,
@@ -102,7 +100,7 @@ const NewShippingAddressScreen: React.FC<NewShippingAddressScreenProps> = ({
                 style={{
                     flex: 1,
                     // marginBottom: height * 0.1,
-                    marginTop: HEADER_HEIGHT - theme.spacing.l,
+                    marginTop: HEADER_HEIGHT + theme.spacing.s,
                 }}
             >
                 <Box marginHorizontal="m">
