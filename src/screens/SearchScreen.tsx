@@ -102,9 +102,15 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
             )}
 
             <FlatList
-                contentContainerStyle={{ marginBottom: height * 0.1 }}
+                contentContainerStyle={{ marginBottom: height * 0.1, paddingHorizontal: theme.spacing.m }}
                 ListHeaderComponent={
-                    <Box margin="m">
+                    <Box 
+                        marginVertical='m'
+                        padding='m'
+                        borderRadius='m'
+                        bg='primary'
+                        elevation={10}
+                    >
                         <SharedElement id='search-input'>
                         <Input
                             inputRef={inputRef}
@@ -129,7 +135,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                                     <Ionicons
                                         name="search"
                                         size={25}
-                                        color={theme.colors.darkColor}
+                                        color={theme.colors.primary}
                                     />
                                 </TouchableOpacity>
                             }
@@ -193,9 +199,11 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                 keyExtractor={(p, i) => p.id.toString()}
                 numColumns={2}
                 scrollEventThrottle={16}
+                
                 renderItem={({ item }) => (
                     <ProductCard
-                        width={PRODUCT_WIDTH - theme.spacing.s * 2}
+            
+                        width={PRODUCT_WIDTH - theme.spacing.m * 2}
                         is_in_bag={products_in_bag.includes(item.id)}
                         product={item}
                         onAddToBagPress={() => {}}
