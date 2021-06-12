@@ -32,6 +32,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useAnimatedStyle } from "react-native-reanimated";
 import { useDerivedValue } from "react-native-reanimated";
+import { Image } from "react-native";
 
 interface FavouriteScreenProps {
     navigation: FavouriteScreenNavigationProps;
@@ -41,7 +42,7 @@ interface FavouriteScreenProps {
 const { width, height } = Dimensions.get("screen");
 const HEADER_HEIGHT = height * 0.15;
 
-const AnimatedBox = Animated.createAnimatedComponent(Box)
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
     navigation,
@@ -60,16 +61,14 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
         setDisplay(true);
     }, []);
 
-   
-
     return (
-        <Layout>
+        <Layout bg={favourites.length > 0 ? "background" : "white"}>
             <Header
                 height={HEADER_HEIGHT}
                 elevation={2}
                 title="Favourites"
                 position="absolute"
-                paddingHorizontal='m'
+                paddingHorizontal="m"
                 top={0}
                 left_icon={
                     <TouchableOpacity
@@ -94,8 +93,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                 >
                     <Box marginVertical="m">
                         <AnimatePresence>
-                            {favourites &&
-                                favourites.length > 0 &&
+                            {favourites && favourites.length > 0 ? (
                                 favourites.map((f, i) => (
                                     <MotiView
                                         key={f.product.id}
@@ -146,7 +144,23 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                                             }
                                         />
                                     </MotiView>
-                                ))}
+                                ))
+                            ) : (
+                                <Box
+                                    flex={1}
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Image
+                                        source={require("../../assets/empty.png")}
+                                        resizeMode="contain"
+                                        style={{
+                                            width: width * 0.6,
+                                            height: height * 0.6,
+                                        }}
+                                    />
+                                </Box>
+                            )}
                         </AnimatePresence>
                     </Box>
                 </ScrollView>
@@ -158,9 +172,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                     />
                 </Box>
             )}
-            <Box marginVertical="l">
-                
-            </Box>
+            
         </Layout>
     );
 };

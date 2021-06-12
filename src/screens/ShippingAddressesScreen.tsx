@@ -21,6 +21,7 @@ import { ShippingAddress } from "../redux/data_types";
 import { removeShippingAddress } from "../redux/user/userSlice";
 import { AnimatePresence } from "framer-motion";
 import { MotiView } from "@motify/components";
+import { Image } from "react-native";
 
 interface ShippingAddressesScreenProps {
     navigation: ShippingAddressesScreenNavigationProps;
@@ -40,13 +41,13 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
         (state) => state.user.current_user?.shipping_addresses
     );
     return (
-        <Layout>
+        <Layout bg={shippingAddresses!.length > 0 ? 'background' : 'white'}>
             <Header
                 height={HEADER_HEIGHT}
                 elevation={2}
                 title="Shipping Addresses"
                 position="absolute"
-                paddingHorizontal='m'
+                paddingHorizontal="m"
                 top={0}
                 left_icon={
                     <TouchableOpacity
@@ -90,42 +91,65 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
             >
                 <Box marginHorizontal="s">
                     <AnimatePresence>
-                        {shippingAddresses &&
-                            shippingAddresses.length > 0 &&
-                            shippingAddresses.map((sh: ShippingAddress, i: number) => (
-                                <MotiView
-                                    key={sh.id}
-                                    from={{ opacity: 0, translateX: -width }}
-                                    animate={{ opacity: 1, translateX: 0 }}
-                                    exit={{ opacity: 0, translateX: -width }}
-                                    transition={{
-                                        type: "timing",
-                                        duration: 300,
-                                        delay: i * 10,
+                        {shippingAddresses && shippingAddresses.length > 0 ? (
+                            shippingAddresses.map(
+                                (sh: ShippingAddress, i: number) => (
+                                    <MotiView
+                                        key={sh.id}
+                                        from={{
+                                            opacity: 0,
+                                            translateX: -width,
+                                        }}
+                                        animate={{ opacity: 1, translateX: 0 }}
+                                        exit={{
+                                            opacity: 0,
+                                            translateX: -width,
+                                        }}
+                                        transition={{
+                                            type: "timing",
+                                            duration: 300,
+                                            delay: i * 10,
+                                        }}
+                                        exitTransition={{
+                                            type: "timing",
+                                            duration: 300,
+                                        }}
+                                    >
+                                        <ShippingAddressCard
+                                            elevation={1}
+                                            address={sh}
+                                            onCheckBoxChange={(v) => {}}
+                                            onEditPress={() =>
+                                                navigation.navigate(
+                                                    "Profile_New_Address",
+                                                    { shipping_address: sh }
+                                                )
+                                            }
+                                            onDeletePress={() =>
+                                                dispatch(
+                                                    removeShippingAddress(sh.id)
+                                                )
+                                            }
+                                        />
+                                    </MotiView>
+                                )
+                            )
+                        ) : (
+                            <Box
+                                flex={1}
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                <Image
+                                    source={require("../../assets/empty.png")}
+                                    resizeMode="contain"
+                                    style={{
+                                        width: width * 0.6,
+                                        height: height * 0.6,
                                     }}
-                                    exitTransition={{
-                                        type: "timing",
-                                        duration: 300,
-                                    }}
-                                >
-                                    <ShippingAddressCard
-                                        elevation={1}
-                                        address={sh}
-                                        onCheckBoxChange={(v) => {}}
-                                        onEditPress={() =>
-                                            navigation.navigate(
-                                                "Profile_New_Address",
-                                                { shipping_address: sh }
-                                            )
-                                        }
-                                        onDeletePress={() =>
-                                            dispatch(
-                                                removeShippingAddress(sh.id)
-                                            )
-                                        }
-                                    />
-                                </MotiView>
-                            ))}
+                                />
+                            </Box>
+                        )}
                     </AnimatePresence>
                 </Box>
             </ScrollView>

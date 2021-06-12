@@ -25,6 +25,7 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 import CheckoutView from "../components/CheckoutView";
+import { Image } from "react-native";
 
 interface BagScreenProps {
     navigation: BagScreenNavigationProps;
@@ -55,7 +56,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
     }, []);
 
     return (
-        <Layout>
+        <Layout bg={bagItems!.length > 0 ? 'background' : 'white'}>
             {display && (
                 <CheckoutView
                     navigation={navigation}
@@ -84,7 +85,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                     elevation={2}
                     title="Bag"
                     position="absolute"
-                    paddingHorizontal='m'
+                    paddingHorizontal="m"
                     top={0}
                     left_icon={
                         <TouchableOpacity
@@ -99,7 +100,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                     }
                 />
             </AnimatedBox>
-            <BottomTab  route_name={route.name} position="absolute" bottom={0} />
+            <BottomTab route_name={route.name} position="absolute" bottom={0} />
             {display ? (
                 <ScrollView
                     style={{
@@ -108,61 +109,78 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                         marginTop: HEADER_HEIGHT - theme.spacing.l,
                     }}
                 >
-                    <Box marginVertical='m'>
-                    <AnimatePresence>
-                        {bagItems &&
-                            bagItems.length > 0 &&
-                            bagItems.map((b, i) => {
-                                return (
-                                    <MotiView
-                                        key={b.product.id}
-                                        from={{
-                                            opacity: 0,
-                                            translateX: -width,
-                                        }}
-                                        animate={{ opacity: 1, translateX: 0 }}
-                                        exit={{
-                                            opacity: 0,
-                                            translateX: -width,
-                                        }}
-                                        transition={{
-                                            type: "timing",
-                                            duration: 300,
-                                        }}
-                                        exitTransition={{
-                                            type: "timing",
-                                            duration: 300,
-                                        }}
-                                    >
-                                        <BagCard
-                                            bagItem={b}
-                                            onImagePress={() =>
-                                                navigation.navigate(
-                                                    "Shop_Product_Detail",
-                                                    {
-                                                        item: b.product,
-                                                    }
-                                                )
-                                            }
-                                            onDeletePress={() => {
-                                                dispatch(
-                                                    removeFromBag(b.product.id)
-                                                );
+                    <Box marginVertical="m">
+                        <AnimatePresence>
+                            {bagItems && bagItems.length > 0 ? (
+                                bagItems.map((b, i) => {
+                                    return (
+                                        <MotiView
+                                            key={b.product.id}
+                                            from={{
+                                                opacity: 0,
+                                                translateX: -width,
                                             }}
-                                        />
-                                    </MotiView>
-                                );
-                            })}
-                    </AnimatePresence>
+                                            animate={{
+                                                opacity: 1,
+                                                translateX: 0,
+                                            }}
+                                            exit={{
+                                                opacity: 0,
+                                                translateX: -width,
+                                            }}
+                                            transition={{
+                                                type: "timing",
+                                                duration: 300,
+                                            }}
+                                            exitTransition={{
+                                                type: "timing",
+                                                duration: 300,
+                                            }}
+                                        >
+                                            <BagCard
+                                                bagItem={b}
+                                                onImagePress={() =>
+                                                    navigation.navigate(
+                                                        "Shop_Product_Detail",
+                                                        {
+                                                            item: b.product,
+                                                        }
+                                                    )
+                                                }
+                                                onDeletePress={() => {
+                                                    dispatch(
+                                                        removeFromBag(
+                                                            b.product.id
+                                                        )
+                                                    );
+                                                }}
+                                            />
+                                        </MotiView>
+                                    );
+                                })
+                            ) : (
+                                <Box
+                                    flex={1}
+                                    justifyContent="center"
+                                    alignItems="center"
+                                >
+                                    <Image
+                                        source={require("../../assets/empty.png")}
+                                        resizeMode="contain"
+                                        style={{
+                                            width: width * 0.6,
+                                            height: height * 0.6,
+                                        }}
+                                    />
+                                </Box>
+                            )}
+                        </AnimatePresence>
                     </Box>
                     {bagItems && bagItems.length > 0 && (
                         <Box>
                             <Box
-                                
-                                
                                 p="m"
                                 bg="white"
-                                
                                 flexDirection="row"
                                 justifyContent="space-between"
                                 alignItems="center"
