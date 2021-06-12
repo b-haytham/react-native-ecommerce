@@ -3,6 +3,7 @@ import { ImageSourcePropType } from "react-native"
 import { Category, Order, Product, ShippingAddress } from "../redux/data_types"
 
 export type AppStackParamList = {
+    OnBoarding: undefined
     Auth: NavigatorScreenParams<AuthStackParamList>
     Main: NavigatorScreenParams<MainStackParamList>
 }

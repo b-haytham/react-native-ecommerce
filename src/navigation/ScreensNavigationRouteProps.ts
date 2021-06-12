@@ -3,6 +3,10 @@ import { StackNavigationProp } from "@react-navigation/stack"
 
 import { AppStackParamList, AuthStackParamList, MainStackParamList } from "./ParmListTypes"
 
+
+export type OnBoardingScreenNavigationProps = StackNavigationProp<AppStackParamList, 'OnBoarding'>
+export type OnBoardingScreenRouteProps = RouteProp<AppStackParamList, 'OnBoarding'>
+
 // Auth Stack Navigation Props
 
 
