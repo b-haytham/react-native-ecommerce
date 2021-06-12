@@ -24,6 +24,7 @@
     "expo-font": "~9.1.0",
     "expo-linear-gradient": "~9.1.0",
     "expo-status-bar": "~1.0.4",
+    "formik": "^2.2.9",
     "moti": "^0.11.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -43,7 +44,8 @@
     "react-navigation-shared-element": "^5.0.0-alpha1",
     "react-redux": "^7.2.4",
     "tslib": "^2.2.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
