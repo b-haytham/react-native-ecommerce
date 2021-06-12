@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, Image, ScrollView, TouchableOpacity } from "react-native";
 
 import { SharedElement } from "react-navigation-shared-element";
+import AnimatedScrollView from "../components/AnimatedScrollView";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
 import TowColumnScrollView from "../components/TowColumnScrollView";
@@ -111,8 +112,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m * 2}
+                        decelerationRate={'fast'}
+                        snapToInterval={width * .6 + theme.spacing.m * 2}
                     >
                         {EXPORLE_SETION.map((s) => (
                             <Box
@@ -162,13 +163,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
+                        decelerationRate={'fast'}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m *2}
                     >
                         {products.slice(0, 3).map((p) => (
                             <Box
+                            width={PRODUCT_WIDTH}
+                            bg='primary'
+                            borderRadius='m'
+                            marginHorizontal='m'
+                        key={p.id}
+                        marginBottom='s'
+                        >
+                            <Box
                                 elevation={10}
-                                key={p.id}
+                                
                                 width={PRODUCT_WIDTH}
                                 marginLeft="m"
                                 bg="white"
@@ -206,6 +215,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     </Text>
                                 </Box>
                             </Box>
+                            </Box>
                         ))}
                     </ScrollView>
                 </Box>
@@ -216,13 +226,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                     <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
+                        decelerationRate={'fast'}
+                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m * 2}
                     >
                         {products.slice(3, 7).map((p) => (
                             <Box
+                            width={PRODUCT_WIDTH}
+                            bg='primary'
+                            borderRadius='m'
+                            marginHorizontal='m'
+                        key={p.id}
+                        marginBottom='s'
+                        >
+                            <Box
                                 elevation={10}
-                                key={p.id}
                                 width={PRODUCT_WIDTH}
                                 marginLeft="m"
                                 bg="white"
@@ -259,59 +276,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                                     </Text>
                                 </Box>
                             </Box>
-                        ))}
-                    </ScrollView>
-                </Box>
-                <Box>
-                    <Text margin="m" variant="body2" opacity={0.9}>
-                        RECEMENDED
-                    </Text>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        decelerationRate={0}
-                        snapToInterval={PRODUCT_WIDTH + theme.spacing.m}
-                    >
-                        {products.slice(8, 12).map((p) => (
-                            <Box
-                                elevation={10}
-                                key={p.id}
-                                width={PRODUCT_WIDTH}
-                                marginLeft="m"
-                                bg="white"
-                                borderRadius="m"
-                                overflow="hidden"
-                                marginBottom="l"
-                                marginTop="s"
-                            >
-                                <TouchableOpacity
-                                    activeOpacity={0.6}
-                                    onPress={() =>
-                                        navigation.navigate(
-                                            "Shop_Product_Detail",
-                                            { item: p }
-                                        )
-                                    }
-                                >
-                                    <SharedElement id={`image-${p.id}`}>
-                                        <Image
-                                            style={{
-                                                width: PRODUCT_WIDTH,
-                                                height: 200,
-
-                                                overflow: "hidden",
-                                            }}
-                                            resizeMode="cover"
-                                            source={{ uri: p.thumbnail! }}
-                                        />
-                                    </SharedElement>
-                                </TouchableOpacity>
-
-                                <Box p="m">
-                                    <Text variant="small" fontWeight="bold">
-                                        {p.name}
-                                    </Text>
-                                </Box>
                             </Box>
                         ))}
                     </ScrollView>
@@ -324,6 +288,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         marginBottom='l'
                         width={width}
                         products={products.slice(12, 16)}
+                    />
+                </Box>
+                <Box>
+                    <Text margin="m" variant="body2" opacity={0.9}>
+                        RECEMENDED
+                    </Text>
+                    <AnimatedScrollView 
+                        navigation={navigation}
+                        data={products.slice(8,12)}
+                        itemWidth={width /2}
                     />
                 </Box>
             </ScrollView>

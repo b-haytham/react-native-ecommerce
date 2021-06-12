@@ -22,6 +22,16 @@ import { MotiView } from "@motify/components";
 import FavouriteCard from "../components/cards/FavouriteCard";
 import { addToBag } from "../redux/bag/bagSlice";
 import { removeFromFavourite } from "../redux/favourite/favouriteSlice";
+import Animated, {
+    concat,
+    Extrapolate,
+    interpolate,
+    useAnimatedScrollHandler,
+    useSharedValue,
+    withSpring,
+} from "react-native-reanimated";
+import { useAnimatedStyle } from "react-native-reanimated";
+import { useDerivedValue } from "react-native-reanimated";
 
 interface FavouriteScreenProps {
     navigation: FavouriteScreenNavigationProps;
@@ -31,21 +41,26 @@ interface FavouriteScreenProps {
 const { width, height } = Dimensions.get("screen");
 const HEADER_HEIGHT = height * 0.15;
 
+const AnimatedBox = Animated.createAnimatedComponent(Box)
+
 const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
     navigation,
     route,
 }) => {
     const theme = useTheme<Theme>();
-    const [display, setDisplay] = useState(false)
+    const [display, setDisplay] = useState(false);
 
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
     const favourites = useAppSelector((state) => state.favourite.favourites);
-    const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
+    const products_in_bag = useAppSelector(
+        (state) => state.bag.products_in_bag
+    );
 
     useEffect(() => {
         setDisplay(true);
     }, []);
 
+   
 
     return (
         <Layout>
@@ -68,45 +83,73 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                 }
             />
             <BottomTab route_name={route.name} position="absolute" bottom={0} />
-            {display ? <ScrollView
-                style={{
-                    flex: 1,
-                    marginBottom: height * 0.1,
-                    marginTop: HEADER_HEIGHT - theme.spacing.l,
-                }}
-            >
-                <Box marginVertical='m'>
-                <AnimatePresence>
-                    {favourites &&
-                        favourites.length > 0 &&
-                        favourites.map((f, i) => (
-                            <MotiView
-                                key={f.product.id}
-                                from={{ opacity: 0, translateX: -width }}
-                                animate={{ opacity: 1, translateX: 0 }}
-                                exit={{ opacity: 0, translateX: -width }}
-                                transition={{
-                                    type: "timing",
-                                    duration: 300,
-                                    delay: i * 10
-                                }}
-                                exitTransition={{
-                                    type: "timing",
-                                    duration: 300,
-                                }}
-                            >
-                                <FavouriteCard
-                                    is_in_bag={products_in_bag.includes(f.product.id)}
-                                    favouriteItem={f}
-                                    onDeletePress={() => dispatch(removeFromFavourite(f.product.id))}
-                                    onImagePress={() => navigation.navigate('Shop_Product_Detail', {item: f.product})}
-                                    onAddToBagPress={() => dispatch(addToBag({...f, quantity: 1}))}
-                              />
-                            </MotiView>
-                        ))}
-                </AnimatePresence>
-                </Box>
-            </ScrollView> : (
+            {display ? (
+                <ScrollView
+                    style={{
+                        flex: 1,
+                        marginBottom: height * 0.1,
+                        marginTop: HEADER_HEIGHT - theme.spacing.l,
+                    }}
+                >
+                    <Box marginVertical="m">
+                        <AnimatePresence>
+                            {favourites &&
+                                favourites.length > 0 &&
+                                favourites.map((f, i) => (
+                                    <MotiView
+                                        key={f.product.id}
+                                        from={{
+                                            opacity: 0,
+                                            translateX: -width,
+                                        }}
+                                        animate={{ opacity: 1, translateX: 0 }}
+                                        exit={{
+                                            opacity: 0,
+                                            translateX: -width,
+                                        }}
+                                        transition={{
+                                            type: "timing",
+                                            duration: 300,
+                                            delay: i * 10,
+                                        }}
+                                        exitTransition={{
+                                            type: "timing",
+                                            duration: 300,
+                                        }}
+                                    >
+                                        <FavouriteCard
+                                            is_in_bag={products_in_bag.includes(
+                                                f.product.id
+                                            )}
+                                            favouriteItem={f}
+                                            onDeletePress={() =>
+                                                dispatch(
+                                                    removeFromFavourite(
+                                                        f.product.id
+                                                    )
+                                                )
+                                            }
+                                            onImagePress={() =>
+                                                navigation.navigate(
+                                                    "Shop_Product_Detail",
+                                                    { item: f.product }
+                                                )
+                                            }
+                                            onAddToBagPress={() =>
+                                                dispatch(
+                                                    addToBag({
+                                                        ...f,
+                                                        quantity: 1,
+                                                    })
+                                                )
+                                            }
+                                        />
+                                    </MotiView>
+                                ))}
+                        </AnimatePresence>
+                    </Box>
+                </ScrollView>
+            ) : (
                 <Box flex={1} justifyContent="center" alignItems="center">
                     <ActivityIndicator
                         size={"large"}
@@ -114,6 +157,9 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                     />
                 </Box>
             )}
+            <Box marginVertical="l">
+                
+            </Box>
         </Layout>
     );
 };

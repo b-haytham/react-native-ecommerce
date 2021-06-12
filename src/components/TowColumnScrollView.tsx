@@ -34,9 +34,17 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
             <Box>
                 {left_products.map((p) => (
                     <Box
-                        elevation={10}
-                        key={p.id}
                         width={PRODUCT_WIDTH}
+                        bg='primary'
+                        borderRadius='m'
+
+                    key={p.id}
+                    marginBottom='s'
+                    >
+                    <Box
+                        elevation={10}
+                        width={PRODUCT_WIDTH}
+                            marginLeft='s'
 
                         bg="white"
                         borderRadius="m"
@@ -71,15 +79,24 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
                             </Text>
                         </Box>
                     </Box>
+                    </Box>
                 ))}
             </Box>
-            <Box style={{transform: [{translateY: 20}]}}>
+            <Box style={{transform: [{translateY: 20}], marginHorizontal: theme.spacing.m}}>
                 {right_products.map((p) => (
                     <Box
+                    width={PRODUCT_WIDTH}
+                    bg='primary'
+                    borderRadius='m'
+
+                key={p.id}
+                marginBottom='s'
+                >
+                    <Box
                         elevation={10}
-                        key={p.id}
+                        
                         width={PRODUCT_WIDTH}
-                        marginLeft="m"
+                        marginLeft="s"
                         bg="white"
                         borderRadius="m"
                         overflow="hidden"
@@ -112,6 +129,7 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
                                 {p.name}
                             </Text>
                         </Box>
+                    </Box>
                     </Box>
                 ))}
             </Box>
