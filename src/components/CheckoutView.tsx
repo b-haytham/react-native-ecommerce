@@ -23,7 +23,7 @@ import { snapPoint } from "react-native-redash";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import ShippingAddressCard from "./cards/ShippingAddressCard";
 import Button from "./forms/form_elements/Button";
-import { BagItem } from "../redux/bag/bagSlice";
+import { BagItem, emptyBag } from "../redux/bag/bagSlice";
 import { BagScreenNavigationProps } from "../navigation/ScreensNavigationRouteProps";
 import { SharedElement } from "react-navigation-shared-element";
 import { addOrder } from "../redux/orders/orderSlice";
@@ -253,6 +253,7 @@ const CheckoutView: React.FC<CheckoutViewProps> = ({
                         title="SUBMIT ORDER"
                         variant="PRIMARY"
                         onPress={() => {
+                            dispatch(emptyBag())
                             dispatch(addOrder({
                                 id: Math.floor(Math.random() * 10),
                                 date: setDate(new Date()),

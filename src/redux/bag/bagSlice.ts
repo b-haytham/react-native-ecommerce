@@ -14,8 +14,8 @@ interface UserState {
     loading: boolean;
     bagItems: BagItem[] | null;
     error: string | null;
-    total: number
-    products_in_bag: number[]
+    total: number;
+    products_in_bag: number[];
 }
 
 // Define the initial state using that type
@@ -44,30 +44,38 @@ export const bagSlice = createSlice({
     name: "bag",
     initialState,
     reducers: {
-        addToBag(
-            state,
-            action: PayloadAction<BagItem>
-        ) {
-            const p = state.bagItems?.find(p => p.product.id === action.payload.product.id)
-            if(!p) {
+        addToBag(state, action: PayloadAction<BagItem>) {
+            const p = state.bagItems?.find(
+                (p) => p.product.id === action.payload.product.id
+            );
+            if (!p) {
                 state.bagItems?.push({
                     product: action.payload.product,
                     quantity: 1,
                     size: action.payload.size,
                     color: action.payload.color,
                 });
-                state.total = +(state.total + action.payload.product.price).toFixed(2)
-                state.products_in_bag.push(action.payload.product.id)
+                state.total = +(
+                    state.total + action.payload.product.price
+                ).toFixed(2);
+                state.products_in_bag.push(action.payload.product.id);
             }
         },
         removeFromBag(state, action: PayloadAction<number>) {
-            const item = state.bagItems?.find(p => p.product.id === action.payload)
-            if(item) {
-                state.total = +(state.total - item.product.price * item.quantity).toFixed(2)
+            const item = state.bagItems?.find(
+                (p) => p.product.id === action.payload
+            );
+            if (item) {
+                state.total = +(
+                    state.total -
+                    item.product.price * item.quantity
+                ).toFixed(2);
                 state.bagItems = state.bagItems!.filter(
                     (s) => s.product.id !== action.payload
                 );
-                state.products_in_bag = state.products_in_bag.filter(p => p !==action.payload)
+                state.products_in_bag = state.products_in_bag.filter(
+                    (p) => p !== action.payload
+                );
             }
         },
         incrementQuantity(state, action: PayloadAction<number>) {
@@ -76,7 +84,7 @@ export const bagSlice = createSlice({
             );
             if (item) {
                 item.quantity = item.quantity + 1;
-                state.total = +(state.total + item.product.price).toFixed(2)
+                state.total = +(state.total + item.product.price).toFixed(2);
             }
         },
         decrementQuantity(state, action: PayloadAction<number>) {
@@ -85,14 +93,22 @@ export const bagSlice = createSlice({
             );
             if (item && item.quantity > 1) {
                 item.quantity = item.quantity - 1;
-                state.total = +(state.total - item.product.price).toFixed(2)
-
+                state.total = +(state.total - item.product.price).toFixed(2);
             }
+        },
+        emptyBag(state) {
+            state.bagItems = [];
+            state.products_in_bag = [];
         },
     },
 });
 
-export const { addToBag, decrementQuantity, incrementQuantity, removeFromBag } =
-    bagSlice.actions;
+export const {
+    addToBag,
+    decrementQuantity,
+    incrementQuantity,
+    removeFromBag,
+    emptyBag,
+} = bagSlice.actions;
 
 export default bagSlice.reducer;

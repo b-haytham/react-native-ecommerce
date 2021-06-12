@@ -80,7 +80,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                 width={width}
                 translateY={sortTranslateY}
                 onClose={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
-                onApply={() => {}}
+                onApply={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
             />
             <FilterView
                 width={width}
@@ -89,7 +89,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                     (filterTranslateY.value = FILTER_VIEW_HEIGHT + 15)
                 }
                 translateY={filterTranslateY}
-                onApply={() => {}}
+                onApply={() => (filterTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
             />
             {!keyboardVisible && (
                 <BottomTab
