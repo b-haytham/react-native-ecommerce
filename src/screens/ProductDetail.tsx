@@ -28,6 +28,7 @@ import { useAppDispatch } from "../redux/hooks";
 import { addToBag } from "../redux/bag/bagSlice";
 import { SIZES } from "../redux/data_types";
 import { addToFavourite } from "../redux/favourite/favouriteSlice";
+import ImageCarousel from "../components/ImageCarousel";
 
 interface ProductDetailProps {
     navigation: ProductDetailScreenNavigationProps;
@@ -194,8 +195,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                     >
                         <ExitIcon onPress={() => navigation.goBack()} />
                     </Box>
-
-                    <SharedElement id={`image-${route.params.item.id}`}>
+                    <ImageCarousel 
+                        productId={route.params.item.id}
+                        thumbnail={route.params.item.thumbnail!}
+                        images={route.params.item.images}
+                        imageHeight={IMAGE_HEIGHT}
+                    />
+                    {/* <SharedElement id={`image-${route.params.item.id}`}>
                         <Image
                             style={{ width, height: IMAGE_HEIGHT }}
                             source={{ uri: route.params.item.thumbnail! }}
@@ -203,7 +209,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                             width={width}
                             height={height * 0.6}
                         />
-                    </SharedElement>
+                    </SharedElement> */}
                     {/* <Carousel
                         data={route.params.item.images}
                         keyExtractor={(item, index) => index.toString()}

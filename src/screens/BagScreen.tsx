@@ -159,6 +159,15 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                                     );
                                 })
                             ) : (
+                                <MotiView
+                                from={{
+                                    opacity: 0
+                                }}
+                                animate={{
+                                    opacity: 1
+                                }}
+                                delay={300}
+                            >
                                 <Box
                                     flex={1}
                                     justifyContent="center"
@@ -173,6 +182,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                                         }}
                                     />
                                 </Box>
+                                </MotiView>
                             )}
                         </AnimatePresence>
                     </Box>

@@ -52,14 +52,14 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
                 showsHorizontalScrollIndicator={false}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
-                snapToInterval={itemWidth}
+                snapToInterval={itemWidth + theme.spacing.m * 2}
                 decelerationRate="fast"
             >
                 {data.map((item, index) => {
                     const inputRange = [
-                        itemWidth * (index - 2),
-                        itemWidth * index,
-                        itemWidth * (index + 2),
+                        (itemWidth + theme.spacing.m * 2) * (index - 2),
+                        (itemWidth  + theme.spacing.m * 2) * index,
+                        (itemWidth +theme.spacing.m * 2 ) * (index + 2),
                     ];
 
                     const rotateZ = useDerivedValue(() => {
@@ -105,6 +105,7 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
                             width={itemWidth}
                             borderRadius="m"
                             key={item.id}
+                            margin='m'
                             style={animatedStyles}
                         >
                             <Box

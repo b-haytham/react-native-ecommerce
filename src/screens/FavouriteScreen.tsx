@@ -146,20 +146,30 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                                     </MotiView>
                                 ))
                             ) : (
-                                <Box
-                                    flex={1}
-                                    justifyContent="center"
-                                    alignItems="center"
+                                <MotiView
+                                    from={{
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                    }}
+                                    delay={300}
                                 >
-                                    <Image
-                                        source={require("../../assets/empty.png")}
-                                        resizeMode="contain"
-                                        style={{
-                                            width: width * 0.6,
-                                            height: height * 0.6,
-                                        }}
-                                    />
-                                </Box>
+                                    <Box
+                                        flex={1}
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                        <Image
+                                            source={require("../../assets/empty.png")}
+                                            resizeMode="contain"
+                                            style={{
+                                                width: width * 0.6,
+                                                height: height * 0.6,
+                                            }}
+                                        />
+                                    </Box>
+                                </MotiView>
                             )}
                         </AnimatePresence>
                     </Box>
@@ -172,7 +182,6 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                     />
                 </Box>
             )}
-            
         </Layout>
     );
 };

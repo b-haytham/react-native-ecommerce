@@ -135,6 +135,15 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                                 )
                             )
                         ) : (
+                            <MotiView
+                                from={{
+                                    opacity: 0
+                                }}
+                                animate={{
+                                    opacity: 1
+                                }}
+                                delay={300}
+                            >
                             <Box
                                 flex={1}
                                 justifyContent="center"
@@ -149,6 +158,7 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                                     }}
                                 />
                             </Box>
+                            </MotiView>
                         )}
                     </AnimatePresence>
                 </Box>
