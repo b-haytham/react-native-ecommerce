@@ -35,6 +35,7 @@ const SettingScreen: React.FC<SettingScreenProps> = ({ route, navigation }) => {
             <Header
                 height={HEADER_HEIGHT}
                 elevation={2}
+                paddingHorizontal='m'
                 title="Settings"
                 position="absolute"
                 top={0}

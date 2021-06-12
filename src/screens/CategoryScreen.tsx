@@ -62,21 +62,23 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
 }) => {
     const theme = useTheme<Theme>();
 
-    const filterTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15)
-    const sortTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15)
+    const filterTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15);
+    const sortTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15);
 
-    const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
+    const products_in_bag = useAppSelector(
+        (state) => state.bag.products_in_bag
+    );
     const products = useAppSelector((state) => state.products.products).filter(
         (p) => p.category.name === route.params.category.name
     );
     const [display, setDisplay] = useState(false);
-    
+
     const [selectedProduct, setSelectedProduct] =
         useState<Product | null>(null);
     const translationY = useSharedValue(0);
-  
+
     const hiddenViewTranslateY = useSharedValue(HIDDEN_VIEW_HEIGHT + 15);
-  
+
     const scrollHandler = useAnimatedScrollHandler((event) => {
         translationY.value = event.contentOffset.y;
     });
@@ -89,26 +91,29 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
         ],
     }));
 
- 
     useEffect(() => {
         setDisplay(true);
     }, []);
 
     return (
         <Layout no_padding>
-            <FilterView 
+            <FilterView
                 height={FILTER_VIEW_HEIGHT}
                 width={width}
                 translateY={filterTranslateY}
-                onApply={() => {}}
-                onClose={() => filterTranslateY.value = FILTER_VIEW_HEIGHT + 15}
+                onApply={() =>
+                    (filterTranslateY.value = FILTER_VIEW_HEIGHT + 15)
+                }
+                onClose={() =>
+                    (filterTranslateY.value = FILTER_VIEW_HEIGHT + 15)
+                }
             />
             <SortView
                 height={FILTER_VIEW_HEIGHT}
                 width={width}
                 translateY={sortTranslateY}
-                onApply={() => {}}
-                onClose={() => sortTranslateY.value = FILTER_VIEW_HEIGHT + 15}
+                onApply={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
+                onClose={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
             />
             <AnimatedBox
                 position="absolute"
@@ -139,7 +144,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
 
                 <ScrollView style={{ flex: 1 }}>
                     <Box paddingTop="xl" paddingHorizontal="m">
-                      
+                        
                     </Box>
                 </ScrollView>
             </AnimatedBox>
@@ -148,7 +153,6 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                 borderBottomRightRadius="l"
                 borderBottomLeftRadius="l"
                 overflow="hidden"
-                
             >
                 <SharedElement
                     id={`category-${route.params.category.display_name}`}
@@ -157,7 +161,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         // width={width}
                         // height={IMAGE_HEIGHT / 3}
                         style={[{ width, height: IMAGE_HEIGHT / 3 }]}
-                        source={route.params.category.image} 
+                        source={route.params.category.image}
                         resizeMode="cover"
                     />
                 </SharedElement>
@@ -181,56 +185,65 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                     <Box>
                         {products.length > 0 && (
                             <AnimatedFlatlist
-                                ListHeaderComponent={<Box
-                                    padding="m"
-                                    flexDirection="row"
-                                    justifyContent="space-between"
-                                    
-                                    borderRadius="m"
-                                >
-                                    <TouchableOpacity
-                                        onPress={() => (filterTranslateY.value = 0)}
+                                ListHeaderComponent={
+                                    <Box
+                                        padding="m"
+                                        flexDirection="row"
+                                        justifyContent="space-between"
+                                        borderRadius="m"
                                     >
-                                        <Box
-                                            flexDirection="row"
-                                            alignItems="center"
+                                        <TouchableOpacity
+                                            onPress={() =>
+                                                (filterTranslateY.value = 0)
+                                            }
                                         >
-                                            <Ionicons
-                                                name="filter-sharp"
-                                                size={24}
-                                                color={theme.colors.darkColor}
-                                            />
-                                            <Text
-                                                marginLeft="s"
-                                                variant="body2"
-                                                opacity={0.7}
+                                            <Box
+                                                flexDirection="row"
+                                                alignItems="center"
                                             >
-                                                Filter
-                                            </Text>
-                                        </Box>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => (sortTranslateY.value = 0)}
-                                    >
-                                        <Box
-                                            flexDirection="row"
-                                            alignItems="center"
+                                                <Ionicons
+                                                    name="filter-sharp"
+                                                    size={24}
+                                                    color={
+                                                        theme.colors.darkColor
+                                                    }
+                                                />
+                                                <Text
+                                                    marginLeft="s"
+                                                    variant="body2"
+                                                    opacity={0.7}
+                                                >
+                                                    Filter
+                                                </Text>
+                                            </Box>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() =>
+                                                (sortTranslateY.value = 0)
+                                            }
                                         >
-                                            <MaterialCommunityIcons
-                                                name="sort"
-                                                size={24}
-                                                color={theme.colors.darkColor}
-                                            />
-                                            <Text
-                                                marginLeft="s"
-                                                variant="body2"
-                                                opacity={0.7}
+                                            <Box
+                                                flexDirection="row"
+                                                alignItems="center"
                                             >
-                                                Sort
-                                            </Text>
-                                        </Box>
-                                    </TouchableOpacity>
-                                </Box>}
+                                                <MaterialCommunityIcons
+                                                    name="sort"
+                                                    size={24}
+                                                    color={
+                                                        theme.colors.darkColor
+                                                    }
+                                                />
+                                                <Text
+                                                    marginLeft="s"
+                                                    variant="body2"
+                                                    opacity={0.7}
+                                                >
+                                                    Sort
+                                                </Text>
+                                            </Box>
+                                        </TouchableOpacity>
+                                    </Box>
+                                }
                                 data={products}
                                 keyExtractor={(p, i) => p.id.toString()}
                                 numColumns={2}
@@ -241,7 +254,9 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                                         width={
                                             PRODUCT_WIDTH - theme.spacing.s * 2
                                         }
-                                        is_in_bag={products_in_bag.includes(item.id)}
+                                        is_in_bag={products_in_bag.includes(
+                                            item.id
+                                        )}
                                         product={item}
                                         onAddToBagPress={() => {
                                             setSelectedProduct(item);

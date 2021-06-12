@@ -84,6 +84,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
                     elevation={2}
                     title="Bag"
                     position="absolute"
+                    paddingHorizontal='m'
                     top={0}
                     left_icon={
                         <TouchableOpacity

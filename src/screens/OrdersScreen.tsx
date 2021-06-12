@@ -61,6 +61,7 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                 elevation={2}
                 title="Orders"
                 position="absolute"
+                paddingHorizontal='m'
                 top={0}
                 left_icon={
                     <TouchableOpacity

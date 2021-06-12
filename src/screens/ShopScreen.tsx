@@ -31,6 +31,7 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
                 height={HEADER_HEIGHT}
                 elevation={2}
                 title="Categories"
+                paddingHorizontal='m'
                 position="absolute"
                 top={0}
                 right_icon={

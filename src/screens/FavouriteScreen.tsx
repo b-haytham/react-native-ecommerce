@@ -69,6 +69,7 @@ const FavouriteScreen: React.FC<FavouriteScreenProps> = ({
                 elevation={2}
                 title="Favourites"
                 position="absolute"
+                paddingHorizontal='m'
                 top={0}
                 left_icon={
                     <TouchableOpacity

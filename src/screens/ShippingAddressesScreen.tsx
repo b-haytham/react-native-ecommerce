@@ -46,6 +46,7 @@ const ShippingAddressesScreen: React.FC<ShippingAddressesScreenProps> = ({
                 elevation={2}
                 title="Shipping Addresses"
                 position="absolute"
+                paddingHorizontal='m'
                 top={0}
                 left_icon={
                     <TouchableOpacity

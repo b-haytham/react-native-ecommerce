@@ -38,6 +38,8 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                 height={HEADER_HEIGHT}
                 title="Order Detail"
                 position="absolute"
+                paddingHorizontal='m'
+                elevation={1}
                 top={0}
                 left_icon={
                     <TouchableOpacity
