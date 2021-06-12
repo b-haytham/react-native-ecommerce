@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 import { SharedElement } from "react-navigation-shared-element";
 import { Image } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
 interface TowColumnScrollViewProps extends BoxProps<Theme> {
     width: number;
@@ -35,101 +36,132 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
                 {left_products.map((p) => (
                     <Box
                         width={PRODUCT_WIDTH}
-                        bg='primary'
-                        borderRadius='m'
-
-                    key={p.id}
-                    marginBottom='s'
-                    >
-                    <Box
-                        elevation={10}
-                        width={PRODUCT_WIDTH}
-                            marginLeft='s'
-
-                        bg="white"
+                        bg="primary"
                         borderRadius="m"
-                        overflow="hidden"
+                        key={p.id}
                         marginBottom="s"
+                        marginTop="s"
                     >
-                        <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() =>
-                                navigation.navigate("Shop_Product_Detail", {
-                                    item: p,
-                                })
-                            }
+                        <Box
+                            elevation={10}
+                            width={PRODUCT_WIDTH}
+                            marginLeft="s"
+                            bg="white"
+                            borderRadius="m"
+                            overflow="hidden"
+                            marginBottom="s"
+                            style={{ marginTop: -10 }}
                         >
-                            <SharedElement id={`image-${p.id}`}>
-                                <Image
-                                    style={{
-                                        width: PRODUCT_WIDTH,
-                                        height: 100,
+                            <TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={() =>
+                                    navigation.navigate("Shop_Product_Detail", {
+                                        item: p,
+                                    })
+                                }
+                            >
+                                <SharedElement id={`image-${p.id}`}>
+                                    <Image
+                                        style={{
+                                            width: PRODUCT_WIDTH,
+                                            height: 100,
 
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{ uri: p.thumbnail! }}
-                                />
-                            </SharedElement>
-                        </TouchableOpacity>
+                                            overflow: "hidden",
+                                        }}
+                                        resizeMode="cover"
+                                        source={{ uri: p.thumbnail! }}
+                                    />
+                                </SharedElement>
+                            </TouchableOpacity>
 
-                        <Box p="m">
-                            <Text variant="small" fontWeight="bold">
-                                {p.name}
-                            </Text>
+                            <Box p="m">
+                                <Text variant="small" fontWeight="bold">
+                                    {p.name}
+                                </Text>
+                            </Box>
                         </Box>
-                    </Box>
+                        <Box
+                                paddingHorizontal='m'
+                                pb='s'
+                                flexDirection='row'
+                                justifyContent='space-between'
+                                alignItems='center'
+                            >
+                                <Box>
+                                    <Text variant='body' color='white' >{`${p.price}DT`}</Text>
+                                </Box>
+                                <TouchableOpacity>
+                                <Entypo name='heart' size={20} color='white' />
+                                </TouchableOpacity>
+                            </Box>
                     </Box>
                 ))}
             </Box>
-            <Box style={{transform: [{translateY: 20}], marginHorizontal: theme.spacing.m}}>
+            <Box
+                style={{
+                    transform: [{ translateY: 20 }],
+                    marginHorizontal: theme.spacing.m,
+                }}
+            >
                 {right_products.map((p) => (
                     <Box
-                    width={PRODUCT_WIDTH}
-                    bg='primary'
-                    borderRadius='m'
-
-                key={p.id}
-                marginBottom='s'
-                >
-                    <Box
-                        elevation={10}
-                        
                         width={PRODUCT_WIDTH}
-                        marginLeft="s"
-                        bg="white"
+                        bg="primary"
                         borderRadius="m"
-                        overflow="hidden"
+                        key={p.id}
                         marginBottom="s"
                     >
-                        <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() =>
-                                navigation.navigate("Shop_Product_Detail", {
-                                    item: p,
-                                })
-                            }
+                        <Box
+                            elevation={10}
+                            width={PRODUCT_WIDTH}
+                            marginLeft="s"
+                            bg="white"
+                            borderRadius="m"
+                            overflow="hidden"
+                            marginBottom="s"
                         >
-                            <SharedElement id={`image-${p.id}`}>
-                                <Image
-                                    style={{
-                                        width: PRODUCT_WIDTH,
-                                        height: 100,
+                            <TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={() =>
+                                    navigation.navigate("Shop_Product_Detail", {
+                                        item: p,
+                                    })
+                                }
+                            >
+                                <SharedElement id={`image-${p.id}`}>
+                                    <Image
+                                        style={{
+                                            width: PRODUCT_WIDTH,
+                                            height: 100,
 
-                                        overflow: "hidden",
-                                    }}
-                                    resizeMode="cover"
-                                    source={{ uri: p.thumbnail! }}
-                                />
-                            </SharedElement>
-                        </TouchableOpacity>
+                                            overflow: "hidden",
+                                        }}
+                                        resizeMode="cover"
+                                        source={{ uri: p.thumbnail! }}
+                                    />
+                                </SharedElement>
+                            </TouchableOpacity>
 
-                        <Box p="m">
-                            <Text variant="small" fontWeight="bold">
-                                {p.name}
-                            </Text>
+                            <Box p="m">
+                                <Text variant="small" fontWeight="bold">
+                                    {p.name}
+                                </Text>
+                            </Box>
                         </Box>
-                    </Box>
+                        <Box
+                                paddingHorizontal='m'
+                                pb='s'
+                                flexDirection='row'
+                                justifyContent='space-between'
+                                alignItems='center'
+                            >
+                                <Box>
+                                    <Text variant='body' color='white' >{`${p.price}DT`}</Text>
+                                </Box>
+                                <TouchableOpacity>
+                                <Entypo name='heart' size={20} color='white' />
+                                </TouchableOpacity>
+                            </Box>
                     </Box>
                 ))}
             </Box>

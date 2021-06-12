@@ -21,6 +21,7 @@ import { SharedElement } from "react-navigation-shared-element";
 import { Image } from "react-native";
 import { HomeScreenNavigationProps } from "../navigation/ScreensNavigationRouteProps";
 
+import { Entypo } from '@expo/vector-icons'
 interface AnimatedScrollViewProps extends BoxProps<Theme> {
     data: Product[];
     itemWidth: number;
@@ -111,12 +112,12 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
                             <Box
                                 elevation={10}
                                 width={itemWidth}
-                                marginHorizontal="m"
+                                marginHorizontal="s"
                                 bg="white"
                                 borderRadius="m"
                                 overflow="hidden"
-                                marginBottom="l"
-                                marginTop="s"
+                                marginBottom="m"
+                                style={{marginTop: -10}}
                             >
                                 <TouchableOpacity
                                     activeOpacity={0.6}
@@ -146,6 +147,20 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
                                         {item.name}
                                     </Text>
                                 </Box>
+                            </Box>
+                            <Box
+                                paddingHorizontal='m'
+                                pb='s'
+                                flexDirection='row'
+                                justifyContent='space-between'
+                                alignItems='center'
+                            >
+                                <Box>
+                                    <Text variant='body' color='white' >{`${item.price}DT`}</Text>
+                                </Box>
+                                <TouchableOpacity>
+                                <Entypo name='heart' size={20} color='white' />
+                                </TouchableOpacity>
                             </Box>
                         </AnimatedBox>
                     );

@@ -40,15 +40,12 @@ const Input: React.FC<InputProps> = ({
     const theme = useTheme<Theme>();
 
     return (
-        <Box
-            backgroundColor="white"
-            
-           
-        >
+        <Box>
             <Box
-            paddingHorizontal="m"
-             marginVertical="s"
-             paddingVertical="s"
+                backgroundColor="white"
+                paddingHorizontal="m"
+                marginVertical="s"
+                paddingVertical="s"
                 borderRadius="s"
                 flexDirection="row"
                 justifyContent="space-between"
@@ -68,7 +65,7 @@ const Input: React.FC<InputProps> = ({
                 {icon && icon}
             </Box>
             {error && (
-                <Text marginLeft='s' variant="description" color="error">
+                <Text marginLeft="s" variant="description" color="error">
                     {error}
                 </Text>
             )}
