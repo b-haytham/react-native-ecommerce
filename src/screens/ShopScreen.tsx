@@ -1,7 +1,7 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "@shopify/restyle";
 import React, { useState } from "react";
-import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import CategoryCard from "../components/cards/CategoryCard";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
@@ -66,7 +66,7 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
                     >
                         <CategoryCard
                             width={width - theme.spacing.m * 2}
-                            image={c.image}
+                            image={{uri: c.image}}
                             title={c.display_name}
                             height={200}
                             icon={
@@ -91,5 +91,7 @@ const ShopScreen: React.FC<ShopScreenProps> = ({ navigation, route }) => {
         </Layout>
     );
 };
+
+
 
 export default ShopScreen;

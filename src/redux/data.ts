@@ -431,7 +431,7 @@ export const PRODUCTS: Product[] = [
                 "Fermeture Laçage",
             ],
         },
-        color: ["Brown"],
+        color: ["Sienna"],
         sizes: ['36', '37', '38', '39', '40', '41'],
         has_size: true,
         has_color: true
@@ -537,7 +537,7 @@ export const PRODUCTS: Product[] = [
                 "Fermeture Laçage",
             ],
         },
-        color: ["Rose"],
+        color: ["Pink"],
         sizes: ['36', '37', '38', '39', '40', '41'],
         has_size: true,
         has_color: true
@@ -910,14 +910,14 @@ export const PRODUCTS: Product[] = [
     },
 ];
 
-export const CATEGORIES: (Category & { image: ImageSourcePropType })[] = [
+export const CATEGORIES: (Category & { image: string })[] = [
     {
         id: 0,
         name: "MEN",
         display_name: "Men",
         number_product: 70,
         sub_categories: [],
-        image: require("../../assets/men.jpg"),
+        image: 'https://images.unsplash.com/photo-1619207490561-135b1480f53e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
     },
     {
         id: 1,
@@ -925,7 +925,7 @@ export const CATEGORIES: (Category & { image: ImageSourcePropType })[] = [
         display_name: "Women",
         number_product: 790,
         sub_categories: [],
-        image: require("../../assets/women.jpg"),
+        image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
     },
     {
         id: 2,
@@ -933,7 +933,7 @@ export const CATEGORIES: (Category & { image: ImageSourcePropType })[] = [
         display_name: "Kids",
         number_product: 40,
         sub_categories: [],
-        image: require("../../assets/kids.jpg"),
+        image: 'https://images.unsplash.com/photo-1571210862729-78a52d3779a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8a2lkc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
     },
     {
         id: 3,
@@ -941,7 +941,7 @@ export const CATEGORIES: (Category & { image: ImageSourcePropType })[] = [
         display_name: "Accessories",
         number_product: 30,
         sub_categories: [],
-        image: require("../../assets/jewelry.jpg"),
+        image: 'https://images.unsplash.com/3/www.madebyvadim.com.jpg?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1061&q=80',
     },
 ];
 

@@ -4,6 +4,7 @@ import React from "react";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import BagScreen from "../screens/BagScreen";
 import CategoryScreen from "../screens/CategoryScreen";
+import ComponentsScreen from "../screens/ComponentsScreen";
 import FavouriteScreen from "../screens/FavouriteScreen";
 import HomeScreen from "../screens/HomeScreen";
 import NewShippingAddressScreen from "../screens/NewShippingAddressScreen";
@@ -57,6 +58,8 @@ const MainStack = () => {
             }}
             headerMode="none"
         >
+            <Stack.Screen name="Components" component={ComponentsScreen} />
+
             <Stack.Screen name="Home" component={HomeScreen} />
 
             <Stack.Screen name="Bag_Main" component={BagScreen} />

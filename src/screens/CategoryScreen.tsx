@@ -36,10 +36,13 @@ import ProductCard from "../components/cards/ProductCard";
 import Input from "../components/forms/form_elements/Input";
 import { useKeyboard } from "../utils/useKeyboardHeight";
 import { Product } from "../redux/data_types";
-import { useAppSelector } from "../redux/hooks";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import FilterView from "../components/FilterView";
 import SortView from "../components/SortView";
+import Selectables from "../components/Selectables";
+import SelectableColors from "../components/SelectableColors";
+import { addToBag } from "../redux/bag/bagSlice";
 
 interface CategoryScreenProps {
     navigation: CategoryScreenNavigationProps;
@@ -60,6 +63,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     route,
     navigation,
 }) => {
+    const dispatch = useAppDispatch()
     const theme = useTheme<Theme>();
 
     const filterTranslateY = useSharedValue(FILTER_VIEW_HEIGHT + 15);
@@ -73,10 +77,23 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     );
     const [display, setDisplay] = useState(false);
 
+    // selection state
     const [selectedProduct, setSelectedProduct] =
         useState<Product | null>(null);
-    const translationY = useSharedValue(0);
+    const [selectedSize, setSelectedSize] = useState(
+        selectedProduct && selectedProduct.has_size
+            ? selectedProduct.sizes[0]
+            : ''
+    );
+    const [selectedColor, setSelectedColor] = useState(
+        selectedProduct && selectedProduct.has_color
+            ? selectedProduct.color[0]
+            : ''
+    );
+    //selection state
+    
 
+    const translationY = useSharedValue(0);
     const hiddenViewTranslateY = useSharedValue(HIDDEN_VIEW_HEIGHT + 15);
 
     const scrollHandler = useAnimatedScrollHandler((event) => {
@@ -94,6 +111,8 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
     useEffect(() => {
         setDisplay(true);
     }, []);
+
+    console.log(selectedProduct);
 
     return (
         <Layout no_padding>
@@ -115,39 +134,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                 onApply={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
                 onClose={() => (sortTranslateY.value = FILTER_VIEW_HEIGHT + 15)}
             />
-            <AnimatedBox
-                position="absolute"
-                bg="background"
-                zIndex={555555}
-                bottom={0}
-                width={width}
-                height={HIDDEN_VIEW_HEIGHT}
-                borderTopRightRadius="xl"
-                borderTopLeftRadius="xl"
-                elevation={15}
-                style={hiddenViewStyles}
-            >
-                <Box
-                    position="absolute"
-                    top={-15}
-                    left={width / 2 - 15}
-                    zIndex={0}
-                >
-                    <ExitIcon
-                        onPress={() => {
-                            setSelectedProduct(null);
-                            hiddenViewTranslateY.value =
-                                HIDDEN_VIEW_HEIGHT + 15;
-                        }}
-                    />
-                </Box>
-
-                <ScrollView style={{ flex: 1 }}>
-                    <Box paddingTop="xl" paddingHorizontal="m">
-                        
-                    </Box>
-                </ScrollView>
-            </AnimatedBox>
+           
             <AnimatedBox
                 width={width}
                 borderBottomRightRadius="l"
@@ -161,7 +148,7 @@ const CategoryScreen: React.FC<CategoryScreenProps> = ({
                         // width={width}
                         // height={IMAGE_HEIGHT / 3}
                         style={[{ width, height: IMAGE_HEIGHT / 3 }]}
-                        source={route.params.category.image}
+                        source={{ uri: route.params.category.image }}
                         resizeMode="cover"
                     />
                 </SharedElement>

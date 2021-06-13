@@ -15,8 +15,8 @@ export type AuthStackParamList = {
 }
 
 export type MainStackParamList = {
+    Components: undefined
     Home: undefined
-    
     Bag_Main: undefined
     Favourite_Main: undefined
     
@@ -34,7 +34,7 @@ export type MainStackParamList = {
     
     Shop_Main: undefined
     Shop_Category: {
-        category: Category & {image: ImageSourcePropType}
+        category: Category & {image: string}
     }
     Shop_Search: {
         search_term: string | null

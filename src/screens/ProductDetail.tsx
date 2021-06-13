@@ -44,21 +44,25 @@ const HIDDEN_VIEW_HEIGHT = height * 0.4;
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
     const theme = useTheme<Theme>();
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
     // hidden view
     const [actionType, setActionType] =
         useState<"BAG" | "FAVOURITE" | null>(null);
-    const [selectedSize, setSelectedSize] = useState<SIZES>(SIZES.S);
-    const [selectedColor, setSelectedColor] = useState<string>("Black");
-    console.log('COLOR', selectedColor)
-    console.log('SIZE', selectedSize)
-    const [hiddenViewShow, setHiddenViewShow] = useState(false)
+    const [selectedSize, setSelectedSize] = useState<string>(
+        route.params.item.has_size ? route.params.item.sizes[0] : "S"
+    );
+    const [selectedColor, setSelectedColor] = useState<string>(
+        route.params.item.has_size ? route.params.item.color[0] : "Black"
+    );
+
+    const [hiddenViewShow, setHiddenViewShow] = useState(false);
     const hiddenViewTranslateY = useSharedValue(HIDDEN_VIEW_HEIGHT + 15);
+
     const hiddenViewStyles = useAnimatedStyle(() => ({
         transform: [
             {
                 translateY: withTiming(hiddenViewTranslateY.value, {
-                    easing: Easing.circle,
+                    easing: Easing.inOut(Easing.ease),
                 }),
             },
         ],
@@ -77,7 +81,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                 elevation={15}
                 style={hiddenViewStyles}
             >
-                 <Box
+                <Box
                     position="absolute"
                     top={-15}
                     left={width / 2 - 15}
@@ -86,7 +90,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                     <ExitIcon
                         onPress={() => {
                             setActionType(null);
-                            setHiddenViewShow(false)
+                            setHiddenViewShow(false);
                             hiddenViewTranslateY.value =
                                 HIDDEN_VIEW_HEIGHT + 15;
                         }}
@@ -95,36 +99,52 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
 
                 <ScrollView style={{ flex: 1 }}>
                     <Box paddingTop="xl">
-                       {hiddenViewShow && <Box marginBottom="m">
-                            <Text
-                                marginHorizontal="s"
-                                marginBottom="s"
-                                variant="body2"
-                                opacity={0.5}
-                            >
-                                SELECT SIZE
-                            </Text>
-                            <Selectables
-                                value={selectedSize}
-                                items={["S", "M", "L", "XL"]}
-                                onChange={(v) => setSelectedSize(v as SIZES)}
-                            />
-                        </Box>}
-                        {hiddenViewShow && <Box>
-                            <Text
-                                marginHorizontal="s"
-                                marginBottom="s"
-                                variant="body2"
-                                opacity={0.5}
-                            >
-                                SELECT COLOR
-                            </Text>
-                            <SelectableColors
-                                value={selectedColor}
-                                items={["Black", "Red", "Blue", "Green"]}
-                                onChange={(v) => setSelectedColor(v)}
-                            />
-                        </Box>}
+                        {hiddenViewShow && route.params.item.has_size && (
+                            <Box marginBottom="m">
+                                <Text
+                                    marginHorizontal="s"
+                                    marginBottom="s"
+                                    variant="body2"
+                                    opacity={0.5}
+                                >
+                                    SELECT SIZE
+                                </Text>
+                                <Selectables
+                                    value={selectedSize}
+                                    items={route.params.item.sizes}
+                                    onChange={(v) => setSelectedSize(v)}
+                                />
+                            </Box>
+                        )}
+                        {hiddenViewShow && route.params.item.has_color && (
+                            <Box>
+                                <Text
+                                    marginHorizontal="s"
+                                    marginBottom="s"
+                                    variant="body2"
+                                    opacity={0.5}
+                                >
+                                    SELECT COLOR
+                                </Text>
+                                <SelectableColors
+                                    value={selectedColor}
+                                    items={route.params.item.color}
+                                    onChange={(v) => setSelectedColor(v)}
+                                />
+                            </Box>
+                        )}
+                        {!route.params.item.has_color &&
+                            !route.params.item.has_size && (
+                                <Box p="m">
+                                    <Text
+                                        textAlign="center"
+                                        variant="description"
+                                    >
+                                        No sizes or color selection for this
+                                        products! just procede
+                                    </Text>
+                                </Box>
+                            )}
                         <Box>
                             <Box
                                 marginHorizontal="s"
@@ -134,26 +154,34 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                                 borderWidth={actionType === "BAG" ? 0 : 1}
                                 borderRadius="m"
                             >
-                                <TouchableOpacity onPress={() => {
-                                    if(actionType === 'BAG') {
-                                        dispatch(addToBag({
-                                          product: route.params.item,
-                                          color: selectedColor,
-                                          size: selectedSize,
-                                          quantity: 1 
-                                        }))
-                                        hiddenViewTranslateY.value = HIDDEN_VIEW_HEIGHT + 15;
-                                        navigation.goBack()
-                                    }else {
-                                        dispatch(addToFavourite({
-                                            product: route.params.item,
-                                            color: selectedColor,
-                                            size: selectedSize as SIZES
-                                        }))
-                                        hiddenViewTranslateY.value = HIDDEN_VIEW_HEIGHT + 15;
-                                        navigation.goBack()
-                                    }
-                                }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (actionType === "BAG") {
+                                            dispatch(
+                                                addToBag({
+                                                    product: route.params.item,
+                                                    color: selectedColor,
+                                                    size: selectedSize,
+                                                    quantity: 1,
+                                                })
+                                            );
+                                            hiddenViewTranslateY.value =
+                                                HIDDEN_VIEW_HEIGHT + 15;
+                                            navigation.goBack();
+                                        } else {
+                                            dispatch(
+                                                addToFavourite({
+                                                    product: route.params.item,
+                                                    color: selectedColor,
+                                                    size: selectedSize as SIZES,
+                                                })
+                                            );
+                                            hiddenViewTranslateY.value =
+                                                HIDDEN_VIEW_HEIGHT + 15;
+                                            navigation.goBack();
+                                        }
+                                    }}
+                                >
                                     <Box
                                         paddingVertical="s"
                                         justifyContent="center"
@@ -195,38 +223,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                     >
                         <ExitIcon onPress={() => navigation.goBack()} />
                     </Box>
-                    <ImageCarousel 
+                    <ImageCarousel
                         productId={route.params.item.id}
                         thumbnail={route.params.item.thumbnail!}
                         images={route.params.item.images}
                         imageHeight={IMAGE_HEIGHT}
                     />
-                    {/* <SharedElement id={`image-${route.params.item.id}`}>
-                        <Image
-                            style={{ width, height: IMAGE_HEIGHT }}
-                            source={{ uri: route.params.item.thumbnail! }}
-                            resizeMode="cover"
-                            width={width}
-                            height={height * 0.6}
-                        />
-                    </SharedElement> */}
-                    {/* <Carousel
-                        data={route.params.item.images}
-                        keyExtractor={(item, index) => index.toString()}
-                        sliderWidth={width}
-                        itemWidth={width}
-                        renderItem={({ item }: { item: string }) => (
-                            <SharedElement id={`image-${route.params.item.id}`}>
-                                <Image
-                                    style={{ width, height: IMAGE_HEIGHT }}
-                                    source={{ uri: item }}
-                                    resizeMode="cover"
-                                    width={width}
-                                    height={height * 0.6}
-                                />
-                            </SharedElement>
-                        )}
-                    /> */}
                 </Box>
                 <Box
                     flexDirection="row"
@@ -245,112 +247,62 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                         <Text variant="body2">{`${route.params.item.price} DT`}</Text>
                     </Box>
                 </Box>
-                <Box>
-                    <Text margin="m" variant="body2" opacity={0.5}>
-                        AVAILABLE SIZES
-                    </Text>
-                    <Box
-                        flexDirection="row"
-                        flexWrap="wrap"
-                        marginHorizontal="m"
-                    >
+                {route.params.item.has_size && (
+                    <Box>
+                        <Text margin="m" variant="body2" opacity={0.5}>
+                            AVAILABLE SIZES
+                        </Text>
                         <Box
-                            marginRight="s"
-                            marginBottom="s"
-                            bg="darkColor"
-                            borderRadius={"m"}
-                            justifyContent={"center"}
-                            alignItems="center"
-                            width={100}
-                            height={40}
+                            flexDirection="row"
+                            flexWrap="wrap"
+                            marginHorizontal="m"
                         >
-                            <Text color="white">S</Text>
-                        </Box>
-                        <Box
-                            marginRight="s"
-                            marginBottom="s"
-                            bg="darkColor"
-                            borderRadius={"m"}
-                            justifyContent={"center"}
-                            alignItems="center"
-                            width={100}
-                            height={40}
-                        >
-                            <Text color="white">M</Text>
-                        </Box>
-                        <Box
-                            marginRight="s"
-                            marginBottom="s"
-                            bg="darkColor"
-                            borderRadius={"m"}
-                            justifyContent={"center"}
-                            alignItems="center"
-                            width={100}
-                            height={40}
-                        >
-                            <Text color="white">L</Text>
-                        </Box>
-                        <Box
-                            marginRight="s"
-                            marginBottom="s"
-                            bg="darkColor"
-                            borderRadius={"m"}
-                            justifyContent={"center"}
-                            alignItems="center"
-                            width={100}
-                            height={40}
-                        >
-                            <Text color="white">XL</Text>
+                            {route.params.item.sizes.map((s, i) => (
+                                <Box
+                                    key={i}
+                                    marginRight="s"
+                                    marginBottom="s"
+                                    bg="darkColor"
+                                    borderRadius={"m"}
+                                    justifyContent={"center"}
+                                    alignItems="center"
+                                    width={100}
+                                    height={40}
+                                >
+                                    <Text color="white">{s}</Text>
+                                </Box>
+                            ))}
                         </Box>
                     </Box>
-                </Box>
-                <Box>
-                    <Text margin="m" variant="body2" opacity={0.5}>
-                        AVAILABLE COLORS
-                    </Text>
-                    <Box
-                        flexDirection="row"
-                        flexWrap="wrap"
-                        marginHorizontal="m"
-                    >
+                )}
+
+                {route.params.item.has_color && (
+                    <Box>
+                        <Text margin="m" variant="body2" opacity={0.5}>
+                            AVAILABLE COLORS
+                        </Text>
                         <Box
-                            marginRight="s"
-                            style={{
-                                backgroundColor: "black",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                            }}
-                        />
-                        <Box
-                            marginRight="s"
-                            style={{
-                                backgroundColor: "red",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                            }}
-                        />
-                        <Box
-                            marginRight="s"
-                            style={{
-                                backgroundColor: "blue",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                            }}
-                        />
-                        <Box
-                            marginRight="s"
-                            style={{
-                                backgroundColor: "green",
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                            }}
-                        />
+                            flexDirection="row"
+                            flexWrap="wrap"
+                            marginHorizontal="m"
+                        >
+                            {route.params.item.color.map((c, i) => (
+                                <Box
+                                    key={i}
+                                    marginRight="s"
+                                    style={{
+                                        backgroundColor: c.toLowerCase(),
+                                        width: 30,
+                                        height: 30,
+                                        borderRadius: 15,
+                                        overflow: "hidden",
+                                    }}
+                                />
+                            ))}
+                        </Box>
                     </Box>
-                </Box>
+                )}
+
                 <Box>
                     <Text margin="m" variant="body2" opacity={0.5}>
                         PRODUCT DETAILS
@@ -377,7 +329,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                             onPress={() => {
                                 setActionType("FAVOURITE");
                                 hiddenViewTranslateY.value = 0;
-                                setHiddenViewShow(true)
+                                setHiddenViewShow(true);
                             }}
                         >
                             <Box
@@ -406,7 +358,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ navigation, route }) => {
                             onPress={() => {
                                 setActionType("BAG");
                                 hiddenViewTranslateY.value = 0;
-                                setHiddenViewShow(true)
+                                setHiddenViewShow(true);
                             }}
                         >
                             <Box

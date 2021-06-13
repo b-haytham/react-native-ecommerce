@@ -23,8 +23,9 @@ interface ProductCardProps extends BoxProps<Theme> {
     width: number;
     is_new?: boolean;
     onImagePress(item: Product): void;
-    onAddToBagPress(item: Product): void;
+    onAddToBagPress?(item: Product): void;
     is_in_bag?: boolean
+    show_icon?: boolean
 }
 
 const { width: SWitch, height } = Dimensions.get("screen");
@@ -36,32 +37,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
     onImagePress,
     onAddToBagPress,
     is_in_bag,
+    show_icon,
     ...rest
 }) => {
     const theme = useTheme<Theme>();
-    // const [loading, setLoading] = useState(false);
-
-    // useEffect(() => {
-    //     preload(product.thumbnail!);
-    // }, []);
-
-    // const preload = async (image: string) => {
-    //     await Image.prefetch(image);
-    //     setLoading(false);
-    // };
-
-    // if (loading) {
-    //     return (
-    //         <Box
-    //             width={width}
-    //             height={400}
-    //             justifyContent="center"
-    //             alignItems="center"
-    //         >
-    //             <ActivityIndicator color={theme.colors.primary} />
-    //         </Box>
-    //     );
-    // } else {
         return (
             <Box width={width} borderRadius="m" bg="white" margin="s" {...rest}>
                 <TouchableOpacity onPress={() => onImagePress(product)}>
@@ -104,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         </SharedElement>
                     </Box>
 
-                    {!is_in_bag &&<Box position="absolute" zIndex={50} bottom={-10} right={0}>
+                    {/* {(!is_in_bag || !show_icon) && <Box position="absolute" zIndex={50} bottom={-10} right={0}>
                         <IconButton
                             bg="primary"
                             icon={
@@ -114,9 +93,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     color={"#ffffff"}
                                 />
                             }
-                            onPress={() => onAddToBagPress(product)}
+                            onPress={() => onAddToBagPress && onAddToBagPress(product)}
                         />
-                    </Box>}
+                    </Box>} */}
                 </TouchableOpacity>
                 <Box
                     marginTop="s"

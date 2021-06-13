@@ -5,7 +5,7 @@ import { Product, SIZES } from "../data_types";
 export interface BagItem {
     product: Product;
     quantity: number;
-    size: SIZES;
+    size: string;
     color: string;
 }
 

@@ -21,6 +21,10 @@ export type RegisterScreenNavigationProps = CompositeNavigationProp<
 
 
 // Main Stack Navigation Props
+export type ComponentsScreenNavigationProps = CompositeNavigationProp<
+    StackNavigationProp<MainStackParamList, 'Components'>,
+    StackNavigationProp<AppStackParamList>
+>
 export type HomeScreenNavigationProps = CompositeNavigationProp<
     StackNavigationProp<MainStackParamList, 'Home'>,
     StackNavigationProp<AppStackParamList>
@@ -105,6 +109,7 @@ export type RegisterScreenRouteProps = RouteProp<AuthStackParamList, 'Register'>
 
 // Main Stack route props
 
+export type ComponentsScreenRouteProps = RouteProp<MainStackParamList, 'Home'>
 export type HomeScreenRouteProps = RouteProp<MainStackParamList, 'Home'>
 export type BagScreenRouteProps = RouteProp<MainStackParamList, 'Bag_Main'>
 export type FavouriteScreenRouteProps = RouteProp<MainStackParamList, 'Favourite_Main'>

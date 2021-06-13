@@ -48,7 +48,7 @@ const BagScreen: React.FC<BagScreenProps> = ({ navigation, route }) => {
     const checkoutTranslateY = useSharedValue(height);
 
     const headerStyles = useAnimatedStyle(() => ({
-        transform: [{ translateY: withSpring(headerTranslateY.value) }],
+        transform: [{ translateY: withSpring(headerTranslateY.value, {mass: 0.5}) }],
     }));
 
     useEffect(() => {
