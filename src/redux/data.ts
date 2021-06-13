@@ -54,8 +54,10 @@ export const PRODUCTS: Product[] = [
             title: "",
             detail_list: [""],
         },
-        color: ["Black", "Blue", "White", "Gray"],
+        color: ["Black", "Blue", "Gray"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_color: true,
+        has_size: true
     },
     {
         id: 1,
@@ -108,8 +110,10 @@ export const PRODUCTS: Product[] = [
                 "Taille élastique",
             ],
         },
-        color: ["Black", "Blue", "White", "Gray"],
+        color: ["Black", "Gray"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_size: true,
+        has_color: true
     },
     {
         id: 2,
@@ -164,6 +168,8 @@ export const PRODUCTS: Product[] = [
         },
         color: ["Black", "Blue", "White", "Gray"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_color: true,
+        has_size: true
     },
     {
         id: 3,
@@ -217,6 +223,8 @@ export const PRODUCTS: Product[] = [
         },
         color: ["Black", "Blue", "White", "Gray"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_size: true,
+        has_color: true,
     },
     {
         id: 4,
@@ -268,8 +276,10 @@ export const PRODUCTS: Product[] = [
                 "Poches arrière, poches latérales",
             ],
         },
-        color: ["Black", "Blue", "White", "Gray"],
+        color: ["Black", "Blue"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_color: true,
+        has_size: true
     },
     {
         id: 5,
@@ -315,8 +325,10 @@ export const PRODUCTS: Product[] = [
             title: "",
             detail_list: ["Composition 100% viscose"],
         },
-        color: ["Red", "Blue", "White", "Gray"],
+        color: ["Red", "Blue"],
         sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        has_size: true,
+        has_color: true
     },
     {
         id: 6,
@@ -345,8 +357,8 @@ export const PRODUCTS: Product[] = [
         },
         is_discount: false,
         is_in_stock: true,
-        name: "MANDY - Jupe trapèze",
-        display_name: "MANDY - Jupe trapèze",
+        name: "Adidas",
+        display_name: "Adidas",
         price: 94.95,
         number_reviews: 2,
         number_views: 30,
@@ -367,7 +379,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: ["White", "Gray"],
-        sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        sizes: ['36', '37', '38', '39', '40', '41'],
+        has_color: true,
+        has_size: true
     },
     {
         id: 7,
@@ -418,7 +432,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: ["Brown"],
-        sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        sizes: ['36', '37', '38', '39', '40', '41'],
+        has_size: true,
+        has_color: true
     },
     {
         id: 8,
@@ -469,7 +485,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: ["Black"],
-        sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        sizes: ['36', '37', '38', '39', '40', '41'],
+        has_color: true,
+        has_size: true
     },
     {
         id: 9,
@@ -520,7 +538,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: ["Rose"],
-        sizes: [SIZES.M, SIZES.L, SIZES.XL],
+        sizes: ['36', '37', '38', '39', '40', '41'],
+        has_size: true,
+        has_color: true
     },
     {
         id: 10,
@@ -573,7 +593,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: [],
-        sizes: [SIZES.S],
+        sizes: [],
+        has_color: false, 
+        has_size: false
     },
     {
         id: 11,
@@ -625,7 +647,9 @@ export const PRODUCTS: Product[] = [
             ],
         },
         color: ["Blue", "Brown"],
-        sizes: [SIZES.S],
+        sizes: ['36', '37', '38', '39', '40', '41'],
+        has_size: true,
+        has_color: true,
     },
     {
         id: 12,
@@ -678,6 +702,9 @@ export const PRODUCTS: Product[] = [
         },
         color: ["Black"],
         sizes: [],
+        has_color: true,
+        has_size: false
+
     },
     {
         id: 14,
@@ -728,6 +755,8 @@ export const PRODUCTS: Product[] = [
         },
         color: ["Gold"],
         sizes: [],
+        has_color: true,
+        has_size: false
     },
     {
         id: 13,
@@ -773,6 +802,8 @@ export const PRODUCTS: Product[] = [
         },
         color: [],
         sizes: [],
+        has_size: false, 
+        has_color: false
     },
     {
         id: 15,
@@ -823,6 +854,8 @@ export const PRODUCTS: Product[] = [
         },
         color: [],
         sizes: [],
+        has_color: false,
+        has_size: false
     },
     {
         id: 17,
@@ -870,8 +903,10 @@ export const PRODUCTS: Product[] = [
                 "Cut Slim Fit"
             ],
         },
-        color: [],
-        sizes: [],
+        color: ['gray'],
+        sizes: ['M', 'L', 'XL'],
+        has_size: true,
+        has_color: true
     },
 ];
 
@@ -925,6 +960,8 @@ export const CURRENT_USER: User = {
             total_amount: 115,
             user: 2,
             order_items: [],
+            date: '',
+            tracking_number: ''
         },
         {
             id: 1,
@@ -932,6 +969,8 @@ export const CURRENT_USER: User = {
             total_amount: 115,
             user: 2,
             order_items: [],
+            date: '',
+            tracking_number: ''
         },
     ],
     reviews: [

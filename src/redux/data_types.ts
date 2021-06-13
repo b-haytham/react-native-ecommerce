@@ -24,8 +24,10 @@ export type Product = {
     thumbnail: string | null
     images: string[] | [] 
     price: number
+    has_color: boolean
+    has_size: boolean
     color: string[]
-    sizes: SIZES[]
+    sizes: string[]
     details: {
         title: string
         detail_list: string[] | []
