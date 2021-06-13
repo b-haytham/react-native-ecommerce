@@ -61,12 +61,11 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                     marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
-                <Box marginVertical="m">
+                <Box marginTop="m" marginBottom='s' marginHorizontal='m' bg='white' p='m' borderRadius='m'>
                     <Box
                         flexDirection="row"
                         justifyContent="space-between"
                         alignItems="center"
-                        marginHorizontal="m"
                         marginBottom="s"
                     >
                         <Box flexDirection="row" alignItems="center">
@@ -85,7 +84,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                         flexDirection="row"
                         justifyContent="space-between"
                         alignItems="center"
-                        marginHorizontal="m"
+                        
                         marginBottom="s"
                     >
                         <Text variant="body" opacity={0.5}>
@@ -107,7 +106,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                         </Text>
                     </Box>
                 </Box>
-                <Box marginVertical="m">
+                <Box marginVertical="s">
                     <Text
                         marginHorizontal="m"
                         marginVertical="s"
@@ -124,6 +123,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                             overflow="hidden"
                             flexDirection="row"
                             marginVertical="s"
+                            bg='white'
                         >
                             <TouchableOpacity
                                 onPress={() =>
@@ -142,7 +142,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                                     />
                                 </SharedElement>
                             </TouchableOpacity>
-                            <Box paddingHorizontal="m" width={width * 0.7}>
+                            <Box paddingHorizontal="m" width={width * 0.7} paddingVertical='s'>
                                 <Text marginBottom="s" variant="body2">
                                     {o.product.display_name}
                                 </Text>
@@ -177,7 +177,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                         </Box>
                     ))}
                 </Box>
-                <Box marginVertical="m">
+                <Box marginVertical="s">
                     <Text
                         marginHorizontal="m"
                         marginVertical="s"
@@ -186,7 +186,7 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({
                     >
                         Order Info
                     </Text>
-                    <Box paddingHorizontal="m">
+                    <Box margin='m' paddingHorizontal="m" padding='m' bg='white' borderRadius='m'>
                         <Box
                             flexDirection="row"
                             alignItems="flex-start"

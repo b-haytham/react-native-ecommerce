@@ -143,11 +143,12 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation, route }) => {
                         </SharedElement>
                         {products.length !== 0 && (
                             <Box
-                                padding="m"
+                                paddingHorizontal="m"
+                                paddingVertical='s'
                                 flexDirection="row"
                                 justifyContent="space-between"
                                 bg="white"
-                                borderRadius="m"
+                                borderRadius="s"
                             >
                                 <TouchableOpacity
                                     onPress={() => (filterTranslateY.value = 0)}

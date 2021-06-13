@@ -88,7 +88,13 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                     marginTop: HEADER_HEIGHT - theme.spacing.l,
                 }}
             >
-                <ScrollView horizontal>
+                {/* <ScrollView horizontal style={{flex: 1}} > */}
+                    <Box
+                        
+                        flexDirection='row'
+                        justifyContent='space-between'
+                    >
+
                     <Chip
                         textProps={{
                             color:
@@ -149,7 +155,8 @@ const OrdersScreen: React.FC<OrdersScreenProps> = ({ route, navigation }) => {
                             translateX.value = 2 * -width;
                         }}
                     />
-                </ScrollView>
+                    </Box>
+                {/* </ScrollView> */}
                 {display ? (
                     <AnimatedBox
                         flex={1}
