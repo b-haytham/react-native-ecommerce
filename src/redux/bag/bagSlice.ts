@@ -99,6 +99,7 @@ export const bagSlice = createSlice({
         emptyBag(state) {
             state.bagItems = [];
             state.products_in_bag = [];
+            state.total = 0
         },
     },
 });
