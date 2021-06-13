@@ -5,6 +5,7 @@ import { Dimensions, Image, ScrollView, TouchableOpacity } from "react-native";
 
 import { SharedElement } from "react-navigation-shared-element";
 import AnimatedScrollView from "../components/AnimatedScrollView";
+import HomeProductCard from "../components/cards/HomeProductCard";
 import Layout from "../components/Layout";
 import BottomTab from "../components/navigation/BottomTab";
 import TowColumnScrollView from "../components/TowColumnScrollView";
@@ -31,6 +32,8 @@ const PRODUCT_WIDTH = width * 0.5;
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     const [display, setDisplay] = useState(false);
     const products = useAppSelector((state) => state.products.products);
+    const product_in_favourite = useAppSelector(state => state.favourite.products_in_favourite)
+    const products_in_bag = useAppSelector(state => state.bag.products_in_bag)
 
     useEffect(() => {
         setDisplay(true);
@@ -178,71 +181,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         snapToInterval={PRODUCT_WIDTH + theme.spacing.m * 2}
                     >
                         {products.slice(0, 3).map((p) => (
-                            <Box
-                                width={PRODUCT_WIDTH}
-                                bg="primary"
-                                borderRadius="m"
-                                marginHorizontal="m"
+                            <HomeProductCard
                                 key={p.id}
-                                marginBottom="s"
-                                marginTop='m'
-                                overflow='visible'
-                            >
-                                <Box
-                                    elevation={10}
-                                    width={PRODUCT_WIDTH}
-                                    marginLeft="s"
-                                    bg="white"
-                                    borderRadius="m"
-                                    overflow="hidden"
-                                    marginBottom="s"
-                                    style={{marginTop: -10}}
-                                    
-                                >
-                                    <TouchableOpacity
-                                        activeOpacity={0.6}
-                                        onPress={() =>
-                                            navigation.navigate(
-                                                "Shop_Product_Detail",
-                                                { item: p }
-                                            )
-                                        }
-                                    >
-                                        <SharedElement id={`image-${p.id}`}>
-                                            <Image
-                                                style={{
-                                                    width: PRODUCT_WIDTH,
-                                                    height: 200,
-
-                                                    overflow: "hidden",
-                                                }}
-                                                resizeMode="cover"
-                                                source={{ uri: p.thumbnail! }}
-                                            />
-                                        </SharedElement>
-                                    </TouchableOpacity>
-
-                                    <Box p="m">
-                                        <Text variant="small" fontWeight="bold">
-                                            {p.name}
-                                        </Text>
-                                    </Box>
-                                </Box>
-                                <Box
-                                paddingHorizontal='m'
-                                pb='s'
-                                flexDirection='row'
-                                justifyContent='space-between'
-                                alignItems='center'
-                            >
-                                <Box>
-                                    <Text variant='body' color='white' >{`${p.price}DT`}</Text>
-                                </Box>
-                                <TouchableOpacity>
-                                <Entypo name='heart' size={20} color='white' />
-                                </TouchableOpacity>
-                            </Box>
-                            </Box>
+                                product={p}
+                                product_width={PRODUCT_WIDTH}
+                                in_favourite={product_in_favourite.includes(p.id)}
+                                in_bag={products_in_bag.includes(p.id)}
+                                product_height={200}
+                                onImagePress={() =>
+                                    navigation.navigate("Shop_Product_Detail", {
+                                        item: p,
+                                    })
+                                }
+                                onAddToFavouritePress={() => {}}
+                            />
                         ))}
                     </ScrollView>
                 </Box>
@@ -257,68 +209,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         snapToInterval={PRODUCT_WIDTH + theme.spacing.m * 2}
                     >
                         {products.slice(3, 7).map((p) => (
-                            <Box
-                                width={PRODUCT_WIDTH}
-                                bg="primary"
-                                borderRadius="m"
-                                marginHorizontal="m"
+                            <HomeProductCard
                                 key={p.id}
-                                marginBottom="s"
-                                marginTop='m'
-                            >
-                                <Box
-                                    elevation={10}
-                                    width={PRODUCT_WIDTH}
-                                    marginLeft="s"
-                                    bg="white"
-                                    borderRadius="m"
-                                    overflow="hidden"
-                                    marginBottom="s"
-                                    style={{marginTop: -10}}
-                                >
-                                    <TouchableOpacity
-                                        activeOpacity={0.6}
-                                        onPress={() =>
-                                            navigation.navigate(
-                                                "Shop_Product_Detail",
-                                                { item: p }
-                                            )
-                                        }
-                                    >
-                                        <SharedElement id={`image-${p.id}`}>
-                                            <Image
-                                                style={{
-                                                    width: PRODUCT_WIDTH,
-                                                    height: PRODUCT_WIDTH,
-
-                                                    overflow: "hidden",
-                                                }}
-                                                resizeMode="cover"
-                                                source={{ uri: p.thumbnail! }}
-                                            />
-                                        </SharedElement>
-                                    </TouchableOpacity>
-                                    <Box p="m">
-                                        <Text variant="small" fontWeight="bold">
-                                            {p.name}
-                                        </Text>
-                                    </Box>
-                                </Box>
-                                <Box
-                                paddingHorizontal='m'
-                                pb='s'
-                                flexDirection='row'
-                                justifyContent='space-between'
-                                alignItems='center'
-                            >
-                                <Box>
-                                    <Text variant='body' color='white' >{`${p.price}DT`}</Text>
-                                </Box>
-                                <TouchableOpacity>
-                                <Entypo name='heart' size={20} color='white' />
-                                </TouchableOpacity>
-                            </Box>
-                            </Box>
+                                product={p}
+                                product_width={PRODUCT_WIDTH}
+                                in_favourite={product_in_favourite.includes(p.id)}
+                                in_bag={products_in_bag.includes(p.id)}
+                                onImagePress={() =>
+                                    navigation.navigate("Shop_Product_Detail", {
+                                        item: p,
+                                    })
+                                }
+                                onAddToFavouritePress={() => {}}
+                            />
                         ))}
                     </ScrollView>
                 </Box>
@@ -330,6 +233,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         marginBottom="l"
                         width={width}
                         products={products.slice(12, 16)}
+                        products_in_bag={products_in_bag}
+                        products_in_favourite={product_in_favourite}
                     />
                 </Box>
                 <Box>
@@ -340,6 +245,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
                         navigation={navigation}
                         data={products.slice(8, 12)}
                         itemWidth={width / 2}
+                        products_in_bag={products_in_bag}
+                        products_in_favourite={product_in_favourite}
                     />
                 </Box>
             </ScrollView>

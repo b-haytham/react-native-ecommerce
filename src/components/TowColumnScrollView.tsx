@@ -23,6 +23,8 @@ import { useAnimatedStyle } from "react-native-reanimated";
 interface TowColumnScrollViewProps extends BoxProps<Theme> {
     width: number;
     products: Product[];
+    products_in_bag: number[];
+    products_in_favourite: number[];
 }
 
 const AnimatedBox = Animated.createAnimatedComponent(Box);
@@ -30,6 +32,8 @@ const AnimatedBox = Animated.createAnimatedComponent(Box);
 const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
     width,
     products,
+    products_in_bag,
+    products_in_favourite,
     ...rest
 }) => {
     const theme = useTheme<Theme>();
@@ -111,13 +115,23 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
                                         color="white"
                                     >{`${p.price}DT`}</Text>
                                 </Box>
-                                <TouchableOpacity>
-                                    <Entypo
-                                        name="heart"
-                                        size={20}
-                                        color="white"
-                                    />
-                                </TouchableOpacity>
+                                <Box flexDirection="row" alignItems="center">
+                                    {products_in_favourite.includes(p.id) && (
+                                        <Entypo
+                                            name="heart"
+                                            size={20}
+                                            color="white"
+                                        />
+                                    )}
+                                    {products_in_bag.includes(p.id) && (
+                                        <Entypo
+                                            style={{ marginLeft: 10 }}
+                                            name="shopping-bag"
+                                            size={18}
+                                            color={"white"}
+                                        />
+                                    )}
+                                </Box>
                             </Box>
                         </Box>
                     );
@@ -187,9 +201,23 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
                                     color="white"
                                 >{`${p.price}DT`}</Text>
                             </Box>
-                            <TouchableOpacity>
-                                <Entypo name="heart" size={20} color="white" />
-                            </TouchableOpacity>
+                            <Box flexDirection="row" alignItems="center">
+                                {products_in_favourite.includes(p.id) && (
+                                    <Entypo
+                                        name="heart"
+                                        size={20}
+                                        color="white"
+                                    />
+                                )}
+                                {products_in_bag.includes(p.id) && (
+                                    <Entypo
+                                        style={{ marginLeft: 10 }}
+                                        name="shopping-bag"
+                                        size={18}
+                                        color={"white"}
+                                    />
+                                )}
+                            </Box>
                         </Box>
                     </Box>
                 ))}
@@ -198,4 +226,4 @@ const TowColumnScrollView: React.FC<TowColumnScrollViewProps> = ({
     );
 };
 
-export default TowColumnScrollView;
+export default React.memo(TowColumnScrollView);

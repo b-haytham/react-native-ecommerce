@@ -27,6 +27,8 @@ interface AnimatedScrollViewProps extends BoxProps<Theme> {
     itemWidth: number;
     itemHeight?: number;
     navigation: HomeScreenNavigationProps;
+    products_in_bag: number[]
+    products_in_favourite: number[]
 }
 
 const AnimatedBox = Animated.createAnimatedComponent(Box);
@@ -36,6 +38,8 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
     itemHeight,
     itemWidth,
     navigation,
+    products_in_bag,
+    products_in_favourite,   
     ...rest
 }) => {
     const theme = useTheme<Theme>();
@@ -158,9 +162,23 @@ const AnimatedScrollView: React.FC<AnimatedScrollViewProps> = ({
                                 <Box>
                                     <Text variant='body' color='white' >{`${item.price}DT`}</Text>
                                 </Box>
-                                <TouchableOpacity>
-                                <Entypo name='heart' size={20} color='white' />
-                                </TouchableOpacity>
+                                <Box flexDirection="row" alignItems="center">
+                                {products_in_favourite.includes(item.id) && (
+                                    <Entypo
+                                        name="heart"
+                                        size={20}
+                                        color="white"
+                                    />
+                                )}
+                                {products_in_bag.includes(item.id) && (
+                                    <Entypo
+                                        style={{ marginLeft: 10 }}
+                                        name="shopping-bag"
+                                        size={18}
+                                        color={"white"}
+                                    />
+                                )}
+                            </Box>
                             </Box>
                         </AnimatedBox>
                     );
