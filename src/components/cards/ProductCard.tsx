@@ -57,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 bg="primary"
                                 position="absolute"
                                 top={5}
-                                left={5}
+                                right={5}
                                 zIndex={2}
                             />
                         )}
