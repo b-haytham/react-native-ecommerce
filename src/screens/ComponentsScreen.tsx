@@ -1,28 +1,34 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import Input from "../components/forms/form_elements/Input";
+import { StyleSheet, Dimensions, ScrollView } from "react-native";
+
 import Layout from "../components/Layout";
-import { Box, Text } from "../utils/restyle";
 
-interface ComponentsScreenProps {}
+import { useTheme } from "@shopify/restyle";
+import { Theme } from "../utils/theme";
 
-const ComponentsScreen: React.FC<ComponentsScreenProps> = ({}) => {
-    return (
-        <Layout>
-            <ScrollView style={styles.container}>
-                <Box m="m">
-                    <Text variant="headline">Form Elements</Text>
-                    <Input placeholder="Input" />
-                </Box>
-            </ScrollView>
-        </Layout>
-    );
+import { ComponentsScreenNavigationProps, ComponentsScreenRouteProps } from "../navigation/ScreensNavigationRouteProps";
+
+interface ComponentsScreenProps {
+    navigation: ComponentsScreenNavigationProps
+    route: ComponentsScreenRouteProps
+}
+
+const { width, height } = Dimensions.get("screen");
+
+const ComponentsScreen: React.FC<ComponentsScreenProps> = ({navigation, route}) => {
+    const theme = useTheme<Theme>();
+    return <Layout>
+        <ScrollView style={{flex: 1}}>
+            
+        </ScrollView>
+    </Layout>;
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
+const DATA = [
+    {
+        
+    }
+]
+
 
 export default ComponentsScreen;

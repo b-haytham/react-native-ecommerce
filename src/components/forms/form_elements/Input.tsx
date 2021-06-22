@@ -1,15 +1,16 @@
 import { useTheme, BoxProps } from "@shopify/restyle";
 import React, { ReactNode } from "react";
 import {
+    NativeSyntheticEvent,
     StyleProp,
     StyleSheet,
     TextInput,
+    TextInputFocusEventData,
     TextInputProps,
     TextStyle,
 } from "react-native";
-import { Box } from "../../../utils/restyle";
+import { Box, Text } from "../../../utils/restyle";
 import { Theme } from "../../../utils/theme";
-
 
 interface InputProps extends BoxProps<Theme> {
     placeholder: string;
@@ -17,7 +18,12 @@ interface InputProps extends BoxProps<Theme> {
     textInputStyle?: StyleProp<TextStyle>;
     textInputProps?: TextInputProps;
     password?: boolean;
-    elevation?: number
+    elevation?: number;
+    inputRef?: React.LegacyRef<TextInput> | undefined;
+    onBlur?:
+        | ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void)
+        | undefined;
+    error?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,29 +32,43 @@ const Input: React.FC<InputProps> = ({
     textInputStyle,
     textInputProps,
     password,
-    elevation
+    elevation,
+    inputRef,
+    onBlur,
+    error,
 }) => {
     const theme = useTheme<Theme>();
 
     return (
-        <Box
-            backgroundColor="white"
-            paddingHorizontal="m"
-            marginVertical="s"
-            paddingVertical="s"
-            borderRadius="s"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            elevation={elevation ? elevation : 0}
-        >
-            <TextInput
-                style={[styles.textInput, textInputStyle]}
-                placeholder={placeholder}
-                secureTextEntry={password}
-                {...textInputProps}
-            />
-            {icon && icon}
+        <Box>
+            <Box
+                backgroundColor="white"
+                paddingHorizontal="m"
+                marginVertical="s"
+                paddingVertical="s"
+                borderRadius="s"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                elevation={elevation ? elevation : 0}
+                borderColor="primary"
+                borderWidth={1}
+            >
+                <TextInput
+                    onBlur={onBlur}
+                    ref={inputRef}
+                    style={[styles.textInput, textInputStyle]}
+                    placeholder={placeholder}
+                    secureTextEntry={password}
+                    {...textInputProps}
+                />
+                {icon && icon}
+            </Box>
+            {error && (
+                <Text marginLeft="s" variant="description" color="error">
+                    {error}
+                </Text>
+            )}
         </Box>
     );
 };

@@ -1,18 +1,18 @@
-enum SIZES {
+export enum SIZES {
     S = "S",
     M = "M",
     L = "L",
     XL = "XL"
 }
 
-enum OrderStatus {
+export enum OrderStatus {
     SUCCESS = "SUCCESS",
     PENDING = "PENDING",
     FAILURE = "FAILURE",
     CANCELLED = "CANCELLED"
 }
 
-enum Gender {
+export enum Gender {
     MALE = "MALE",
     FEMALE = "FEMALE"
 }
@@ -24,26 +24,30 @@ export type Product = {
     thumbnail: string | null
     images: string[] | [] 
     price: number
+    has_color: boolean
+    has_size: boolean
     color: string[]
-    sizes: SIZES[]
+    sizes: string[]
     details: {
         title: string
-        detail_list: string[]
+        detail_list: string[] | []
     },
     brand: {
         name: string
         display_name: string
     }
     number_reviews: number
-    number_views: string
+    number_views: number
     number_sold: number
     is_in_stock: boolean
     is_discount: boolean
+    avg_rating: number
+    is_new: boolean
     discount: {
         percentage: number
     }
-    category: Category | number
-    sub_category: SubCategory | number
+    category: Category 
+    sub_category: SubCategory 
 }
 
 
@@ -51,7 +55,7 @@ export type Category = {
     id :number
     name: string
     display_name: string
-    sub_categories: SubCategory[]
+    sub_categories: SubCategory[] | []
     number_product: number
 }
 
@@ -59,7 +63,7 @@ export type SubCategory = {
     id: number
     name: string
     display_name: string
-    parent_category: Category
+    parent_category: Category | number
     number_product: number
 }
 
@@ -70,6 +74,8 @@ export type ShippingAddress = {
     state: string
     address: string
     country: string
+    zip_code: number
+    is_default: boolean
 }
 
 export type Review = {
@@ -86,15 +92,18 @@ export type Review = {
 export type Order = {
     id: number
     user: number
+    date: string
+    tracking_number: string
     order_items: OrderItem[]
     status: OrderStatus
     total_amount: number
 }
 
 export type OrderItem = {
-    product: number
+    product: Product
     quantity: number
-    price: number
+    color: string
+    size: string
 }
 
 export type User = {

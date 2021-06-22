@@ -8,13 +8,15 @@ import { Theme } from '../utils/theme'
 import { Box } from '../utils/restyle'
 
 
-interface LayoutProps extends BoxProps<Theme>{}
+interface LayoutProps extends BoxProps<Theme>{
+    no_padding?: boolean
+}
 
-const Layout: React.FC<LayoutProps> = ({children, ...rest}) =>{
+const Layout: React.FC<LayoutProps> = ({no_padding ,children, ...rest}) =>{
     return (
         <Box
             bg='background'
-            style={styles.container}
+            style={[styles.container, no_padding && {paddingTop: 0}]}
             {...rest}
         >
             {children}
